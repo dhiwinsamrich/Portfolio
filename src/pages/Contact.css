@@ -1,0 +1,367 @@
+.contact-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #FFF;
+}
+
+.contact-main {
+  padding: 0 56px;
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .contact-main {
+    padding: 0 24px;
+  }
+}
+
+.contact-main .about-section {
+  display: flex;
+  margin-top: 144px;
+  gap: 362px;
+}
+
+@media (max-width: 1024px) {
+  .contact-main .about-section {
+    gap: 80px;
+    margin-top: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-main .about-section {
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 40px;
+  }
+}
+
+.contact-main .about-section .section-title {
+  width: 201px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .contact-main .about-section .section-title {
+    width: 100%;
+  }
+}
+
+.contact-main .about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  flex: 1;
+}
+
+.contact-main .about-text {
+  color: #000;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+@media (max-width: 768px) {
+  .contact-main .about-text {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
+
+.contact-main .profile-image {
+  width: 314px;
+  height: 204px;
+  background: #F6F6F6;
+}
+
+@media (max-width: 768px) {
+  .contact-main .profile-image {
+    width: 100%;
+    height: 200px;
+  }
+}
+
+.contact-main .experience-section {
+  display: flex;
+  margin-top: 80px;
+  gap: 362px;
+}
+
+@media (max-width: 1024px) {
+  .contact-main .experience-section {
+    gap: 80px;
+    margin-top: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-main .experience-section {
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 48px;
+  }
+}
+
+.contact-main .experience-section .section-title {
+  width: 201px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .contact-main .experience-section .section-title {
+    width: 100%;
+  }
+}
+
+.contact-main .experience-list {
+  display: flex;
+  width: 765px;
+  flex-direction: column;
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .contact-main .experience-list {
+    width: 100%;
+    gap: 24px;
+  }
+}
+
+.contact-main .experience-item {
+  display: flex;
+  padding-bottom: 32px;
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .contact-main .experience-item {
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 24px;
+  }
+}
+
+.contact-main .experience-item:not(.border-bottom) {
+  padding-top: 12px;
+}
+
+.contact-main .job-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.contact-main .job-title {
+  color: #000;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .contact-main .job-title {
+    font-size: 20px;
+  }
+}
+
+.contact-main .company-name {
+  color: #000;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .contact-main .company-name {
+    font-size: 14px;
+  }
+}
+
+.contact-main .certificates-section {
+  display: flex;
+  margin-top: 80px;
+  gap: 362px;
+}
+
+@media (max-width: 1024px) {
+  .contact-main .certificates-section {
+    gap: 80px;
+    margin-top: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-main .certificates-section {
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 48px;
+  }
+}
+
+.contact-main .certificates-section .section-title {
+  width: 201px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .contact-main .certificates-section .section-title {
+    width: 100%;
+  }
+}
+
+.contact-main .certificates-list {
+  display: flex;
+  width: 765px;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .contact-main .certificates-list {
+    width: 100%;
+    gap: 16px;
+  }
+}
+
+.contact-main .certificate-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.contact-main .certificate-name {
+  color: #000;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .contact-main .certificate-name {
+    font-size: 14px;
+  }
+}
+
+.contact-main .education-section {
+  display: flex;
+  margin-top: 80px;
+  gap: 362px;
+}
+
+@media (max-width: 1024px) {
+  .contact-main .education-section {
+    gap: 80px;
+    margin-top: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-main .education-section {
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 48px;
+  }
+}
+
+.contact-main .education-section .section-title {
+  width: 201px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .contact-main .education-section .section-title {
+    width: 100%;
+  }
+}
+
+.contact-main .education-list {
+  display: flex;
+  width: 765px;
+  flex-direction: column;
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .contact-main .education-list {
+    width: 100%;
+    gap: 24px;
+  }
+}
+
+.contact-main .education-item {
+  display: flex;
+  padding-bottom: 32px;
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .contact-main .education-item {
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 24px;
+  }
+}
+
+.contact-main .education-item:not(.border-bottom) {
+  padding-top: 12px;
+}
+
+.contact-main .degree-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.contact-main .degree-title {
+  color: #000;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .contact-main .degree-title {
+    font-size: 20px;
+  }
+}
+
+.contact-main .institution-name {
+  color: #000;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .contact-main .institution-name {
+    font-size: 14px;
+  }
+}
+
+.contact-main .page-title {
+  margin-top: 40px;
+  width: 100%;
+  color: #000;
+  text-align: center;
+  font-size: 280px;
+  font-weight: 700;
+  line-height: normal;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 1024px) {
+  .contact-main .page-title {
+    font-size: 160px;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-main .page-title {
+    font-size: 60px;
+    margin-top: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-main .page-title {
+    font-size: 48px;
+  }
+}
