@@ -110,11 +110,10 @@ const About = () => {
             </div>
           </div>
         </section>
-
-        <div className="page-title">ABOUT</div>
       </main>
       
       <Footer />
+      <div className="page-title">ABOUT</div>
     </div>
   );
 };

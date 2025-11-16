@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <div className="footer-text">Made with love:)</div>
+        {/* <div className="footer-text">Made with love:)</div> */}
         
         <div className="footer-links">
           <a href="#resume" className="footer-link">Resume</a>
