@@ -9,6 +9,34 @@
   position: relative;
 }
 
+.home-page > footer {
+  margin-top: auto;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+}
+
+@media (max-width: 640px) {
+  .home-page > footer {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    display: block !important;
+    visibility: visible !important;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .home-page > footer {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    display: block !important;
+    visibility: visible !important;
+  }
+}
+
 .home-main {
   padding: 0 56px;
   flex: 1;

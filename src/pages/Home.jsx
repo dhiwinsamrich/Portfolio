@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Footer from '../components/Footer.tsx';
 import './Home.css';
 
 const Home = () => {
@@ -285,8 +285,7 @@ const Home = () => {
         </section>
       </main>
       
-      <Footer />
-      <div className="page-title">HOME</div>
+      <Footer hoverText="HOME" />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Footer from '../components/Footer.tsx';
 import './About.css';
 
 const About = () => {
@@ -89,7 +89,6 @@ const About = () => {
             ))}
           </div>
         </section>
-
         <section className="education-section">
           <h3 className="section-title">Education</h3>
           <div className="education-list">
@@ -100,7 +99,6 @@ const About = () => {
               </div>
               <p className="text-secondary">2023-2025</p>
             </div>
-
             <div className="education-item">
               <div className="degree-info">
                 <h4 className="degree-title">Bachelor of Computer Applications</h4>
@@ -111,9 +109,7 @@ const About = () => {
           </div>
         </section>
       </main>
-      
-      <Footer />
-      <div className="page-title">ABOUT</div>
+      <Footer hoverText="ABOUT" />
     </div>
   );
 };

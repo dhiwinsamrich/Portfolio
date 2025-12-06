@@ -9,8 +9,36 @@
   position: relative;
 }
 
+.about-page > footer {
+  margin-top: auto;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+}
+
+@media (max-width: 640px) {
+  .about-page > footer {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    display: block !important;
+    visibility: visible !important;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .about-page > footer {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    display: block !important;
+    visibility: visible !important;
+  }
+}
+
 .about-main {
-  padding: 0 56px;
+  padding: 0 80px;
   flex: 1;
   width: 100%;
   max-width: 100%;
@@ -98,7 +126,7 @@
 
 @media (max-width: 768px) {
   .about-text {
-    font-size: 14px;
+    font-size: 40px;
     line-height: 1.6;
   }
 }
