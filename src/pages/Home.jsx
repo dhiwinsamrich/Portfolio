@@ -10,8 +10,25 @@ const Home = () => {
       
       <main className="home-main">
         <section className="hero-section">
-          <h1 className="hero-name">DHIWIN SAMRICH</h1>
-          <h2 className="hero-title">AI/ML Engineer</h2>
+          <div className="hero-image-wrapper">
+            <img
+              src="/hero.jpg"
+              alt="Dhiwin Samrich"
+              className="hero-image"
+            />
+          </div>
+
+          <h1 className="hero-name">
+            DHIWIN
+            <br />
+            SAMRICH
+          </h1>
+
+          <h2 className="hero-title">
+            AI/ML
+            <br />
+            <span className="highlight-letter">E</span>ngineer
+          </h2>
         </section>
 
         <section className="selected-works-section">
