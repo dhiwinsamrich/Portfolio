@@ -44,18 +44,18 @@ const Footer = ({ hoverText = "DHIWIN" }: FooterProps) => {
     external?: boolean;
   }> = [
     {
-      icon: <Mail size={18} className="text-[#000000]" />,
+      icon: <Mail size={18} className="text-foreground" />,
       text: "dhiwinsamrichj@gmail.com",   
       href: "mailto:dhiwinsamrichj@gmail.com",
     },
     {
-      icon: <LinkedInIcon size={18} className="text-[#000000]" />,
+      icon: <LinkedInIcon size={18} className="text-foreground" />,
       text: "LinkedIn",
       href: "https://www.linkedin.com/in/dhiwin-samrich-9167-jerome/",
       external: true,
     },
     {
-      icon: <GitHubIcon size={18} className="text-[#000000]" />,
+      icon: <GitHubIcon size={18} className="text-foreground" />,
       text: "GitHub",
       href: "https://github.com/dhiwinsamrich",
       external: true,
@@ -70,13 +70,13 @@ const Footer = ({ hoverText = "DHIWIN" }: FooterProps) => {
   ];
 
   return (
-    <footer className="bg-[#ffffff] relative h-fit rounded-3xl overflow-hidden mx-4 mt-8 sm:mx-4 md:mx-8 md:mt-16 mb-0">
+    <footer className="bg-background border border-border relative h-fit rounded-3xl overflow-hidden mx-4 mt-8 sm:mx-4 md:mx-8 md:mt-16 mb-0 shadow-lg">
       <div className="max-w-7xl mx-auto pt-8 sm:pt-10 md:pt-14 px-4 sm:px-6 md:px-14 pb-0 z-40 relative">
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6 md:gap-8 lg:gap-16 pb-0">
           {/* Footer link sections */}
           {footerLinks.map((section) => (
             <div key={section.title}>
-              <h4 className="text-[#000000] text-base md:text-lg font-semibold mb-4 md:mb-6">
+              <h4 className="text-foreground text-base md:text-lg font-semibold mb-4 md:mb-6">
                 {section.title}
               </h4>
               <ul className="space-y-2 md:space-y-3">
@@ -84,7 +84,7 @@ const Footer = ({ hoverText = "DHIWIN" }: FooterProps) => {
                   <li key={link.label} className="relative">
                     <a
                       href={link.href}
-                      className="text-[#000000] hover:text-[#2f8df3] transition-colors text-sm md:text-base"
+                      className="text-foreground hover:text-primary transition-colors text-sm md:text-base"
                       {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                     >
                       {link.label}
@@ -97,7 +97,7 @@ const Footer = ({ hoverText = "DHIWIN" }: FooterProps) => {
 
           {/* Contact section */}
           <div>
-            <h4 className="text-[#000000] text-base md:text-lg font-semibold mb-4 md:mb-6">
+            <h4 className="text-foreground text-base md:text-lg font-semibold mb-4 md:mb-6">
               Contact
             </h4>
             <ul className="space-y-3 md:space-y-4">
@@ -107,13 +107,13 @@ const Footer = ({ hoverText = "DHIWIN" }: FooterProps) => {
                   {item.href ? (
                     <a
                       href={item.href}
-                      className="text-[#000000] hover:text-[#000000] transition-colors text-sm md:text-base break-words"
+                      className="text-foreground hover:text-primary transition-colors text-sm md:text-base break-words"
                       {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                     >
                       {item.text}
                     </a>
                   ) : (
-                    <span className="text-[#000000] hover:text-[#000000] transition-colors text-sm md:text-base break-words">
+                    <span className="text-foreground hover:text-primary transition-colors text-sm md:text-base break-words">
                       {item.text}
                     </span>
                   )}

@@ -1,35 +1,155 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer.tsx';
+import { HeroParallax } from '../components/ui/hero-parallax';
+import { LogoCloud, LogoCloud4 } from '../components/ui';
 import './Home.css';
+
+const products = [
+  {
+    title: "Justicia - Legal AI",
+    link: "#",
+    thumbnail: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1280&auto=format&fit=crop",
+  },
+  {
+    title: "Chess Game - RL",
+    link: "#",
+    thumbnail: "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?q=80&w=1280&auto=format&fit=crop",
+  },
+  {
+    title: "RAG System",
+    link: "#",
+    thumbnail: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1280&auto=format&fit=crop",
+  },
+  {
+    title: "Hand Sign Recognition",
+    link: "#",
+    thumbnail: "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?q=80&w=1280&auto=format&fit=crop",
+  },
+  {
+    title: "AI/ML Projects",
+    link: "#",
+    thumbnail: "https://images.unsplash.com/photo-1555255707-c07966088b7b?q=80&w=1280&auto=format&fit=crop",
+  },
+  {
+    title: "Deep Learning Models",
+    link: "#",
+    thumbnail: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?q=80&w=1280&auto=format&fit=crop",
+  },
+  {
+    title: "Neural Networks",
+    link: "#",
+    thumbnail: "https://images.unsplash.com/photo-1527477396000-e27163b481c2?q=80&w=1280&auto=format&fit=crop",
+  },
+  {
+    title: "Data Science",
+    link: "#",
+    thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1280&auto=format&fit=crop",
+  },
+  {
+    title: "Machine Learning",
+    link: "#",
+    thumbnail: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1280&auto=format&fit=crop",
+  },
+  {
+    title: "Computer Vision",
+    link: "#",
+    thumbnail: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=1280&auto=format&fit=crop",
+  },
+  {
+    title: "Natural Language Processing",
+    link: "#",
+    thumbnail: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1280&auto=format&fit=crop",
+  },
+  {
+    title: "Reinforcement Learning",
+    link: "#",
+    thumbnail: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1280&auto=format&fit=crop",
+  },
+  {
+    title: "AI Research",
+    link: "#",
+    thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1280&auto=format&fit=crop",
+  },
+  {
+    title: "Tech Innovation",
+    link: "#",
+    thumbnail: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1280&auto=format&fit=crop",
+  },
+  {
+    title: "Software Development",
+    link: "#",
+    thumbnail: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1280&auto=format&fit=crop",
+  },
+];
+
+const toolsLogos = [
+  {
+    src: "https://svgl.app/library/github_wordmark_light.svg",
+    alt: "GitHub",
+  },
+  {
+    src: "https://svgl.app/library/docker-wordmark-light.svg",
+    alt: "Docker",
+  },
+  {
+    src: "https://svgl.app/library/supabase_wordmark_light.svg",
+    alt: "Supabase",
+  },
+  {
+    src: "https://svgl.app/library/figma-wordmark-light.svg",
+    alt: "Figma",
+  },
+  {
+    src: "https://svgl.app/library/azure-wordmark-light.svg",
+    alt: "Azure",
+  },
+  {
+    src: "https://svgl.app/library/aws-wordmark-light.svg",
+    alt: "AWS",
+  },
+  {
+    src: "https://svgl.app/library/hugging-face-wordmark-light.svg",
+    alt: "Hugging Face",
+  },
+  {
+    src: "https://svgl.app/library/kaggle-wordmark-light.svg",
+    alt: "Kaggle",
+  },
+  {
+    src: "https://svgl.app/library/git-wordmark-light.svg",
+    alt: "Git",
+  },
+  {
+    src: "https://svgl.app/library/microsoft-wordmark-light.svg",
+    alt: "Power BI",
+  },
+  {
+    src: "https://svgl.app/library/microsoft-wordmark-light.svg",
+    alt: "Microsoft Workbench",
+  },
+  {
+    src: "https://svgl.app/library/microsoft-wordmark-light.svg",
+    alt: "Power Automate",
+  },
+  {
+    src: "https://svgl.app/library/n8n-wordmark-light.svg",
+    alt: "n8n",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=400&auto=format&fit=crop",
+    alt: "LM Studio",
+  },
+];
 
 const Home = () => {
   return (
     <div className="home-page">
       <Header />
       
+      <HeroParallax products={products} />
+      
       <main className="home-main">
-        <section className="hero-section">
-          <div className="hero-image-wrapper">
-            <img
-              src="/hero.jpg"
-              alt="Dhiwin Samrich"
-              className="hero-image"
-            />
-          </div>
-
-          <h1 className="hero-name">
-            DHIWIN
-            <br />
-            SAMRICH
-          </h1>
-
-          <h2 className="hero-title">
-            AI/ML
-            <br />
-            <span className="highlight-letter">E</span>ngineer
-          </h2>
-        </section>
 
         <section className="selected-works-section">
           <h3 className="section-title">SELECTED WORKS</h3>
@@ -151,136 +271,26 @@ const Home = () => {
         </section>
 
         <section className="skills-section">
-          <h3 className="section-title">Languages I'm Familiar</h3>
-          
-          <div className="skills-list">
-            <div className="skill-item">
-              <div className="skill-icon">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                  <path d="M20.0392 4.16669C18.7433 4.17085 17.845 4.28502 16.7592 4.47252C13.5525 5.03085 12.9683 6.20335 12.9683 8.36419V11.6667H20.4683V13.3334H12.6833H9.05833C6.86167 13.3334 4.93917 14.3684 4.33 16.8492C3.64167 19.6967 3.61083 21.48 4.33 24.4534C4.87583 26.6709 6.07833 28.3334 8.27583 28.3334H11.3025V24.08C11.3025 21.6084 13.5408 19.1667 16.1058 19.1667H22.1358C24.2383 19.1667 26.3025 17.615 26.3025 15.5192V8.36419C26.3025 6.33169 24.8367 4.81169 22.7875 4.47085C22.8383 4.46585 21.3242 4.16169 20.0392 4.16669ZM15.8858 7.50002C16.57 7.50002 17.1358 8.06419 17.1358 8.75169C17.1358 9.44585 16.57 10 15.8858 10C15.1883 10 14.6358 9.44669 14.6358 8.75169C14.6358 8.06669 15.1883 7.50002 15.8858 7.50002Z" fill="#0277BD"/>
-                  <path d="M19.2317 35.8333C20.5275 35.8291 21.4258 35.715 22.5117 35.5275C25.7183 34.9691 26.3025 33.7966 26.3025 31.6358V28.3333H18.8025V26.6666H26.5883H30.2133C32.41 26.6666 34.3325 25.6316 34.9417 23.1508C35.63 20.3033 35.6608 18.52 34.9417 15.5466C34.395 13.3291 33.1925 11.6666 30.995 11.6666H27.9683V15.92C27.9683 18.3916 25.73 20.8333 23.165 20.8333H17.135C15.0325 20.8333 12.9683 22.385 12.9683 24.4808V31.6358C12.9683 33.6683 14.4342 35.1883 16.4833 35.5291C16.4325 35.5341 17.9467 35.8383 19.2317 35.8333ZM23.3858 32.5C22.7017 32.5 22.1358 31.9358 22.1358 31.2483C22.1358 30.5541 22.7017 30 23.3858 30C24.0833 30 24.6358 30.5533 24.6358 31.2483C24.6358 31.9333 24.0825 32.5 23.3858 32.5Z" fill="#FFC107"/>
-                </svg>
-              </div>
-              <span className="skill-name">Python</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">C</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">C++</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">Java</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">Java Script</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">HTML5</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">CSS3</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">R</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">MLflow</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">PyTorch</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">NVIDIA Rapids</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">FastAPI</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">MySQL</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">MongoDB</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">Streamlit</span>
-            </div>
+          <h3 className="section-title mb-6 text-center font-medium text-lg text-muted-foreground tracking-tight md:text-2xl">
+            Technologies I{" "}
+            <span className="font-semibold text-primary">work</span> with.
+          </h3>
+          <div className="w-full">
+            <LogoCloud />
           </div>
         </section>
 
         <section className="tools-section">
-          <h3 className="section-title">Tools I use</h3>
-          
-          <div className="skills-list">
-            <div className="skill-item">
-              <span className="skill-name">Git</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">GitHub</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">LM Studio</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">Azure</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">AWS</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">Power BI</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">Microsoft Workbench</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">Kaggle</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">n8n</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">Hugging Face</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">Docker</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">Power Automate</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">Figma</span>
-            </div>
-            <div className="divider"></div>
-            <div className="skill-item">
-              <span className="skill-name">Supabase</span>
-            </div>
+          <div className="w-full">
+            <h2 className="mb-5 text-center">
+              <span className="block font-medium text-2xl text-muted-foreground">
+                Tools I
+              </span>
+              <span className="font-black text-2xl text-primary tracking-tight md:text-3xl">
+                use
+              </span>
+            </h2>
+            <LogoCloud4 logos={toolsLogos} />
           </div>
         </section>
       </main>
