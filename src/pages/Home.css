@@ -40,7 +40,7 @@
 }
 
 .home-main {
-  padding: 0 8px;
+  padding: 0 56px;
   flex: 1;
   width: 100%;
   max-width: 100%;
@@ -49,13 +49,13 @@
 
 @media (max-width: 768px) {
   .home-main {
-    padding: 0 4px;
+    padding: 0 24px;
   }
 }
 
 @media (max-width: 480px) {
   .home-main {
-    padding: 0 2px;
+    padding: 0 16px;
   }
 }
 

@@ -284,10 +284,7 @@ const Home = () => {
           <div className="w-full">
             <h2 className="mb-5 text-center">
               <span className="block font-medium text-2xl text-muted-foreground">
-                Tools I
-              </span>
-              <span className="font-black text-2xl text-primary tracking-tight md:text-3xl">
-                use
+                Tools I Use
               </span>
             </h2>
             <LogoCloud4 logos={toolsLogos} />

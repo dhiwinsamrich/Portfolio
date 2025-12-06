@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { LucideIcon } from "lucide-react";
 import { cn } from "../../lib/utils";
-import CinematicThemeSwitcher from "./cinematic-theme-switcher";
 
 interface NavItem {
   name: string;
@@ -52,9 +51,6 @@ export function NavBar({ items, className }: NavBarProps) {
       )}
     >
       <div className="flex items-center gap-3 bg-background/5 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
-        <div className="ml-2">
-          <CinematicThemeSwitcher />
-        </div>
         {items.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.name;
