@@ -6,7 +6,6 @@ import {
   useSpring,
   MotionValue,
 } from "framer-motion";
-import { Link } from "react-router-dom";
 
 export const HeroParallax = ({
   products,
@@ -62,7 +61,7 @@ export const HeroParallax = ({
   return (
     <div
       ref={ref}
-      className="h-[300vh] py-40 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className="h-[300vh] py-12 md:py-20 lg:py-24 overflow-hidden antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <Header />
 
@@ -109,13 +108,12 @@ export const HeroParallax = ({
 
 export const Header = () => {
   return (
-    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full left-0 top-0">
-      <h1 className="text-2xl md:text-7xl font-bold text-foreground">
-        DHIWIN SAMRICH <br /> AI/ML Engineer
+    <div className="max-w-7xl relative mx-auto py-12 md:py-16 lg:py-20 px-4 w-full left-0 top-0">
+      <h1 className="typography-hero text-foreground">
+        DHIWIN SAMRICH <br /> <span className="font-serif italic font-medium">AI/ML Engineer</span>
       </h1>
-      <p className="max-w-2xl text-base md:text-xl mt-8 text-muted-foreground">
-        Building intelligent systems that transform how humans interact with technology.
-        Passionate about AI, Machine Learning, and creating solutions that make a difference.
+      <p className="typography-statement max-w-3xl mt-12 text-foreground">
+        As an <span className="typography-statement-serif">AI/ML Engineer</span>, I help companies and brands connect with their audience, achieve their business goals, and leave a mark in a fast-moving world.
       </p>
     </div>
   );

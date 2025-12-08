@@ -61,7 +61,7 @@ const Contact = () => {
         </section>
       </main>
       
-      <Footer hoverText="CONTACT" />
+      <Footer />
     </div>
   );
 };

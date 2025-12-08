@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer.tsx';
 import { HeroParallax } from '../components/ui/hero-parallax';
 import { LogoCloud, LogoCloud4 } from '../components/ui';
+import { useWorkHoverPreview, WorkHoverPreviewStyles } from '../components/WorkHoverPreview';
+import { ProjectDetailsModal } from '../components/ProjectDetailsModal';
+import ProjectItem from '../components/ProjectItem';
+import { projects, getProjectsPreviewData, getProjectDetails as getProjectDetailsData } from '../data/projects';
 import './Home.css';
 
 const products = [
@@ -142,9 +147,53 @@ const toolsLogos = [
   },
 ];
 
+// Get preview data and project details from centralized data
+const workPreviewData = getProjectsPreviewData();
+const projectDetails = getProjectDetailsData();
+
+// Show only top 5 projects on home page
+const displayedProjects = projects.slice(0, 5);
+
 const Home = () => {
+  const { handleHoverStart, handleHoverMove, handleHoverEnd, PreviewCardComponent } = useWorkHoverPreview(workPreviewData);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentTime, setCurrentTime] = useState('');
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      const displayHours = hours % 12 || 12;
+      const displayMinutes = minutes.toString().padStart(2, '0');
+      setCurrentTime(`${displayHours}:${displayMinutes} ${ampm}`);
+    };
+    
+    updateTime();
+    const interval = setInterval(updateTime, 60000); // Update every minute
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleExploreClick = (projectKey) => {
+    setSelectedProject(projectKey);
+    setIsModalOpen(true);
+  };
+
+  const getProjectDetails = () => {
+    if (!selectedProject) return null;
+    return projectDetails[selectedProject] || null;
+  };
+
   return (
     <div className="home-page">
+      <WorkHoverPreviewStyles />
       <Header />
       
       <HeroParallax products={products} />
@@ -155,89 +204,31 @@ const Home = () => {
           <h3 className="section-title">SELECTED WORKS</h3>
           
           <div className="works-container">
-            <div className="work-item">
-              <div className="work-header">
-                <div className="work-number-title">
-                  <span className="work-number">01</span>
-                  <h4 className="work-name">Justicia - Legal AI</h4>
-                </div>
-              </div>
-              <div className="work-content">
-                <p className="work-description">
-                  Justicia was born for a mission to merge cutting-edge AI with the complexities of Indian law.
-                  Driven to bridge the gap between fast-moving tech and the traditionally slow, opaque legal system, I built a platform where accessibility and precision aren't just aims - they're assured.
-                </p>
-                <div className="work-links">
-                  <a href="#" className="work-link">Live Site</a>
-                  <a href="#" className="work-link">GitHub</a>
-                </div>
-              </div>
-            </div>
-
-            <div className="divider-horizontal"></div>
-
-            <div className="work-item">
-              <div className="work-header">
-                <div className="work-number-title">
-                  <span className="work-number">02</span>
-                  <h4 className="work-name">Chess Game - RL</h4>
-                </div>
-              </div>
-              <div className="work-content">
-                <p className="work-description">
-                  Every chess match is a dialogue - a test of strategy, creativity, and learning.
-                  "Chess Game" isn't just a web-based app; it's a bold AI experiment that blends traditional gameplay with Deep-Q Learning to create an ever-evolving digital opponent.
-                </p>
-                <div className="work-links">
-                  <a href="#" className="work-link">Live Site</a>
-                  <a href="#" className="work-link">GitHub</a>
-                </div>
-              </div>
-            </div>
-
-            <div className="divider-horizontal"></div>
-
-            <div className="work-item">
-              <div className="work-header">
-                <div className="work-number-title">
-                  <span className="work-number">03</span>
-                  <h4 className="work-name">RAG</h4>
-                </div>
-              </div>
-              <div className="work-content">
-                <p className="work-description">
-                  Every powerful system starts with a bold vision: transforming how humans connect with information.
-                  Driven by this ambition.
-                  I didn't just build a system that stores knowledge - I built one that brings it to life.
-                </p>
-                <div className="work-links">
-                  <a href="#" className="work-link">Live Site</a>
-                  <a href="#" className="work-link">GitHub</a>
-                </div>
-              </div>
-            </div>
-
-            <div className="divider-horizontal"></div>
-
-            <div className="work-item">
-              <div className="work-header">
-                <div className="work-number-title">
-                  <span className="work-number">04</span>
-                  <h4 className="work-name">Hand Sign Recognition</h4>
-                </div>
-              </div>
-              <div className="work-content">
-                <p className="work-description">
-                  Every gesture tells a story.
-                  My Hand Sign Recognition Glove was inspired by a passion to give voice and visibility to those who communicate through sign language - technology as a bridge for connection and understanding.
-                </p>
-                <div className="work-links">
-                  <a href="#" className="work-link">Live Site</a>
-                  <a href="#" className="work-link">GitHub</a>
-                </div>
-              </div>
-            </div>
+            {displayedProjects.map((project, index) => (
+              <React.Fragment key={project.id}>
+                <ProjectItem
+                  project={project}
+                  handleHoverStart={handleHoverStart}
+                  handleHoverMove={handleHoverMove}
+                  handleHoverEnd={handleHoverEnd}
+                  handleExploreClick={handleExploreClick}
+                />
+                {index < displayedProjects.length - 1 && (
+                  <div className="divider-horizontal"></div>
+                )}
+              </React.Fragment>
+            ))}
           </div>
+          
+          {projects.length > 5 && (
+            <div className="view-more-container">
+              <Link to="/projects" className="view-more-button">
+                View More
+              </Link>
+            </div>
+          )}
+          
+          {PreviewCardComponent}
         </section>
 
         <section className="achievements-section">
@@ -271,9 +262,9 @@ const Home = () => {
         </section>
 
         <section className="skills-section">
-          <h3 className="section-title mb-6 text-center font-medium text-lg text-muted-foreground tracking-tight md:text-2xl">
+          <h3 className="section-title mb-6 text-center typography-statement text-foreground">
             Technologies I{" "}
-            <span className="font-semibold text-primary">work</span> with.
+            <span className="typography-statement-serif text-primary">work</span> with.
           </h3>
           <div className="w-full">
             <LogoCloud />
@@ -283,16 +274,23 @@ const Home = () => {
         <section className="tools-section">
           <div className="w-full">
             <h2 className="mb-5 text-center">
-              <span className="block font-medium text-2xl text-muted-foreground">
-                Tools I Use
+              <span className="block typography-statement text-foreground">
+                Tools I <span className="typography-statement-serif text-primary">Use</span>
               </span>
             </h2>
             <LogoCloud4 logos={toolsLogos} />
           </div>
         </section>
+
       </main>
       
-      <Footer hoverText="HOME" />
+      <Footer currentTime={currentTime} scrollToTop={scrollToTop} />
+      
+      <ProjectDetailsModal
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        project={getProjectDetails()}
+      />
     </div>
   );
 };

@@ -1,139 +1,52 @@
 import React from "react";
+import { ModemAnimatedFooter } from "./ui/modem-animated-footer";
 import {
+  Github,
+  Linkedin,
   Mail,
-  Linkedin as LinkedInIcon,
-  Instagram,
-  Github as GitHubIcon,
 } from "lucide-react";
-import { FooterBackgroundGradient, TextHoverEffect } from "./ui";
 
 interface FooterProps {
-  hoverText?: string;
+  currentTime?: string;
+  scrollToTop?: () => void;
 }
 
-const Footer = ({ hoverText = "DHIWIN" }: FooterProps) => {
-  // Footer link data
-  const footerLinks: Array<{
-    title: string;
-    links: Array<{ label: string; href: string; external?: boolean }>;
-  }> = [
-    {
-      title: "Quick Links",
-      links: [
-        { label: "Home", href: "/" },
-        { label: "About", href: "/about" },
-        { label: "Contact", href: "/contact" },
-        { label: "Resume", href: "#resume" },
-      ],
-    },
-    {
-      title: "Connect",
-      links: [
-        { label: "LinkedIn", href: "https://linkedin.com", external: true },
-        { label: "GitHub", href: "https://github.com", external: true },
-        { label: "Instagram", href: "https://instagram.com", external: true },
-      ],
-    },
-  ];
-
-  // Contact info data
-  const contactInfo: Array<{
-    icon: React.ReactElement;
-    text: string;
-    href?: string;
-    external?: boolean;
-  }> = [
-    {
-      icon: <Mail size={18} className="text-foreground" />,
-      text: "dhiwinsamrichj@gmail.com",   
-      href: "mailto:dhiwinsamrichj@gmail.com",
-    },
-    {
-      icon: <LinkedInIcon size={18} className="text-foreground" />,
-      text: "LinkedIn",
-      href: "https://www.linkedin.com/in/dhiwin-samrich-9167-jerome/",
-      external: true,
-    },
-    {
-      icon: <GitHubIcon size={18} className="text-foreground" />,
-      text: "GitHub",
-      href: "https://github.com/dhiwinsamrich",
-      external: true,
-    },
-  ];
-
-  // Social media icons
+const Footer = ({ currentTime = "", scrollToTop }: FooterProps) => {
   const socialLinks = [
-    { icon: <LinkedInIcon size={20} />, label: "LinkedIn", href: "https://www.linkedin.com/in/dhiwin-samrich-9167-jerome/" },
-    { icon: <Instagram size={20} />, label: "Instagram", href: "https://www.instagram.com/_itz_jerome._" },
-    { icon: <GitHubIcon size={20} />, label: "GitHub", href: "https://github.com/dhiwinsamrich" },
+    {
+      icon: <Github className="w-6 h-6" />,
+      href: "https://www.github.com/dhiwinsamrich",
+      label: "GitHub",
+    },
+    {
+      icon: <Linkedin className="w-6 h-6" />,
+      href: "https://www.linkedin.com/in/dhiwin-samrich-9167-jerome/",
+      label: "LinkedIn",
+    },
+    {
+      icon: <Mail className="w-6 h-6" />,
+      href: "mailto:dhiwinsamrichj@gmail.com",
+      label: "Email",
+    },
+  ];
+
+  const navLinks = [
+    { label: "HOME", href: "/" },
+    { label: "ABOUT", href: "/about" },
+    { label: "CONTACT", href: "/contact" },
+    { label: "PROJECTS", href: "/projects" },
   ];
 
   return (
-    <footer className="bg-background border border-border relative h-fit rounded-3xl overflow-hidden mx-4 mt-8 sm:mx-4 md:mx-8 md:mt-16 mb-0 shadow-lg">
-      <div className="max-w-7xl mx-auto pt-8 sm:pt-10 md:pt-14 px-4 sm:px-6 md:px-14 pb-0 z-40 relative">
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6 md:gap-8 lg:gap-16 pb-0">
-          {/* Footer link sections */}
-          {footerLinks.map((section) => (
-            <div key={section.title}>
-              <h4 className="text-foreground text-base md:text-lg font-semibold mb-4 md:mb-6">
-                {section.title}
-              </h4>
-              <ul className="space-y-2 md:space-y-3">
-                {section.links.map((link) => (
-                  <li key={link.label} className="relative">
-                    <a
-                      href={link.href}
-                      className="text-foreground hover:text-primary transition-colors text-sm md:text-base"
-                      {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-
-          {/* Contact section */}
-          <div>
-            <h4 className="text-foreground text-base md:text-lg font-semibold mb-4 md:mb-6">
-              Contact
-            </h4>
-            <ul className="space-y-3 md:space-y-4">
-              {contactInfo.map((item, i) => (
-                <li key={i} className="flex items-start md:items-center space-x-2 md:space-x-3">
-                  <span className="flex-shrink-0 mt-0.5 md:mt-0">{item.icon}</span>
-                  {item.href ? (
-                    <a
-                      href={item.href}
-                      className="text-foreground hover:text-primary transition-colors text-sm md:text-base break-words"
-                      {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                    >
-                      {item.text}
-                    </a>
-                  ) : (
-                    <span className="text-foreground hover:text-primary transition-colors text-sm md:text-base break-words">
-                      {item.text}
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-      </div>
-
-      {/* Text hover effect */}
-      <div className="flex h-[20rem] sm:h-[30rem] md:h-[35rem] lg:h-[40rem] -mt-10 sm:-mt-16 md:-mt-20 -mb-40 sm:-mb-56 md:-mb-60 items-start justify-start">
-        <TextHoverEffect text={hoverText} className="z-50" />
-      </div>
-
-      <FooterBackgroundGradient />
-    </footer>
+    <ModemAnimatedFooter
+      brandName="Dhiwin Samrich"
+      brandDescription="AI/ML Engineer / Working Worldwide"
+      socialLinks={socialLinks}
+      navLinks={navLinks}
+      currentTime={currentTime}
+      scrollToTop={scrollToTop}
+    />
   );
 };
 
 export default Footer;
-

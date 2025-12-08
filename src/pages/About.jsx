@@ -109,7 +109,7 @@ const About = () => {
           </div>
         </section>
       </main>
-      <Footer hoverText="ABOUT" />
+      <Footer />
     </div>
   );
 };

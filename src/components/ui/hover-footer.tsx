@@ -35,13 +35,14 @@ export const TextHoverEffect = ({
     <svg
       ref={svgRef}
       width="100%"
-      height="100%"
-      viewBox="0 0 400 100"
+      viewBox="0 0 1000 180"
+      preserveAspectRatio="xMidYMid meet"
       xmlns="http://www.w3.org/2000/svg"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onMouseMove={(e) => setCursor({ x: e.clientX, y: e.clientY })}
       className={cn("select-none uppercase cursor-pointer", className)}
+      style={{ display: 'block', height: 'auto', width: '100%' }}
     >
       <defs>
         <linearGradient
@@ -87,8 +88,11 @@ export const TextHoverEffect = ({
         y="50%"
         textAnchor="middle"
         dominantBaseline="middle"
-        strokeWidth="0.3"
-        className="fill-transparent stroke-neutral-200 font-[helvetica] text-7xl font-bold dark:stroke-neutral-900"
+        strokeWidth="0.4"
+        fontSize="100"
+        fontFamily="helvetica, Arial, sans-serif"
+        fontWeight="bold"
+        className="fill-transparent stroke-neutral-200 dark:stroke-neutral-900"
         style={{ opacity: hovered ? 0.7 : 0 }}
       >
         {text}
@@ -98,13 +102,15 @@ export const TextHoverEffect = ({
         y="50%"
         textAnchor="middle"
         dominantBaseline="middle"
-        strokeWidth="0.3"
-        className="fill-transparent stroke-neutral-200 font-[helvetica] text-7xl font-bold 
-        dark:stroke-neutral-900"
-        initial={{ strokeDashoffset: 1000, strokeDasharray: 1000 }}
+        strokeWidth="0.4"
+        fontSize="100"
+        fontFamily="helvetica, Arial, sans-serif"
+        fontWeight="bold"
+        className="fill-transparent stroke-neutral-200 dark:stroke-neutral-900"
+        initial={{ strokeDashoffset: 2500, strokeDasharray: 2500 }}
         animate={{
           strokeDashoffset: 0,
-          strokeDasharray: 1000,
+          strokeDasharray: 2500,
         }}
         transition={{
           duration: 4,
@@ -119,9 +125,12 @@ export const TextHoverEffect = ({
         textAnchor="middle"
         dominantBaseline="middle"
         stroke="url(#textGradient)"
-        strokeWidth="0.3"
+        strokeWidth="0.4"
+        fontSize="100"
+        fontFamily="helvetica, Arial, sans-serif"
+        fontWeight="bold"
         mask="url(#textMask)"
-        className="fill-transparent font-[helvetica] text-7xl font-bold"
+        className="fill-transparent"
       >
         {text}
       </text>
