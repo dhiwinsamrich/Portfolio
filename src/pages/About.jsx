@@ -1,7 +1,9 @@
 import React from 'react';
 import Footer from '../components/Footer.tsx';
 import { ContributionGraph } from '../components/ui/contribution-graph';
+import { Timeline } from '../components/ui/timeline';
 import { useGitHubContributions } from '../hooks/useGitHubContributions';
+import { getTimelineData } from '../data/experience';
 import './About.css';
 
 const About = () => {
@@ -19,6 +21,39 @@ const About = () => {
 
   const { data: contributionData, loading: contributionsLoading } = useGitHubContributions('dhiwinsamrich');
 
+  // Get experience timeline data from centralized data file and format for Timeline component
+  const experienceData = getTimelineData();
+  const experienceTimeline = experienceData.map((exp) => ({
+    title: exp.period,
+    content: (
+      <div className="space-y-3">
+        <div className="space-y-2">
+          <h4 className="text-xl font-semibold text-foreground">
+            {exp.title}
+          </h4>
+          <p className="text-muted-foreground">
+            {exp.company}
+          </p>
+          {exp.type && (
+            <span className="inline-block px-2 py-1 text-xs font-medium bg-muted text-muted-foreground rounded">
+              {exp.type}
+            </span>
+          )}
+        </div>
+        {exp.descriptions && exp.descriptions.length > 0 && (
+          <ul className="space-y-2 mt-4">
+            {exp.descriptions.map((desc, index) => (
+              <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                <span className="text-primary mt-1">▹</span>
+                <span>{desc}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    ),
+  }));
+
   return (
     <div className="about-page">
       <main className="about-main">
@@ -33,40 +68,11 @@ const About = () => {
         </section>
 
         <section className="experience-section">
-          <h3 className="section-title">Experience</h3>
-          <div className="experience-list">
-            <div className="experience-item border-bottom">
-              <div className="job-info">
-                <h4 className="job-title">AI/ML Engineer</h4>
-                <p className="company-name">White Mastery</p>
-              </div>
-              <p className="text-secondary">Jan 2025</p>
-            </div>
-
-            <div className="experience-item border-bottom">
-              <div className="job-info">
-                <h4 className="job-title">Machine Learning Engineer Intern</h4>
-                <p className="company-name">Krutanic</p>
-              </div>
-              <p className="text-secondary">Jan 2025</p>
-            </div>
-
-            <div className="experience-item border-bottom">
-              <div className="job-info">
-                <h4 className="job-title">Data Science and Analyst Intern</h4>
-                <p className="company-name">Zidio Development</p>
-              </div>
-              <p className="text-secondary">Aug 2024 - Nov 2024</p>
-            </div>
-
-            <div className="experience-item">
-              <div className="job-info">
-                <h4 className="job-title">Artificial Intelligence Intern</h4>
-                <p className="company-name">NoviTech R&D Pvt Ltd</p>
-              </div>
-              <p className="text-secondary">Feb 2024 - Apr 2024</p>
-            </div>
-          </div>
+          <Timeline 
+            data={experienceTimeline}
+            title="Internship Experience"
+            description="My journey through various internships and roles in AI/ML and Data Science."
+          />
         </section>
 
         <section className="certificates-section">

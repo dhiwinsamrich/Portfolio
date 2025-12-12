@@ -155,6 +155,7 @@ export default function TopNav() {
               to="/" 
               className="flex items-center gap-2 group" 
               aria-label="Homepage"
+              data-navbar-logo
             >
               <span className="font-black text-foreground text-base md:text-lg lg:text-xl tracking-tight select-none">
                 GameOn!
@@ -258,6 +259,7 @@ export default function TopNav() {
               to="/" 
               className="flex items-center gap-2 group" 
               aria-label="Homepage"
+              data-navbar-logo
             >
               <span className="font-black text-foreground text-base tracking-tight select-none">
                 GameOn!

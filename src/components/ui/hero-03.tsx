@@ -73,12 +73,12 @@ export function HeroSection03() {
           <div className="md:flex md:mx-8 grid md:justify-end items-center gap-3">
             <Separator className="w-full my-6 mx-auto max-w-3xl" />
             <div className="text-xs whitespace-nowrap md:text-sm">
-              INDIA
+              AI/ML
             </div>
             <div className="flex w-full items-end gap-3">
-              <span className="text-2xl md:text-4xl font-thin">ENGINEER</span>
+              <span className="text-2xl md:text-4xl font-thin">Dhiwin</span>
               <span className="text-3xl md:text-5xl font-bold italic text-foreground">
-                Dhiwin
+                Samrich
               </span>
             </div>
           </div>
