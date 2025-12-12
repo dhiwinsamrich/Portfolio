@@ -1,6 +1,7 @@
 import React from 'react';
-import Header from '../components/Header';
 import Footer from '../components/Footer.tsx';
+import { ContributionGraph } from '../components/ui/contribution-graph';
+import { useGitHubContributions } from '../hooks/useGitHubContributions';
 import './About.css';
 
 const About = () => {
@@ -16,10 +17,10 @@ const About = () => {
     'Deep Learning - Tutorialspoint'
   ];
 
+  const { data: contributionData, loading: contributionsLoading } = useGitHubContributions('dhiwinsamrich');
+
   return (
     <div className="about-page">
-      <Header />
-      
       <main className="about-main">
         <section className="about-section">
           <h3 className="section-title">About me</h3>
@@ -106,6 +107,22 @@ const About = () => {
               </div>
               <p className="text-secondary">2020-2023</p>
             </div>
+          </div>
+        </section>
+
+        <section className="contributions-section">
+          <h3 className="section-title">GitHub Contributions</h3>
+          <div className="contributions-content">
+            {contributionsLoading ? (
+              <div className="contributions-loading">Loading contributions...</div>
+            ) : (
+              <ContributionGraph
+                data={contributionData}
+                year={new Date().getFullYear()}
+                showLegend={true}
+                showTooltips={true}
+              />
+            )}
           </div>
         </section>
       </main>

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
 import Footer from '../components/Footer.tsx';
-import { HeroParallax } from '../components/ui/hero-parallax';
+import { HeroSection03 } from '../components/ui/hero-03';
 import { LogoCloud, LogoCloud4 } from '../components/ui';
 import { useWorkHoverPreview, WorkHoverPreviewStyles } from '../components/WorkHoverPreview';
 import { ProjectDetailsModal } from '../components/ProjectDetailsModal';
@@ -194,9 +193,8 @@ const Home = () => {
   return (
     <div className="home-page">
       <WorkHoverPreviewStyles />
-      <Header />
       
-      <HeroParallax products={products} />
+      <HeroSection03 />
       
       <main className="home-main">
 

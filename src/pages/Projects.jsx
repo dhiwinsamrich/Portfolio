@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Header from '../components/Header';
 import Footer from '../components/Footer.tsx';
 import { useWorkHoverPreview, WorkHoverPreviewStyles } from '../components/WorkHoverPreview';
 import { ProjectDetailsModal } from '../components/ProjectDetailsModal';
@@ -28,7 +27,6 @@ const Projects = () => {
   return (
     <div className="home-page">
       <WorkHoverPreviewStyles />
-      <Header />
       
       <main className="home-main">
         <section className="selected-works-section">

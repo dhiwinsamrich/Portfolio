@@ -1,0 +1,11 @@
+How to Use:
+Without Token (Current Setup):
+Already works with your GitHub username
+May hit rate limits with frequent refreshes
+With Token (Recommended):
+Create a token at: https://github.com/settings/tokens
+Create a .env file in your project root:
+   REACT_APP_GITHUB_TOKEN=your_token_here
+Restart your development server
+The contribution graph now displays your actual GitHub commit activity. It fetches data from your GitHub account and shows your real contribution history for the current year.
+See GITHUB_SETUP.md for detailed setup instructions.

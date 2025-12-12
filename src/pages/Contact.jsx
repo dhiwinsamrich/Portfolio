@@ -1,13 +1,10 @@
 import React from 'react';
-import Header from '../components/Header';
 import Footer from '../components/Footer.tsx';
 import './Contact.css';
 
 const Contact = () => {
   return (
     <div className="contact-page">
-      <Header />
-      
       <main className="contact-main">
         <section className="contact-section">
           <h3 className="section-title">Get in Touch</h3>

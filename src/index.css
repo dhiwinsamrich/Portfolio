@@ -110,3 +110,13 @@
   }
 }
 
+/* TopNav Underline Animation Styles */
+:root {
+  --underline-duration: 250ms;
+}
+
+/* Ensure the underline scales from left */
+nav a > span[style*="transform-origin"] {
+  transform-origin: left center;
+}
+
