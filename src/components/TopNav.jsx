@@ -79,6 +79,13 @@ export default function TopNav() {
       path: '/projects',
     },
     { 
+      key: 'play', 
+      label: 'PLAY', 
+      center: 'with', 
+      right: 'me', 
+      path: '/play',
+    },
+    { 
       key: 'about', 
       label: 'ABOUT', 
       center: 'me', 
@@ -158,7 +165,7 @@ export default function TopNav() {
               data-navbar-logo
             >
               <span className="font-black text-foreground text-base md:text-lg lg:text-xl tracking-tight select-none">
-                GameOn!
+                Knight's Gambit!
               </span>
             </Link>
 
@@ -169,6 +176,7 @@ export default function TopNav() {
                   {items.map((item, idx) => {
                     const isActive = 
                       (item.key === 'works' && location.pathname === '/projects') ||
+                      (item.key === 'play' && location.pathname === '/play') ||
                       (item.key === 'about' && location.pathname === '/about') ||
                       (item.key === 'contact' && location.pathname === '/contact');
 
@@ -262,7 +270,7 @@ export default function TopNav() {
               data-navbar-logo
             >
               <span className="font-black text-foreground text-base tracking-tight select-none">
-                GameOn!
+                Knight's Gambit!
               </span>
             </Link>
 
@@ -311,6 +319,7 @@ export default function TopNav() {
               {items.map((item, index) => {
                 const isActive = 
                   (item.key === 'works' && location.pathname === '/projects') ||
+                  (item.key === 'play' && location.pathname === '/play') ||
                   (item.key === 'about' && location.pathname === '/about') ||
                   (item.key === 'contact' && location.pathname === '/contact');
 

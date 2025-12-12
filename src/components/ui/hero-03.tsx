@@ -3,10 +3,10 @@ import { Separator } from "./separator";
 
 export function HeroSection03() {
   return (
-    <div className="min-h-screen relative">
+    <div className="relative pb-8">
       <div className="w-full absolute h-full z-0 bg-[radial-gradient(circle,_black_1px,_transparent_1px)] dark:bg-[radial-gradient(circle,_white_1px,_transparent_1px)] opacity-15 [background-size:20px_20px]"/>
       
-      <main className="relative pt-20 pb-20">
+      <main className="relative pt-20">
         <div className="flex relative gap-2 px-6 md:items-center w-full flex-col justify-center">
           <div className="md:flex gap-6 items-center">
             <p className="text-xs text-muted-foreground md:text-sm text-start md:text-right leading-5 max-w-[220px] md:max-w-[180px]">
@@ -87,4 +87,5 @@ export function HeroSection03() {
     </div>
   );
 }
+
 

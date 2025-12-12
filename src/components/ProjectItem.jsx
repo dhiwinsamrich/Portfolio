@@ -51,46 +51,44 @@ const ProjectItem = ({
   };
 
   return (
-    <>
-      <div className="work-item">
-        <div className="work-header">
-          <div className="work-number-title">
-            <span className="work-number">{project.number}</span>
-            <div className="work-name-with-icons">
-              <h4 className="work-name">
-                <HoverLink
-                  previewKey={project.id}
-                  onHoverStart={handleHoverStart}
-                  onHoverMove={handleHoverMove}
-                  onHoverEnd={handleHoverEnd}
-                >
-                  {project.name}
-                </HoverLink>
-              </h4>
-              <div className="work-header-links">
-                <a href={project.liveSiteUrl} className="work-header-link" title="Live Site">
-                  <Globe size={18} />
-                </a>
-                <a href={project.githubUrl} className="work-header-link" title="GitHub">
-                  <Github size={18} />
-                </a>
-              </div>
+    <div className="work-item">
+      <div className="work-header">
+        <div className="work-number-title">
+          <span className="work-number">{project.number}</span>
+          <div className="work-name-with-icons">
+            <h4 className="work-name">
+              <HoverLink
+                previewKey={project.id}
+                onHoverStart={handleHoverStart}
+                onHoverMove={handleHoverMove}
+                onHoverEnd={handleHoverEnd}
+              >
+                {project.name}
+              </HoverLink>
+            </h4>
+            <div className="work-header-links">
+              <a href={project.liveSiteUrl} className="work-header-link" title="Live Site">
+                <Globe size={18} />
+              </a>
+              <a href={project.githubUrl} className="work-header-link" title="GitHub">
+                <Github size={18} />
+              </a>
             </div>
           </div>
         </div>
-        <div className="work-content">
-          {renderDescription(project.description, project.hoverKeywords)}
-          <div className="work-links">
-            <Link
-              to={`/project/${project.id}`}
-              className="work-link cursor-pointer"
-            >
-              Explore
-            </Link>
-          </div>
+      </div>
+      <div className="work-content">
+        {renderDescription(project.description, project.hoverKeywords)}
+        <div className="work-links">
+          <Link
+            to={`/project/${project.id}`}
+            className="work-link cursor-pointer"
+          >
+            Explore
+          </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

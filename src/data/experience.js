@@ -8,7 +8,7 @@ export const experiences = [
     title: 'AI/ML Engineer',
     company: 'White Mastery',
     period: 'Aug 2025 - Present',
-    type: 'Full-time',
+    type: 'Internship',
     descriptions: [
       'Developed and deployed machine learning models for production use',
       'Collaborated with cross-functional teams to integrate AI solutions',

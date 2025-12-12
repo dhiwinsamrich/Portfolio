@@ -12,14 +12,10 @@ interface TimelineEntry {
 
 interface TimelineProps {
   data: TimelineEntry[];
-  title?: string;
-  description?: string;
 }
 
 export const Timeline = ({ 
-  data, 
-  title = "Changelog from my journey",
-  description = "I've been working on various projects and roles. Here's a timeline of my journey."
+  data
 }: TimelineProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -42,38 +38,29 @@ export const Timeline = ({
 
   return (
     <div
-      className="w-full bg-background font-sans md:px-10"
+      className="w-full bg-background font-sans"
       ref={containerRef}
     >
-      <div className="max-w-7xl mx-auto py-20 px-4 md:px-8 lg:px-10">
-        <h2 className="text-lg md:text-4xl mb-4 text-foreground max-w-4xl">
-          {title}
-        </h2>
-        <p className="text-muted-foreground text-sm md:text-base max-w-sm">
-          {description}
-        </p>
-      </div>
-
-      <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
+      <div ref={ref} className="relative w-full pt-4">
         {data.map((item, index) => (
           <div
             key={`${item.title}-${index}`}
-            className="flex justify-start pt-10 md:pt-40 md:gap-10"
+            className="flex justify-start pt-1 md:pt-8 pb-8 md:pb-12"
           >
-            <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
-              <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-background flex items-center justify-center">
-                <div className="h-4 w-4 rounded-full bg-muted border border-border p-2" />
+            <div className="sticky flex flex-col z-40 items-start top-40 self-start w-full md:w-full lg:w-full flex-shrink-0">
+              <div className="flex items-start gap-4 w-full">
+                <div className="h-10 w-10 rounded-full bg-background flex items-center justify-center z-10 flex-shrink-0 mt-1">
+                  <div className="h-4 w-4 rounded-full bg-muted border border-border p-2" />
+                </div>
+                <div className="flex-1 min-w-0 pl-12 md:pl-12 pt-5 md:pt-5">
+                  <h3 className="block text-lg md:text-xl lg:text-2xl font-bold text-muted-foreground mb-4">
+                    {item.title}
+                  </h3>
+                  <div className="w-full">
+                    {item.content}
+                  </div>
+                </div>
               </div>
-              <h3 className="hidden md:block text-xl md:pl-20 md:text-5xl font-bold text-muted-foreground">
-                {item.title}
-              </h3>
-            </div>
-
-            <div className="relative pl-20 pr-4 md:pl-4 w-full">
-              <h3 className="md:hidden block text-2xl mb-4 text-left font-bold text-muted-foreground">
-                {item.title}
-              </h3>
-              {item.content}{" "}
             </div>
           </div>
         ))}
@@ -81,7 +68,7 @@ export const Timeline = ({
           style={{
             height: height + "px",
           }}
-          className="absolute md:left-8 left-8 top-0 overflow-hidden w-[2px] bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent from-[0%] via-border to-transparent to-[99%] [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)] "
+          className="absolute left-4 md:left-4 top-0 overflow-hidden w-[2px] bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent from-[0%] via-border to-transparent to-[99%] [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]"
         >
           <motion.div
             style={{

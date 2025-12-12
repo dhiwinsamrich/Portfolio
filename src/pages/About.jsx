@@ -19,7 +19,7 @@ const About = () => {
     'Deep Learning - Tutorialspoint'
   ];
 
-  const { data: contributionData, loading: contributionsLoading } = useGitHubContributions('dhiwinsamrich');
+  const { data: contributionData, loading: contributionsLoading, error: contributionsError } = useGitHubContributions('dhiwinsamrich');
 
   // Get experience timeline data from centralized data file and format for Timeline component
   const experienceData = getTimelineData();
@@ -68,11 +68,13 @@ const About = () => {
         </section>
 
         <section className="experience-section">
-          <Timeline 
-            data={experienceTimeline}
-            title="Internship Experience"
-            description="My journey through various internships and roles in AI/ML and Data Science."
-          />
+          <h3 className="section-title">Internship Experience</h3>
+          <div className="experience-content">
+            <p className="experience-description">My journey through various internships and roles in AI/ML and Data Science.</p>
+            <Timeline 
+              data={experienceTimeline}
+            />
+          </div>
         </section>
 
         <section className="certificates-section">
@@ -121,6 +123,17 @@ const About = () => {
           <div className="contributions-content">
             {contributionsLoading ? (
               <div className="contributions-loading">Loading contributions...</div>
+            ) : contributionsError ? (
+              <div className="contributions-error">
+                <p className="text-muted-foreground mb-2">Unable to load GitHub contributions:</p>
+                <p className="text-sm text-muted-foreground">{contributionsError}</p>
+                <p className="text-xs text-muted-foreground mt-2">
+                  Please check:
+                  <br />• Your GitHub username is correct: <strong>dhiwinsamrich</strong>
+                  <br />• Your GitHub profile is public
+                  <br />• Check browser console for more details
+                </p>
+              </div>
             ) : (
               <ContributionGraph
                 data={contributionData}

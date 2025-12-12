@@ -14,7 +14,7 @@ const Projects = () => {
     <div className="home-page">
       <WorkHoverPreviewStyles />
       
-      <main className="home-main">
+      <main className="home-main pt-10">
         <section className="selected-works-section">
           <h3 className="section-title">ALL PROJECTS</h3>
           

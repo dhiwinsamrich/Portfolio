@@ -114,6 +114,13 @@
   flex: 1;
   min-width: 0;
   max-width: 100%;
+  width: 765px;
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    width: 100%;
+  }
 }
 
 .about-text {
@@ -205,6 +212,36 @@
 @media (max-width: 768px) {
   .experience-section .section-title {
     width: 100%;
+  }
+}
+
+.experience-content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+  width: 765px;
+}
+
+@media (max-width: 768px) {
+  .experience-content {
+    width: 100%;
+  }
+}
+
+.experience-description {
+  color: hsl(var(--muted-foreground));
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .experience-description {
+    font-size: 14px;
   }
 }
 

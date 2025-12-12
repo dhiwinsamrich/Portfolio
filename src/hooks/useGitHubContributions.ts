@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ContributionData } from "../components/ui/contribution-graph";
 
 interface GitHubGraphQLResponse {
-  data: {
+  data?: {
     user: {
       contributionsCollection: {
         contributionCalendar: {
@@ -17,6 +17,11 @@ interface GitHubGraphQLResponse {
       };
     };
   };
+  errors?: Array<{
+    message: string;
+    type?: string;
+    path?: string[];
+  }>;
 }
 
 interface FallbackResponse {
@@ -67,6 +72,13 @@ async function fetchFromGraphQL(
   const toDate = `${targetYear}-12-31T23:59:59Z`;
   const GITHUB_GRAPHQL_URL = "https://api.github.com/graphql";
   const token = process.env.REACT_APP_GITHUB_TOKEN || "";
+  
+  // Debug: Check if token is loaded (without exposing it)
+  if (token) {
+    console.log("GitHub token detected - using authenticated API");
+  } else {
+    console.warn("No GitHub token found - using unauthenticated API (may have rate limits)");
+  }
 
   const query = `
     query($username: String!, $from: DateTime!, $to: DateTime!) {
@@ -113,7 +125,18 @@ async function fetchFromGraphQL(
 
   const json: GitHubGraphQLResponse = await response.json();
 
+  // Check for GraphQL errors
+  if (json.errors) {
+    const errorMessage = json.errors[0]?.message || "GitHub API error";
+    console.error("GitHub GraphQL API errors:", json.errors);
+    throw new Error(errorMessage);
+  }
+
   if (!json.data?.user?.contributionsCollection) {
+    // Check if user exists
+    if (!json.data?.user) {
+      throw new Error(`GitHub user "${username}" not found. Please check the username.`);
+    }
     throw new Error("Invalid response from GitHub API");
   }
 
@@ -134,22 +157,36 @@ async function fetchFromFallback(
   username: string,
   targetYear: number
 ): Promise<ContributionData[]> {
-  const response = await fetch(
-    `https://github-contributions-api.jogruber.de/v4/${username}?y=${targetYear}`
-  );
+  // Try multiple fallback APIs for better reliability
+  const fallbackApis = [
+    `https://github-contributions-api.jogruber.de/v4/${username}?y=${targetYear}`,
+    `https://github-contributions.vercel.app/api/v1/${username}?y=${targetYear}`,
+  ];
 
-  if (!response.ok) {
-    throw new Error("Fallback API request failed");
+  for (const apiUrl of fallbackApis) {
+    try {
+      const response = await fetch(apiUrl);
+
+      if (!response.ok) {
+        continue; // Try next API
+      }
+
+      const json: FallbackResponse = await response.json();
+      const contributionMap = new Map<string, number>();
+
+      if (json.contributions && Array.isArray(json.contributions)) {
+        json.contributions.forEach((contribution) => {
+          contributionMap.set(contribution.date, contribution.count);
+        });
+        return generateContributions(contributionMap, targetYear);
+      }
+    } catch (error) {
+      console.warn(`Fallback API ${apiUrl} failed:`, error);
+      continue; // Try next API
+    }
   }
 
-  const json: FallbackResponse = await response.json();
-  const contributionMap = new Map<string, number>();
-
-  json.contributions?.forEach((contribution) => {
-    contributionMap.set(contribution.date, contribution.count);
-  });
-
-  return generateContributions(contributionMap, targetYear);
+  throw new Error(`All fallback APIs failed for username: ${username}. Please verify your GitHub username is correct.`);
 }
 
 export function useGitHubContributions(username: string, year?: number) {
@@ -174,9 +211,16 @@ export function useGitHubContributions(username: string, year?: number) {
         let contributions: ContributionData[];
         try {
           contributions = await fetchFromGraphQL(username, targetYear);
-        } catch {
-          // Fallback to public API if GraphQL fails
-          contributions = await fetchFromFallback(username, targetYear);
+          console.log(`Successfully fetched ${contributions.length} contributions from GitHub GraphQL API`);
+        } catch (graphQLError) {
+          console.warn("GraphQL API failed, trying fallback API:", graphQLError);
+          try {
+            contributions = await fetchFromFallback(username, targetYear);
+            console.log(`Successfully fetched ${contributions.length} contributions from fallback API`);
+          } catch (fallbackError) {
+            console.error("Both APIs failed:", fallbackError);
+            throw fallbackError;
+          }
         }
         setData(contributions);
       } catch (err) {

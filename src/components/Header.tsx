@@ -18,6 +18,16 @@ const Header = () => {
       ]
     },
     { 
+      name: 'PLAY', 
+      hoverText: 'PLAY with ME',
+      url: '/play',
+      parts: [
+        { text: 'PLAY', bold: true },
+        { text: ' with ', bold: false, italic: true, small: true },
+        { text: 'ME', bold: true },
+      ]
+    },
+    { 
       name: 'ABOUT', 
       hoverText: 'ABOUT',
       url: '/about',
@@ -57,12 +67,12 @@ const Header = () => {
 
       {/* Content */}
       <div className="relative h-full flex items-center justify-between px-8 md:px-12 lg:px-16">
-        {/* Left: GameOn! */}
+        {/* Left: Kinght's Gambit */}
         <Link
           to="/"
           className="text-2xl md:text-3xl font-bold text-foreground hover:opacity-80 transition-opacity z-10"
         >
-          GameOn!
+          Kinght's Gambit!
         </Link>
 
         {/* Right: Navigation Links */}

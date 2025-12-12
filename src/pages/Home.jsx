@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import Footer from '../components/Footer.tsx';
 import { HeroSection03 } from '../components/ui/hero-03';
 import { LogoCloud, LogoCloud4 } from '../components/ui';
+import { WavePath } from '../components/ui/wave-path';
+import { Testimonials } from '../components/ui/testimonials';
 import { useWorkHoverPreview, WorkHoverPreviewStyles } from '../components/WorkHoverPreview';
 import ProjectItem from '../components/ProjectItem';
 import { projects, getProjectsPreviewData } from '../data/projects';
@@ -263,6 +265,30 @@ const Home = () => {
             </h2>
             <LogoCloud4 logos={toolsLogos} />
           </div>
+        </section>
+
+        <section className="wave-section relative w-full flex flex-col items-center justify-center py-20 md:py-32">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-10 left-1/2 size-full -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,hsl(var(--foreground)/.1),transparent_50%)] blur-[30px]"
+          />
+
+          <div className="flex w-[70vw] flex-col items-end">
+            <WavePath className="mb-10" />
+            <div className="flex w-full flex-col items-end">
+              <div className="flex justify-end">
+                <p className="text-muted-foreground mt-2 text-sm">AI/ML Engineering</p>
+                <p className="text-foreground/80 ml-8 w-3/4 text-2xl md:text-4xl">
+                  Transforming ideas into intelligent solutions. Let innovation drive your 
+                  projects forward with cutting-edge artificial intelligence and machine learning.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="testimonials-section">
+          <Testimonials />
         </section>
 
       </main>

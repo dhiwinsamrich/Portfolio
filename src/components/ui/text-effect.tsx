@@ -24,6 +24,57 @@ type Props = React.ComponentProps<typeof motion.svg> & {
   onAnimationComplete?: () => void;
 };
 
+// New text-based component for Knight's Gambit
+type TextEffectProps = {
+  speed?: number;
+  onAnimationComplete?: () => void;
+  className?: string;
+};
+
+function KnightsGambitTextEffect({
+  className,
+  speed = 1,
+  onAnimationComplete,
+}: TextEffectProps) {
+  const text = "Knight's Gambit !";
+  const chars = text.split("");
+  const calc = (x: number) => x * speed;
+
+  return (
+    <motion.div
+      className={cn("flex items-center justify-center", className)}
+      style={{ fontFamily: "var(--font-sans)" }}
+    >
+      <motion.h1
+        className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tight"
+        style={{ fontFamily: "var(--font-sans)" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        {chars.map((char, index) => (
+          <motion.span
+            key={`char-${char}-${index}`}
+            className="inline-block"
+            initial={{ opacity: 0, y: 20, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{
+              duration: calc(0.1),
+              delay: calc(index * 0.05),
+              ease: [0.25, 0.1, 0.25, 1],
+            }}
+            onAnimationComplete={
+              index === chars.length - 1 ? onAnimationComplete : undefined
+            }
+          >
+            {char === " " ? "\u00A0" : char}
+          </motion.span>
+        ))}
+      </motion.h1>
+    </motion.div>
+  );
+}
+
 function GameOnTextEffect({
   className,
   speed = 1,
@@ -52,7 +103,7 @@ function GameOnTextEffect({
       }}
       {...props}
     >
-      <title>GameOn! - Bold Tech Style</title>
+      <title>Kinght's Gambit!</title>
 
       {/* G - Geometric G shape */}
       <motion.g>
@@ -306,5 +357,5 @@ function GameOnTextEffect({
   );
 }
 
-export { GameOnTextEffect };
+export { GameOnTextEffect, KnightsGambitTextEffect };
 

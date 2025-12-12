@@ -5,6 +5,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Projects from './pages/Projects';
 import ProjectDetail from './pages/ProjectDetail';
+import Play from './pages/Play';
 import NotFound from './pages/NotFound';
 import TopNav from './components/TopNav';
 import Loader from './components/Loader';
@@ -28,26 +29,27 @@ function App() {
       {isLoading && <Loader onComplete={handleLoaderComplete} />}
       {!isLoading && (
         <>
-          <TopNav />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/projects" element={<Projects />} />
+      <TopNav />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/projects" element={<Projects />} />
             <Route path="/project/:id" element={<ProjectDetail />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          
-          {/* Floating Consult Button - appears on all pages */}
-          <FloatingConsultButton
-            revolvingText="LET'S TALK - CONSULTATION - "
-            popupHeading="Let's Connect"
-            popupDescription="I'm available for freelance projects and open to full-time opportunities. Let's discuss how I can help bring your ideas to life."
-            popupBadgeText="Available"
-            ctaButtonText="Get in Touch"
-            ctaButtonAction={handleBookCall}
-            position={{ bottom: "2rem", right: "2rem" }}
-          />
+        <Route path="/play" element={<Play />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      
+      {/* Floating Consult Button - appears on all pages */}
+      <FloatingConsultButton
+        revolvingText="LET'S TALK - CONSULTATION - "
+        popupHeading="Let's Connect"
+        popupDescription="I'm available for freelance projects and open to full-time opportunities. Let's discuss how I can help bring your ideas to life."
+        popupBadgeText="Available"
+        ctaButtonText="Get in Touch"
+        ctaButtonAction={handleBookCall}
+        position={{ bottom: "2rem", right: "2rem" }}
+      />
         </>
       )}
     </Router>
