@@ -1,25 +1,41 @@
-/**
- * TopNav Component
- * 
- * A production-ready top navigation bar component matching the Prototype Studio style.
- * Features: fixed transparent header with Menu button, full-screen overlay navigation,
- * and smooth hover animations with expanding text.
- * 
- * Usage:
- *   import TopNav from './components/TopNav';
- *   
- *   function App() {
- *     return <TopNav />;
- *   }
- */
-
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// Character animation component
+const AnimatedText = ({ text, delay = 0, className = '', isHovered = false }) => {
+  if (!text) return null;
+  
+  return (
+    <span className={className}>
+      {text.split('').map((char, idx) => (
+        <motion.span
+          key={`${text}-${idx}`}
+          className="char inline-block"
+          initial={{ opacity: 0, visibility: 'hidden' }}
+          animate={{
+            opacity: isHovered ? 1 : 0,
+            visibility: isHovered ? 'visible' : 'hidden',
+          }}
+          transition={{
+            duration: 0.6,
+            delay: delay + idx * 0.04,
+            ease: [0.25, 0.1, 0.25, 1],
+          }}
+          aria-hidden="true"
+        >
+          {char}
+        </motion.span>
+      ))}
+      <span className="sr-only">{text}</span>
+    </span>
+  );
+};
+
 export default function TopNav() {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [hoveredItem, setHoveredItem] = useState(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -55,9 +71,27 @@ export default function TopNav() {
   }, [isMenuOpen]);
 
   const items = [
-    { key: 'works', label: 'WORKS', sub: "i've done", path: '/projects' },
-    { key: 'about', label: 'ABOUT', sub: 'me', path: '/about' },
-    { key: 'contact', label: 'CONTACT', sub: 'me', path: '/contact' },
+    { 
+      key: 'works', 
+      label: 'WORKS', 
+      center: "i've", 
+      right: 'done', 
+      path: '/projects',
+    },
+    { 
+      key: 'about', 
+      label: 'ABOUT', 
+      center: 'me', 
+      right: '', 
+      path: '/about',
+    },
+    { 
+      key: 'contact', 
+      label: 'CONTACT', 
+      center: 'me', 
+      right: '', 
+      path: '/contact',
+    },
   ];
 
   const socialLinks = [
@@ -113,117 +147,152 @@ export default function TopNav() {
             : 'bg-transparent'
         }`}
       >
-        <div className="max-w-10xl mx-auto px-6 md:px-8 lg:px-12 py-4 md:py-5 flex items-center justify-between">
-          {/* Logo - Left */}
-          <Link 
-            to="/" 
-            className="flex items-center gap-3 group" 
-            aria-label="Homepage"
-          >
-            <span className="font-black text-foreground text-lg md:text-xl tracking-tight select-none">
-              GameOn!
-            </span>
-          </Link>
+        <div className="max-w-10xl mx-auto px-4 md:px-6 lg:px-8 py-2 md:py-3">
+          {/* Desktop Navigation - Visible on md screens and above */}
+          <div className="hidden md:flex items-center justify-between">
+            {/* Logo - Left */}
+            <Link 
+              to="/" 
+              className="flex items-center gap-2 group" 
+              aria-label="Homepage"
+            >
+              <span className="font-black text-foreground text-base md:text-lg lg:text-xl tracking-tight select-none">
+                GameOn!
+              </span>
+            </Link>
 
-          {/* Navigation Items - Visible on Large Screens */}
-          <nav aria-label="Primary" className="hidden lg:flex items-center gap-0.5">
-            {items.map((it, idx) => {
-              const isActive = 
-                (it.key === 'works' && location.pathname === '/projects') ||
-                (it.key === 'about' && location.pathname === '/about') ||
-                (it.key === 'contact' && location.pathname === '/contact');
+            <div className="header-menu flex justify-end">
+              <div className="header-menu-inner flex justify-end items-center gap-x-2 lg:gap-x-2 uppercase">
+                {/* Navigation Items */}
+                <div className="header-items flex items-center gap-x-8">
+                  {items.map((item, idx) => {
+                    const isActive = 
+                      (item.key === 'works' && location.pathname === '/projects') ||
+                      (item.key === 'about' && location.pathname === '/about') ||
+                      (item.key === 'contact' && location.pathname === '/contact');
 
-              return (
-                <Link
-                  key={it.key}
-                  to={it.path}
-                  className={`relative group px-2 md:px-3 py-2 inline-flex items-end text-xs md:text-sm tracking-widest uppercase transition-all duration-700 ease-out ${
-                    isActive 
-                      ? 'text-foreground font-extrabold' 
-                      : 'text-foreground/60 hover:text-foreground'
-                  }`}
-                  aria-current={isActive ? 'page' : undefined}
-                >
-                  <span className="flex items-baseline gap-1 md:gap-2 overflow-hidden">
-                    <span className={`leading-tight transition-all duration-700 ease-out whitespace-nowrap ${
-                      isActive 
-                        ? 'text-sm md:text-base lg:text-lg' 
-                        : 'text-xs md:text-sm group-hover:text-sm md:group-hover:text-base'
-                    }`}>
-                      {it.label}
-                    </span>
-                    {/* sub label shown only on hover (italic, small) - expands smoothly */}
-                    {it.sub && (
-                      <span className="ml-0 md:ml-1 text-[10px] md:text-xs italic transform translate-y-0.5 transition-all duration-700 ease-out whitespace-nowrap overflow-hidden max-w-0 group-hover:max-w-[200px] opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100">
-                        {it.sub}
-                      </span>
-                    )}
-                  </span>
-
-                  {/* underline animation (grow from left when hovered or active) */}
-                  <span 
-                    className={`absolute left-0 right-0 -bottom-1 h-[2px] transform origin-left transition-transform duration-300 ${
-                      isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                    }`}
-                    style={{ 
-                      background: 'currentColor',
-                      transformOrigin: 'left center'
-                    }} 
-                  />
-                </Link>
-              );
-            })}
-
-            {/* Social Links - IG / YT */}
-            <div className="flex items-center gap-1 ml-2">
-              <a
-                href="https://www.instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs md:text-sm tracking-widest uppercase text-foreground/60 hover:text-foreground transition-colors"
-              >
-                IG
-              </a>
-              <span className="text-foreground/30">/</span>
-              <a
-                href="https://www.youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs md:text-sm tracking-widest uppercase text-foreground/60 hover:text-foreground transition-colors"
-              >
-                YT
-              </a>
+                    const isHovered = hoveredItem === item.key;
+                    
+                    const isAnyItemHovered = hoveredItem !== null;
+                    const shouldBlur = isAnyItemHovered && !isHovered;
+                    
+                    let opacityClass = 'opacity-60 hover:opacity-100';
+                    if (shouldBlur) {
+                      opacityClass = 'opacity-30';
+                    } else if (isActive) {
+                      opacityClass = 'opacity-100';
+                    }
+                    
+                    return (
+                      <div
+                        key={item.key}
+                        className="header-item-w pointer-events-none"
+                        style={{ opacity: 1, visibility: 'inherit' }}
+                      >
+                        <Link
+                          to={item.path}
+                          className={`header-item relative inline-flex items-baseline pointer-events-auto transition-all duration-300 ease-out overflow-visible ${opacityClass}`}
+                          onMouseEnter={() => setHoveredItem(item.key)}
+                          onMouseLeave={() => setHoveredItem(null)}
+                          style={{ 
+                            overflow: 'visible',
+                            filter: shouldBlur ? 'blur(4px)' : 'none',
+                            transition: 'opacity 0.3s ease-out, filter 0.3s ease-out',
+                          }}
+                        >
+                          <motion.span 
+                            className="header-item-left inline-block pointer-events-none text-sm md:text-base lg:text-lg tracking-widest uppercase whitespace-nowrap"
+                            animate={{
+                              x: isHovered ? -4 : 0,
+                            }}
+                            transition={{
+                              duration: 0.3,
+                              ease: [0.4, 0, 0.2, 1],
+                            }}
+                          >
+                            {item.label}
+                          </motion.span>
+                          {(item.center || item.right) && (
+                            <motion.span 
+                              className="header-item-hover-text inline-flex items-baseline gap-x-0.5 pl-0 pointer-events-none whitespace-nowrap"
+                              initial={{ maxWidth: 0, opacity: 0 }}
+                              animate={{ 
+                                maxWidth: isHovered ? 500 : 0,
+                                opacity: isHovered ? 1 : 0,
+                              }}
+                              transition={{
+                                duration: 0.6,
+                                ease: [0.25, 0.1, 0.25, 1],
+                              }}
+                              style={{ 
+                                overflow: 'visible',
+                                minWidth: 0,
+                                marginLeft: '-2px',
+                              }}
+                            >
+                              {item.center && (
+                                <span className="header-item-center inline-block font-heading gap-x-0 italic text-xs md:text-sm normal-case -mt-[0.5px] whitespace-nowrap">
+                                  <AnimatedText text={item.center} delay={0.2} isHovered={isHovered} />
+                                </span>
+                              )}
+                              {item.right && (
+                                <span className="header-item-right pl-0 inline-block whitespace-nowrap text-sm md:text-base">
+                                  <AnimatedText text={item.right} delay={item.center ? 0.2 + item.center.length * 0.04 : 0.2} isHovered={isHovered} />
+                                </span>
+                              )}
+                            </motion.span>
+                          )}
+                        </Link>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-          </nav>
+          </div>
 
-          {/* Menu Button - Right (hidden on large screens where nav is visible) */}
-          <button
-            onClick={handleMenuToggle}
-            aria-expanded={isMenuOpen}
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-            className="relative text-sm md:text-base font-medium uppercase tracking-wider text-foreground hover:text-foreground/80 transition-colors lg:hidden"
-          >
-            <span className="relative z-10">
-              {isMenuOpen ? 'Close' : 'Menu'}
-            </span>
-            <motion.span
-              className="absolute bottom-0 left-0 right-0 h-[1px] bg-foreground origin-left"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: isMenuOpen ? 1 : 0 }}
-              transition={{ duration: 0.3 }}
-            />
-          </button>
+          {/* Mobile Layout - Only on small screens */}
+          <div className="flex items-center justify-between md:hidden">
+            {/* Logo - Left */}
+            <Link 
+              to="/" 
+              className="flex items-center gap-2 group" 
+              aria-label="Homepage"
+            >
+              <span className="font-black text-foreground text-base tracking-tight select-none">
+                GameOn!
+              </span>
+            </Link>
+
+            {/* Menu Button - Right */}
+            <button
+              onClick={handleMenuToggle}
+              aria-expanded={isMenuOpen}
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+              className="relative text-xs font-medium uppercase tracking-wider text-foreground hover:text-foreground/80 transition-colors"
+            >
+              <span className="relative z-10">
+                {isMenuOpen ? 'Close' : 'Menu'}
+              </span>
+              <motion.span
+                className="absolute bottom-0 left-0 right-0 h-[1px] bg-foreground origin-left"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: isMenuOpen ? 1 : 0 }}
+                transition={{ duration: 0.3 }}
+              />
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* Full Screen Navigation Overlay */}
+      {/* Full Screen Navigation Overlay - Mobile Only */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
             role="dialog"
             aria-modal="true"
             aria-label="Navigation menu"
-            className="fixed inset-0 z-[100] bg-background flex flex-col"
+            className="fixed inset-0 z-[100] bg-background flex flex-col md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -231,7 +300,7 @@ export default function TopNav() {
           >
             {/* Navigation Links */}
             <motion.nav
-              className="flex-1 flex flex-col justify-center items-start px-6 md:px-12 lg:px-16 xl:px-24"
+              className="flex-1 flex flex-col justify-center items-end px-6 md:px-12 lg:px-16 xl:px-24 pt-[calc(5rem_+_10rem)] pb-20"
               variants={containerVariants}
               initial="closed"
               animate="open"
@@ -261,9 +330,10 @@ export default function TopNav() {
                     >
                       <span className="flex items-baseline gap-2">
                         <span>{item.label}</span>
-                        {item.sub && (
+                        {(item.center || item.right) && (
                           <span className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl italic font-light opacity-70">
-                            {item.sub}
+                            {item.center && <span>{item.center} </span>}
+                            {item.right && <span>{item.right}</span>}
                           </span>
                         )}
                       </span>

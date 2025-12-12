@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Globe, Github } from 'lucide-react';
 import { HoverLink } from './WorkHoverPreview';
 
@@ -6,8 +7,7 @@ const ProjectItem = ({
   project, 
   handleHoverStart, 
   handleHoverMove, 
-  handleHoverEnd, 
-  handleExploreClick 
+  handleHoverEnd
 }) => {
   // Split description and insert hover links for keywords
   const renderDescription = (description, keywords) => {
@@ -81,12 +81,12 @@ const ProjectItem = ({
         <div className="work-content">
           {renderDescription(project.description, project.hoverKeywords)}
           <div className="work-links">
-            <button
-              onClick={() => handleExploreClick(project.id)}
+            <Link
+              to={`/project/${project.id}`}
               className="work-link cursor-pointer"
             >
               Explore
-            </button>
+            </Link>
           </div>
         </div>
       </div>

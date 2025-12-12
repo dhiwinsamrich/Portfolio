@@ -4,9 +4,8 @@ import Footer from '../components/Footer.tsx';
 import { HeroSection03 } from '../components/ui/hero-03';
 import { LogoCloud, LogoCloud4 } from '../components/ui';
 import { useWorkHoverPreview, WorkHoverPreviewStyles } from '../components/WorkHoverPreview';
-import { ProjectDetailsModal } from '../components/ProjectDetailsModal';
 import ProjectItem from '../components/ProjectItem';
-import { projects, getProjectsPreviewData, getProjectDetails as getProjectDetailsData } from '../data/projects';
+import { projects, getProjectsPreviewData } from '../data/projects';
 import './Home.css';
 
 const products = [
@@ -146,17 +145,14 @@ const toolsLogos = [
   },
 ];
 
-// Get preview data and project details from centralized data
+// Get preview data from centralized data
 const workPreviewData = getProjectsPreviewData();
-const projectDetails = getProjectDetailsData();
 
 // Show only top 5 projects on home page
 const displayedProjects = projects.slice(0, 5);
 
 const Home = () => {
   const { handleHoverStart, handleHoverMove, handleHoverEnd, PreviewCardComponent } = useWorkHoverPreview(workPreviewData);
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
 
   useEffect(() => {
@@ -180,16 +176,6 @@ const Home = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleExploreClick = (projectKey) => {
-    setSelectedProject(projectKey);
-    setIsModalOpen(true);
-  };
-
-  const getProjectDetails = () => {
-    if (!selectedProject) return null;
-    return projectDetails[selectedProject] || null;
-  };
-
   return (
     <div className="home-page">
       <WorkHoverPreviewStyles />
@@ -209,15 +195,14 @@ const Home = () => {
                   handleHoverStart={handleHoverStart}
                   handleHoverMove={handleHoverMove}
                   handleHoverEnd={handleHoverEnd}
-                  handleExploreClick={handleExploreClick}
                 />
                 {index < displayedProjects.length - 1 && (
-                  <div className="divider-horizontal"></div>
+            <div className="divider-horizontal"></div>
                 )}
               </React.Fragment>
             ))}
-          </div>
-          
+            </div>
+
           {projects.length > 5 && (
             <div className="view-more-container">
               <Link to="/projects" className="view-more-button">
@@ -283,12 +268,6 @@ const Home = () => {
       </main>
       
       <Footer currentTime={currentTime} scrollToTop={scrollToTop} />
-      
-      <ProjectDetailsModal
-        open={isModalOpen}
-        onOpenChange={setIsModalOpen}
-        project={getProjectDetails()}
-      />
     </div>
   );
 };
