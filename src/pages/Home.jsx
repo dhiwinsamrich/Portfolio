@@ -94,8 +94,10 @@ const toolsLogos = [
     alt: "GitHub",
   },
   {
-    src: "https://svgl.app/library/docker-wordmark-light.svg",
+    src: "/ToolsIuse/docker.svg",
     alt: "Docker",
+    height: 20,
+    width: 80,
   },
   {
     src: "https://svgl.app/library/supabase_wordmark_light.svg",

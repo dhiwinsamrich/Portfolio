@@ -18,17 +18,24 @@ export function LogoCloud({ logos, ...props }: LogoCloudProps) {
       <div className="-translate-x-1/2 -top-px pointer-events-none absolute left-1/2 w-screen border-t" />
 
       <InfiniteSlider gap={42} reverse speed={5} speedOnHover={0}>
-        {logos.map((logo) => (
-          <img
-            alt={logo.alt}
-            className="pointer-events-none h-4 select-none md:h-5"
-            height="auto"
-            key={`logo-${logo.alt}`}
-            loading="lazy"
-            src={logo.src}
-            width="auto"
-          />
-        ))}
+        {logos.map((logo) => {
+          const hasCustomSize = logo.width || logo.height;
+          return (
+            <img
+              alt={logo.alt}
+              className={hasCustomSize ? "pointer-events-none select-none" : "pointer-events-none h-4 select-none md:h-5"}
+              height={logo.height || "auto"}
+              key={`logo-${logo.alt}`}
+              loading="lazy"
+              src={logo.src}
+              width={logo.width || "auto"}
+              style={hasCustomSize ? {
+                height: logo.height ? `${logo.height}px` : 'auto',
+                width: logo.width ? `${logo.width}px` : 'auto',
+              } : undefined}
+            />
+          );
+        })}
       </InfiniteSlider>
 
       <ProgressiveBlur
