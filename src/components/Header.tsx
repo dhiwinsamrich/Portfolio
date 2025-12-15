@@ -18,13 +18,13 @@ const Header = () => {
       ]
     },
     { 
-      name: 'PLAY', 
-      hoverText: 'PLAY with ME',
+      name: 'MY', 
+      hoverText: 'MY play GROUND',
       url: '/play',
       parts: [
-        { text: 'PLAY', bold: true },
-        { text: ' with ', bold: false, italic: true, small: true },
-        { text: 'ME', bold: true },
+        { text: 'MY', bold: true },
+        { text: ' play ', bold: false, italic: true, small: true },
+        { text: ' GROUND', bold: true },
       ]
     },
     { 

@@ -56,7 +56,7 @@ const ProjectItem = ({
         <div className="work-number-title">
           <span className="work-number">{project.number}</span>
           <div className="work-name-with-icons">
-            <h4 className="work-name">
+            <h4 className="work-name italic">
               <HoverLink
                 previewKey={project.id}
                 onHoverStart={handleHoverStart}

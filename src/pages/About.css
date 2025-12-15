@@ -40,11 +40,13 @@
 }
 
 .about-main {
-  padding: 0 80px;
+  padding: 0 56px;
+  padding-top: 0;
   flex: 1;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+  margin-top: 0;
 }
 
 @media (max-width: 768px) {
@@ -96,13 +98,29 @@
   }
 }
 
-.about-section .section-title {
+.section-title {
+  font-family: var(--font-sans);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.about-section .section-title,
+.experience-section .section-title,
+.certificates-section .section-title,
+.education-section .section-title,
+.contributions-section .section-title {
   width: 201px;
   flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
-  .about-section .section-title {
+  .about-section .section-title,
+  .experience-section .section-title,
+  .certificates-section .section-title,
+  .education-section .section-title,
+  .contributions-section .section-title {
     width: 100%;
   }
 }
@@ -125,9 +143,10 @@
 
 .about-text {
   color: hsl(var(--foreground));
-  font-size: 16px;
+  font-family: var(--font-sans);
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
   font-weight: 400;
-  line-height: normal;
+  line-height: 1.6;
   word-wrap: break-word;
   overflow-wrap: break-word;
   max-width: 100%;
@@ -135,8 +154,8 @@
 
 @media (max-width: 768px) {
   .about-text {
-    font-size: 40px;
-    line-height: 1.6;
+    font-size: 14px;
+    line-height: 1.5;
   }
 }
 
@@ -233,15 +252,17 @@
 
 .experience-description {
   color: hsl(var(--muted-foreground));
-  font-size: 16px;
+  font-family: var(--font-sans);
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
   font-weight: 400;
-  line-height: normal;
+  line-height: 1.6;
   margin-bottom: 8px;
 }
 
 @media (max-width: 768px) {
   .experience-description {
     font-size: 14px;
+    line-height: 1.5;
   }
 }
 
@@ -407,17 +428,20 @@
 
 .certificate-name {
   color: hsl(var(--foreground));
-  font-size: 16px;
+  font-family: var(--font-sans);
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
   font-weight: 400;
   word-wrap: break-word;
   overflow-wrap: break-word;
   flex: 1;
   min-width: 0;
+  line-height: 1.6;
 }
 
 @media (max-width: 768px) {
   .certificate-name {
     font-size: 14px;
+    line-height: 1.5;
   }
 }
 
@@ -534,8 +558,10 @@
 
 .degree-title {
   color: hsl(var(--foreground));
-  font-size: 24px;
-  font-weight: 500;
+  font-family: var(--font-sans);
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 @media (max-width: 768px) {
@@ -546,13 +572,16 @@
 
 .institution-name {
   color: hsl(var(--foreground));
-  font-size: 16px;
+  font-family: var(--font-sans);
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
   font-weight: 400;
+  line-height: 1.6;
 }
 
 @media (max-width: 768px) {
   .institution-name {
     font-size: 14px;
+    line-height: 1.5;
   }
 }
 

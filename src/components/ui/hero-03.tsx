@@ -13,7 +13,7 @@ export function HeroSection03() {
               I am an AI/ML Engineer based in India, working @Chennai.
             </p>
             <h1 className="text-6xl md:text-7xl xl:text-[10rem] font-light leading-none tracking-wider">
-              AI/ML
+              _02
             </h1>
           </div>
 

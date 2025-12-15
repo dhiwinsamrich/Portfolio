@@ -8,7 +8,7 @@ import ProjectDetail from './pages/ProjectDetail';
 import Play from './pages/Play';
 import NotFound from './pages/NotFound';
 import TopNav from './components/TopNav';
-import Loader from './components/Loader';
+import ProfileLoader from './components/ProfileLoader';
 import { FloatingConsultButton } from './components/ui/floating-consult-button';
 import './App.css';
 
@@ -26,9 +26,6 @@ function App() {
 
   return (
     <Router>
-      {isLoading && <Loader onComplete={handleLoaderComplete} />}
-      {!isLoading && (
-        <>
       <TopNav />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -41,17 +38,20 @@ function App() {
       </Routes>
       
       {/* Floating Consult Button - appears on all pages */}
-      <FloatingConsultButton
-        revolvingText="LET'S TALK - CONSULTATION - "
-        popupHeading="Let's Connect"
-        popupDescription="I'm available for freelance projects and open to full-time opportunities. Let's discuss how I can help bring your ideas to life."
-        popupBadgeText="Available"
-        ctaButtonText="Get in Touch"
-        ctaButtonAction={handleBookCall}
-        position={{ bottom: "2rem", right: "2rem" }}
-      />
-        </>
+      {!isLoading && (
+        <FloatingConsultButton
+          revolvingText="LET'S TALK - CONSULTATION - "
+          popupHeading="Let's Connect"
+          popupDescription="I'm available for freelance projects and open to full-time opportunities. Let's discuss how I can help bring your ideas to life."
+          popupBadgeText="Available"
+          ctaButtonText="Get in Touch"
+          ctaButtonAction={handleBookCall}
+          position={{ bottom: "2rem", right: "2rem" }}
+        />
       )}
+      
+      {/* Profile Loader Overlay */}
+      {isLoading && <ProfileLoader onComplete={handleLoaderComplete} />}
     </Router>
   );
 }

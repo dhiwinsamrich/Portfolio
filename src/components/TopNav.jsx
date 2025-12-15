@@ -80,9 +80,9 @@ export default function TopNav() {
     },
     { 
       key: 'play', 
-      label: 'PLAY', 
-      center: 'with', 
-      right: 'me', 
+      label: 'MY', 
+      center: 'play', 
+      right: 'GROUND', 
       path: '/play',
     },
     { 

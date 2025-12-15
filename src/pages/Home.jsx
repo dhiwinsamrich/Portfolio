@@ -4,10 +4,13 @@ import Footer from '../components/Footer.tsx';
 import { HeroSection03 } from '../components/ui/hero-03';
 import { LogoCloud, LogoCloud4 } from '../components/ui';
 import { WavePath } from '../components/ui/wave-path';
-import { Testimonials } from '../components/ui/testimonials';
+import { TestimonialSection } from '../components/ui/testimonial';
 import { useWorkHoverPreview, WorkHoverPreviewStyles } from '../components/WorkHoverPreview';
 import ProjectItem from '../components/ProjectItem';
 import { projects, getProjectsPreviewData } from '../data/projects';
+import BadgeButtonCombo from '../components/ui/badge-button-combo';
+import { ProductHighlightCard } from '../components/ui/product-card';
+import { Trophy, Target, GraduationCap, Award, BookOpen, Users } from 'lucide-react';
 import './Home.css';
 
 const products = [
@@ -209,9 +212,17 @@ const Home = () => {
 
           {projects.length > 5 && (
             <div className="view-more-container">
-              <Link to="/projects" className="view-more-button">
-                View More
-              </Link>
+              <BadgeButtonCombo 
+                label="View More" 
+                badge={projects.length}
+                size="md"
+                asChild
+                className="view-more-button"
+              >
+                <Link to="/projects" style={{ textDecoration: 'none', color: 'inherit', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                  View More
+                </Link>
+              </BadgeButtonCombo>
             </div>
           )}
           
@@ -221,30 +232,33 @@ const Home = () => {
         <section className="achievements-section">
           <h3 className="section-title">ACHIVEMENTS</h3>
           
-          <div className="achievements-grid">
-            <div className="achievement-card">
-              <div className="achievement-rank">1st</div>
-              <div className="achievement-details">
-                <h4 className="achievement-title">UNIVERSITY GOLD MEDALIST</h4>
-                <p className="achievement-subtitle">Madurai Kamaraj University - 2023</p>
-              </div>
-            </div>
-
-            <div className="achievement-card">
-              <div className="achievement-rank">2nd</div>
-              <div className="achievement-details">
-                <h4 className="achievement-title">Make-A-Thon</h4>
-                <p className="achievement-subtitle">2nd Position in 24 Hours Make-A-Thon</p>
-              </div>
-            </div>
-
-            <div className="achievement-card">
-              <div className="achievement-rank">99.4</div>
-              <div className="achievement-details">
-                <h4 className="achievement-title">TANCET EXAM</h4>
-                <p className="achievement-subtitle">99.4 Percentile - 2023</p>
-              </div>
-            </div>
+          <div className="achievements-grid-new">
+            <ProductHighlightCard
+              category="Academic Excellence"
+              categoryIcon={<GraduationCap className="h-5 w-5" />}
+              title="Gold Medalist"
+              description="University Gold Medalist at Madurai Kamaraj University - 2023. Recognized for outstanding academic performance and excellence."
+              imageSrc={<Award className="h-24 w-24 text-primary" />}
+              imageAlt="Gold Medal Achievement"
+            />
+            
+            <ProductHighlightCard
+              category="Competition"
+              categoryIcon={<Trophy className="h-5 w-5" />}
+              title="Make-A-Thon"
+              description="2nd Position in 24 Hours Make-A-Thon. Showcased innovation and problem-solving skills in a competitive hackathon environment."
+              imageSrc={<Users className="h-24 w-24 text-primary" />}
+              imageAlt="Hackathon Achievement"
+            />
+            
+            <ProductHighlightCard
+              category="Examination"
+              categoryIcon={<Target className="h-5 w-5" />}
+              title="TANCET 99.4%"
+              description="Achieved 99.4 Percentile in TANCET Exam - 2023. Demonstrated exceptional performance in competitive entrance examination."
+              imageSrc={<BookOpen className="h-24 w-24 text-primary" />}
+              imageAlt="TANCET Achievement"
+            />
           </div>
         </section>
 
@@ -290,7 +304,47 @@ const Home = () => {
         </section>
 
         <section className="testimonials-section">
-          <Testimonials />
+          <TestimonialSection
+            title="What People Say"
+            testimonials={[
+              {
+                type: "user",
+                quote: "Working with Dhiwin was an absolute pleasure. His expertise in AI/ML engineering helped us transform our business operations. The results exceeded our expectations and the level of professionalism was remarkable.",
+                name: "Sarah Chen",
+                role: "Product Manager at TechCorp",
+                avatarSrc: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop",
+                avatarFallback: "SC",
+              },
+              {
+                type: "quote",
+                quote: "Dhiwin's innovative approach to problem-solving and technical expertise helped us solve complex challenges efficiently. His ability to translate ideas into intelligent solutions is truly exceptional.",
+              },
+              {
+                type: "user",
+                quote: "The quality of work and attention to detail is outstanding. Dhiwin doesn't just execute tasks - he provides strategic value that helps businesses grow. We couldn't be happier with the results.",
+                name: "Michael Rodriguez",
+                role: "CTO at StartupXYZ",
+                avatarSrc: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop",
+                avatarFallback: "MR",
+              },
+              {
+                type: "user",
+                quote: "Despite tight timelines, Dhiwin delivered a high-quality solution without compromising on quality. Clear communication and regular updates kept us informed throughout the entire project.",
+                name: "Emily Watson",
+                role: "Founder at InnovateLab",
+                avatarSrc: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=150&auto=format&fit=crop",
+                avatarFallback: "EW",
+              },
+              {
+                type: "user",
+                quote: "We've found a reliable partner who understands our needs and delivers consistently high-quality work. Dhiwin has become an integral part of our success.",
+                name: "David Kim",
+                role: "Engineering Lead at DataFlow",
+                avatarSrc: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop",
+                avatarFallback: "DK",
+              },
+            ]}
+          />
         </section>
 
       </main>
