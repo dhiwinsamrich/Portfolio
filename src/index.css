@@ -118,6 +118,18 @@
   --underline-duration: 250ms;
 }
 
+/* Reveal on scroll */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Ensure the underline scales from left */
 nav a > span[style*="transform-origin"] {
   transform-origin: left center;

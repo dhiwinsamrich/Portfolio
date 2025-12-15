@@ -41,13 +41,14 @@ const ProfileLoader = ({ onComplete }: ProfileLoaderProps) => {
             <ProfileCard
               name="Dhiwin Samrich"
               title="AI/ML Engineer who focuses on simplicity & usability."
-              avatarUrl="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop"
+              avatarUrl="/Profile%20Pictures/Initial%20Loader.jpg"
               currentPosition={{
                 role: "AI/ML Intern",
                 company: "White Mastery Systems Pvt Ltd",
                 experience: "4 Months"
               }}
               showOpenToWork={true}
+              availabilityStatus="open" // or "working for Red dot"
               instagramUrl="https://instagram.com/dhiwinsamrich"
               twitterUrl="https://twitter.com/dhiwinsamrich"
               githubUrl="https://github.com/dhiwinsamrich"

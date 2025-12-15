@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Globe, Github } from 'lucide-react';
 import { HoverLink } from './WorkHoverPreview';
+import { Highlighter } from './ui/highlighter';
 
 const ProjectItem = ({ 
   project, 
@@ -33,7 +34,9 @@ const ProjectItem = ({
                 onHoverMove={handleHoverMove}
                 onHoverEnd={handleHoverEnd}
               >
-                {keyword.text}
+                <Highlighter action="underline" color="#FFEB3B">
+                  {keyword.text}
+                </Highlighter>
               </HoverLink>,
               after
             );

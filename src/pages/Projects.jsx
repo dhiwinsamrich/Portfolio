@@ -3,6 +3,7 @@ import Footer from '../components/Footer.tsx';
 import { useWorkHoverPreview, WorkHoverPreviewStyles } from '../components/WorkHoverPreview';
 import ProjectItem from '../components/ProjectItem';
 import { projects, getProjectsPreviewData } from '../data/projects';
+import { Highlighter } from '../components/ui/highlighter';
 import './Home.css';
 
 const workPreviewData = getProjectsPreviewData();

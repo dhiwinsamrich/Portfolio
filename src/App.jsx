@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -12,8 +13,53 @@ import ProfileLoader from './components/ProfileLoader';
 import { FloatingConsultButton } from './components/ui/floating-consult-button';
 import './App.css';
 
-function App() {
+const PageWrapper = ({ children }) => (
+  <motion.div
+    key={children.key}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.4, ease: "easeOut" }}
+  >
+    {children}
+  </motion.div>
+);
+
+function AppContent() {
   const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
+
+  // Reveal on scroll for sections and key blocks
+  useEffect(() => {
+    const targets = document.querySelectorAll(
+      'section, .card, .work-item, .product-card, .contact-content, .availability-content, .achievements-section, .home-main > *'
+    );
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    targets.forEach((el) => {
+      if (!el.classList.contains('reveal-visible')) {
+        el.classList.add('reveal-init');
+        observer.observe(el);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, [location.pathname]);
 
   const handleBookCall = () => {
     // You can customize this action - e.g., open a calendar link, email, etc.
@@ -25,17 +71,20 @@ function App() {
   };
 
   return (
-    <Router>
+    <>
       <TopNav />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/projects" element={<Projects />} />
-            <Route path="/project/:id" element={<ProjectDetail />} />
-        <Route path="/play" element={<Play />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<PageWrapper key={location.pathname}><Home /></PageWrapper>} />
+          <Route path="/about" element={<PageWrapper key={location.pathname}><About /></PageWrapper>} />
+          <Route path="/contact" element={<PageWrapper key={location.pathname}><Contact /></PageWrapper>} />
+          <Route path="/projects" element={<PageWrapper key={location.pathname}><Projects /></PageWrapper>} />
+          <Route path="/project/:id" element={<PageWrapper key={location.pathname}><ProjectDetail /></PageWrapper>} />
+          <Route path="/play" element={<PageWrapper key={location.pathname}><Play /></PageWrapper>} />
+          <Route path="*" element={<PageWrapper key={location.pathname}><NotFound /></PageWrapper>} />
+        </Routes>
+      </AnimatePresence>
       
       {/* Floating Consult Button - appears on all pages */}
       {!isLoading && (
@@ -52,6 +101,14 @@ function App() {
       
       {/* Profile Loader Overlay */}
       {isLoading && <ProfileLoader onComplete={handleLoaderComplete} />}
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }

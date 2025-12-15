@@ -10,6 +10,7 @@ import ProjectItem from '../components/ProjectItem';
 import { projects, getProjectsPreviewData } from '../data/projects';
 import BadgeButtonCombo from '../components/ui/badge-button-combo';
 import { ProductHighlightCard } from '../components/ui/product-card';
+import { Highlighter } from '../components/ui/highlighter';
 import { Trophy, Target, GraduationCap, Award, BookOpen, Users } from 'lucide-react';
 import './Home.css';
 

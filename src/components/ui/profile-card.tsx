@@ -5,22 +5,25 @@ import { Instagram, Twitter, Github, Linkedin } from "lucide-react"
 import { cn } from "../../lib/utils"
 
 interface CurrentPosition {
-  role?: string
-  company?: string
-  experience?: string
+  readonly role?: string
+  readonly company?: string
+  readonly experience?: string
 }
 
+type AvailabilityStatus = "open" | "working"
+
 interface ProfileCardProps {
-  name?: string
-  title?: string
-  avatarUrl?: string
-  currentPosition?: CurrentPosition
-  showOpenToWork?: boolean
-  instagramUrl?: string
-  twitterUrl?: string
-  githubUrl?: string
-  linkedinUrl?: string
-  onViewPortfolio?: () => void
+  readonly name?: string
+  readonly title?: string
+  readonly avatarUrl?: string
+  readonly currentPosition?: CurrentPosition
+  readonly showOpenToWork?: boolean
+  readonly availabilityStatus?: AvailabilityStatus
+  readonly instagramUrl?: string
+  readonly twitterUrl?: string
+  readonly githubUrl?: string
+  readonly linkedinUrl?: string
+  readonly onViewPortfolio?: () => void
 }
 
 export function ProfileCard({
@@ -29,12 +32,17 @@ export function ProfileCard({
   avatarUrl = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop",
   currentPosition,
   showOpenToWork = true,
+  availabilityStatus = "open",
   instagramUrl,
   twitterUrl,
   githubUrl,
   linkedinUrl,
   onViewPortfolio,
 }: ProfileCardProps) {
+  const isWorking = availabilityStatus === "working"
+  const statusLabel = isWorking ? "Working" : "Open to Work"
+  const dotColor = isWorking ? "bg-red-500 shadow-red-500/40" : "bg-green-500 shadow-green-500/40"
+
   return (
     <div className="w-full max-w-md mx-auto">
       <div className="bg-card/80 backdrop-blur-md border border-[#EBEBEB] rounded-lg overflow-hidden">
@@ -50,7 +58,7 @@ export function ProfileCard({
             >
               <div className="relative">
                 <motion.div
-                  className="w-2 h-2 rounded-full bg-foreground"
+                  className={`w-2 h-2 rounded-full ${dotColor} shadow-[0_0_12px]`}
                   animate={{
                     opacity: [1, 0.3, 1],
                   }}
@@ -62,7 +70,7 @@ export function ProfileCard({
                 />
               </div>
               <span className="text-foreground text-xs font-light uppercase tracking-wider" style={{ fontFamily: 'var(--font-sans)' }}>
-                Open to Work
+                {statusLabel}
               </span>
             </motion.div>
           )}
@@ -70,7 +78,10 @@ export function ProfileCard({
           {/* Avatar */}
           <div className="flex justify-center mb-8">
             <div className="relative w-32 h-32">
-              <div className="w-full h-full rounded-full border-2 border-[#EBEBEB] overflow-hidden bg-card">
+              <div
+                className="w-full h-full rounded-full border-2 border-[#EBEBEB] overflow-hidden bg-card"
+                style={{ boxShadow: "15px 15px 30px #bebebe, -15px -15px 30px #ffffff", background: "#e0e0e0" }}
+              >
                 <img src={avatarUrl || "/placeholder.svg"} alt={name} className="w-full h-full object-cover" />
               </div>
             </div>
@@ -106,14 +117,12 @@ export function ProfileCard({
                 {currentPosition.experience && (
                   <p>
                     <span className="font-medium">Experience:</span> {currentPosition.experience}
-                  </p>
-                )}
-              </div>
+            </p>
+          )}
+            </div>
             </div>
           )}
 
-          {/* Divider */}
-          <div className="w-full h-px bg-[#EBEBEB] mb-8"></div>
 
           {/* View Portfolio Button */}
           {onViewPortfolio && (

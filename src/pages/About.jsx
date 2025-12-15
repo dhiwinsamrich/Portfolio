@@ -4,6 +4,7 @@ import { ContributionGraph } from '../components/ui/contribution-graph';
 import { Timeline } from '../components/ui/timeline';
 import { useGitHubContributions } from '../hooks/useGitHubContributions';
 import { getTimelineData } from '../data/experience';
+import { Highlighter } from '../components/ui/highlighter';
 import './About.css';
 
 const About = () => {

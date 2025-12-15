@@ -3,8 +3,8 @@ import React from 'react';
 const ThankYouCard = () => {
   return (
     <div className="card">
-      <div className="relative bg-black w-[300px] sm:w-[350px] group transition-all duration-700 aspect-video flex items-center justify-center">
-        <div className="transition-all flex flex-col items-center py-5 justify-start duration-300 group-hover:duration-1000 bg-white w-full h-full absolute group-hover:-translate-y-16">
+      <div className="relative bg-black w-[300px] sm:w-[350px] group transition-all duration-700 aspect-video flex items-center justify-center border border-gray-200 shadow-lg shadow-black/20">
+        <div className="transition-all flex flex-col items-center py-5 justify-start duration-300 group-hover:duration-1000 bg-white w-full h-full absolute group-hover:-translate-y-16 border border-gray-400 shadow-inner shadow-gray-400/20">
           <p className="text-xl sm:text-2xl font-semibold text-gray-500 font-serif">
             Thank You
           </p>
