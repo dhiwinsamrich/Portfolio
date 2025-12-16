@@ -4,13 +4,15 @@ import Footer from '../components/Footer.tsx';
 import { HeroSection03 } from '../components/ui/hero-03';
 import { LogoCloud, LogoCloud4 } from '../components/ui';
 import { WavePath } from '../components/ui/wave-path';
-import { TestimonialSection } from '../components/ui/testimonial';
+import { CleanTestimonial } from '../components/ui/clean-testimonial';
 import { useWorkHoverPreview, WorkHoverPreviewStyles } from '../components/WorkHoverPreview';
 import ProjectItem from '../components/ProjectItem';
 import { projects, getProjectsPreviewData } from '../data/projects';
+import { experiences } from '../data/experience';
 import BadgeButtonCombo from '../components/ui/badge-button-combo';
 import { ProductHighlightCard } from '../components/ui/product-card';
 import { Highlighter } from '../components/ui/highlighter';
+import { LocationTag } from '../components/ui/location-tag';
 import { Trophy, Target, GraduationCap, Award, BookOpen, Users } from 'lucide-react';
 import './Home.css';
 
@@ -192,6 +194,67 @@ const Home = () => {
       
       <main className="home-main">
 
+        <section className="current-internship-section">
+          <h3 className="section-title">CURRENT INTERNSHIP</h3>
+          
+          <div className="internship-container">
+            {experiences.length > 0 && (() => {
+              const currentInternship = experiences[0];
+              return (
+                <div className="internship-item">
+                  <div className="internship-header">
+                    <div className="internship-company-role">
+                      <h4 className="internship-company" style={{ fontFamily: 'var(--font-serif)' }}>
+                        {currentInternship.company}
+                      </h4>
+                      <p className="internship-role" style={{ fontFamily: 'var(--font-sans)' }}>
+                        {currentInternship.title}
+                      </p>
+                      {currentInternship.location && (
+                        <div className="internship-location" style={{ marginTop: '12px' }}>
+                          <LocationTag 
+                            city={currentInternship.location.city}
+                            country={currentInternship.location.country}
+                            timezone={currentInternship.location.timezone}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="internship-content">
+                    <div className="internship-achievements">
+                      <h5 className="internship-achievements-title" style={{ fontFamily: 'var(--font-sans)' }}>
+                        Achievements:
+                      </h5>
+                      <ul className="internship-achievements-list">
+                        {currentInternship.descriptions.map((achievement, index) => (
+                          <li key={index} className="internship-achievement-item" style={{ fontFamily: 'var(--font-sans)' }}>
+                            {achievement}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+
+          <div className="view-more-container">
+            <BadgeButtonCombo 
+              label="View All" 
+              badge={experiences.length}
+              size="md"
+              asChild
+              className="view-more-button"
+            >
+              <Link to="/about" style={{ textDecoration: 'none', color: 'inherit', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                View All
+              </Link>
+            </BadgeButtonCombo>
+          </div>
+        </section>
+
         <section className="selected-works-section">
           <h3 className="section-title">SELECTED WORKS</h3>
           
@@ -284,20 +347,19 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="wave-section relative w-full flex flex-col items-center justify-center py-20 md:py-32">
+        <section className="wave-section relative w-full flex flex-col items-center justify-center py-20 md:py-16">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute -top-10 left-1/2 size-full -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,hsl(var(--foreground)/.1),transparent_50%)] blur-[30px]"
           />
 
-          <div className="flex w-[70vw] flex-col items-end">
+          <div className="flex w-[80vw] flex-col items-center">
             <WavePath className="mb-10" />
-            <div className="flex w-full flex-col items-end">
-              <div className="flex justify-end">
-                <p className="text-muted-foreground mt-2 text-sm">AI/ML Engineering</p>
-                <p className="text-foreground/80 ml-8 w-3/4 text-2xl md:text-4xl">
-                  Transforming ideas into intelligent solutions. Let innovation drive your 
-                  projects forward with cutting-edge artificial intelligence and machine learning.
+            <div className="flex w-full flex-col items-center">
+              <div className="flex items-center justify-center gap-3 flex-wrap md:flex-nowrap">
+                <p className="text-muted-foreground text-sm whitespace-nowrap">ME :)</p>
+                <p className="text-foreground/80 text-2xl md:text-4xl whitespace-nowrap">
+                  I Aspire to Inspire before I Expire !
                 </p>
               </div>
             </div>
@@ -305,47 +367,47 @@ const Home = () => {
         </section>
 
         <section className="testimonials-section">
-          <TestimonialSection
-            title="What People Say"
+          <div className="w-full mb-12">
+            <h2 className="mb-5 text-center">
+              <span className="block typography-statement text-foreground">
+                People's <span className="typography-statement-serif text-primary">Loved</span> my work
+              </span>
+            </h2>
+          </div>
+          <div className="flex justify-center w-full">
+            <CleanTestimonial
             testimonials={[
               {
-                type: "user",
                 quote: "Working with Dhiwin was an absolute pleasure. His expertise in AI/ML engineering helped us transform our business operations. The results exceeded our expectations and the level of professionalism was remarkable.",
-                name: "Sarah Chen",
-                role: "Product Manager at TechCorp",
-                avatarSrc: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop",
-                avatarFallback: "SC",
+                author: "Sarah Chen",
+                role: "Product Manager",
+                company: "TechCorp",
+                avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop",
               },
               {
-                type: "quote",
                 quote: "Dhiwin's innovative approach to problem-solving and technical expertise helped us solve complex challenges efficiently. His ability to translate ideas into intelligent solutions is truly exceptional.",
+                author: "Michael Rodriguez",
+                role: "CTO",
+                company: "StartupXYZ",
+                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop",
               },
               {
-                type: "user",
                 quote: "The quality of work and attention to detail is outstanding. Dhiwin doesn't just execute tasks - he provides strategic value that helps businesses grow. We couldn't be happier with the results.",
-                name: "Michael Rodriguez",
-                role: "CTO at StartupXYZ",
-                avatarSrc: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop",
-                avatarFallback: "MR",
+                author: "Emily Watson",
+                role: "Founder",
+                company: "InnovateLab",
+                avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=150&auto=format&fit=crop",
               },
               {
-                type: "user",
                 quote: "Despite tight timelines, Dhiwin delivered a high-quality solution without compromising on quality. Clear communication and regular updates kept us informed throughout the entire project.",
-                name: "Emily Watson",
-                role: "Founder at InnovateLab",
-                avatarSrc: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=150&auto=format&fit=crop",
-                avatarFallback: "EW",
-              },
-              {
-                type: "user",
-                quote: "We've found a reliable partner who understands our needs and delivers consistently high-quality work. Dhiwin has become an integral part of our success.",
-                name: "David Kim",
-                role: "Engineering Lead at DataFlow",
-                avatarSrc: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop",
-                avatarFallback: "DK",
+                author: "David Kim",
+                role: "Engineering Lead",
+                company: "DataFlow",
+                avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150&auto=format&fit=crop",
               },
             ]}
           />
+          </div>
         </section>
 
       </main>

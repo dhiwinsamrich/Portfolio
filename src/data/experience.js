@@ -5,10 +5,15 @@
 export const experiences = [
   {
     id: 'white-mastery',
-    title: 'AI/ML Engineer',
-    company: 'White Mastery',
+    title: 'AI/ML Engineer - Intern',
+    company: 'White Mastery Systems Pvt Ltd',
     period: 'Aug 2025 - Present',
     type: 'Internship',
+    location: {
+      city: 'Guindy, Chennai',
+      country: 'India',
+      timezone: 'IST'
+    },
     descriptions: [
       'Developed and deployed machine learning models for production use',
       'Collaborated with cross-functional teams to integrate AI solutions',

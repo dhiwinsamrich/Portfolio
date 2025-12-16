@@ -1,21 +1,25 @@
 import React from 'react';
-import { FullScreenScrollFX } from '../components/ui/full-screen-scroll-fx';
+import FeedbackSlider from '../components/ui/feedback-slider';
 import InteractiveBentoGallery from '../components/ui/interactive-bento-gallery';
 import Footer from '../components/Footer';
-import { scrollSections, mediaItems } from '../data/play';
+import { mediaItems } from '../data/play';
 import './Home.css';
 
 const Play = () => {
   return (
     <div className="home-page min-h-screen">
-      {/* Full Screen Scroll Effect */}
-      <FullScreenScrollFX
-        sections={scrollSections}
-        header={<><div>The Creative</div><div>Process</div></>}
-        footer={<div></div>}
-        showProgress
-        durations={{ change: 0.7, snap: 800 }}
-      />
+      {/* Feedback Slider */}
+      <div 
+        className="w-full md:h-[700px] flex items-center justify-center overflow-hidden"
+        style={{
+          height: '100vh',
+          height: '100dvh', // Dynamic viewport height for mobile
+          minHeight: '100vh',
+          minHeight: '-webkit-fill-available', // iOS Safari fix
+        }}
+      >
+        <FeedbackSlider className="h-full w-full" />
+      </div>
 
       <main className="home-main py-12">
         <InteractiveBentoGallery

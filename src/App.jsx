@@ -83,7 +83,7 @@ function AppContent() {
           <Route path="/project/:id" element={<PageWrapper key={location.pathname}><ProjectDetail /></PageWrapper>} />
           <Route path="/play" element={<PageWrapper key={location.pathname}><Play /></PageWrapper>} />
           <Route path="*" element={<PageWrapper key={location.pathname}><NotFound /></PageWrapper>} />
-        </Routes>
+      </Routes>
       </AnimatePresence>
       
       {/* Floating Consult Button - appears on all pages */}

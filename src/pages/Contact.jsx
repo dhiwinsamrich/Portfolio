@@ -196,7 +196,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="contact-page">
+    <div className="contact-page pt-5">
       <main className="contact-main">
         <section className="contact-section">
           <h3 className="section-title">Get in Touch</h3>

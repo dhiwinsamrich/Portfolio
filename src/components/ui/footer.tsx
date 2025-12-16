@@ -126,6 +126,56 @@ interface StickyFooterProps {
   scrollToTop?: () => void;
 }
 
+// Chess Board Pattern Component
+const ChessBoardPattern = () => (
+  <div className="absolute inset-0 opacity-[0.03] z-0">
+    <div className="w-full h-full" style={{
+      backgroundImage: `
+        repeating-linear-gradient(0deg, transparent, transparent 50px, hsl(var(--foreground)) 50px, hsl(var(--foreground)) 51px),
+        repeating-linear-gradient(90deg, transparent, transparent 50px, hsl(var(--foreground)) 50px, hsl(var(--foreground)) 51px)
+      `,
+      backgroundSize: '100px 100px',
+    }} />
+  </div>
+)
+
+// Chess Notation Divider
+const ChessNotationDivider = () => (
+  <motion.div
+    initial={{ scaleX: 0 }}
+    animate={{ scaleX: 1 }}
+    transition={{ duration: 1, delay: 0.5 }}
+    className="relative w-full max-w-2xl h-px bg-gradient-to-r from-transparent via-border to-transparent my-4"
+  >
+    <div className="absolute left-0 top-1/2 -translate-y-1/2 text-[8px] font-mono text-muted-foreground/40">
+      a8
+    </div>
+    <div className="absolute right-0 top-1/2 -translate-y-1/2 text-[8px] font-mono text-muted-foreground/40">
+      h1
+    </div>
+  </motion.div>
+)
+
+// Chess Quote Component
+const ChessQuote = () => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 1.4, duration: 0.8 }}
+    className="text-center max-w-2xl mx-auto"
+  >
+    <motion.p
+      className="text-sm md:text-base text-muted-foreground/80 italic font-serif mb-2"
+      whileHover={{ scale: 1.02 }}
+    >
+      "Every move is a decision, every decision shapes the game"
+    </motion.p>
+    <p className="text-xs text-muted-foreground/50 font-mono">
+      — Knight's Gambit Philosophy
+    </p>
+  </motion.div>
+)
+
 export default function StickyFooter({
   sections = [
     { title: "Navigation", links: [
@@ -139,14 +189,18 @@ export default function StickyFooter({
   title = "Dhiwin Samrich",
   subtitle = "AI/ML Engineer / Working Worldwide",
   copyright = `©${new Date().getFullYear()} Dhiwin Samrich. All rights reserved.`,
+  scrollToTop,
 }: StickyFooterProps) {
   return (
     <motion.footer
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="pt-6 md:pt-12 pb-20 md:pb-32 px-4 md:px-12 w-full flex flex-col justify-center items-center relative overflow-hidden mt-20 min-h-[450px]"
+      className="pt-6 md:pt-12 pb-20 md:pb-32 px-4 md:px-12 w-full flex flex-col justify-center items-center relative overflow-hidden mt-20 min-h-[550px] bg-gradient-to-b from-transparent via-background/50 to-background"
     >
+            {/* Chess Board Pattern Background */}
+            <ChessBoardPattern />
+            
             {/* Infinite Plane Shader Background - Knight's Gambit Theme */}
             <InfinitePlaneBg 
               planeHeight={0} 
@@ -154,8 +208,6 @@ export default function StickyFooter({
               className="z-0"
               ariaLabel="Knight's Gambit infinite plane background"
             />
-            
-            {/* Subtle overlay removed for transparency */}
 
             <motion.div
               variants={backgroundVariants}
@@ -188,6 +240,9 @@ export default function StickyFooter({
 
             {/* Footer Content - Vertical Stack Layout */}
             <div className="relative z-[10] w-full max-w-10xl mx-auto flex flex-col items-center justify-center gap-6 md:gap-8">
+              {/* Chess Notation Divider - Top */}
+              <ChessNotationDivider />
+
               {/* Navigation Section - Horizontal */}
               <motion.div variants={containerVariants} className="w-auto flex justify-center">
                 {sections.map((section, index) => (
@@ -195,8 +250,11 @@ export default function StickyFooter({
                 ))}
               </motion.div>
 
+              {/* Chess Quote */}
+              <ChessQuote />
+
               {/* Title - Dhiwin Samrich */}
-              <motion.h1
+              {/* <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
@@ -207,38 +265,46 @@ export default function StickyFooter({
                 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[0.8] font-serif bg-gradient-to-r from-foreground via-muted-foreground to-foreground/60 bg-clip-text text-transparent cursor-default text-center"
               >
                 {title}
-              </motion.h1>
+              </motion.h1> */}
 
-              {/* Copyright - Positioned above InfinitePlane */}
-              <motion.p
+              {/* Social Links and Copyright - Same line on md+ */}
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 1.2, duration: 0.5 }}
-                className="text-muted-foreground text-xs md:text-sm hover:text-foreground transition-colors duration-300 text-center"
+                transition={{ delay: 1.6, duration: 0.5 }}
+                className="flex flex-col md:flex-row items-center gap-4 md:gap-0 w-full relative"
               >
-                {copyright}
-              </motion.p>
-
-              {/* Social Links */}
-              {social.length > 0 && (
-                <motion.div
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
-                  transition={{ delay: 1.8, staggerChildren: 0.1 }}
-                  className="flex gap-2 md:gap-3 justify-center"
+                {/* Copyright - Left aligned on md+ */}
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.8, duration: 0.5 }}
+                  className="text-muted-foreground text-xs md:text-sm hover:text-foreground transition-colors duration-300 text-center md:text-left font-mono md:absolute md:left-0"
                 >
-                  {social.map((socialItem, index) => (
-                    <SocialLink
-                      key={socialItem.label}
-                      href={socialItem.href}
-                      label={socialItem.label}
-                      icon={socialItem.icon}
-                      index={index}
-                    />
-                  ))}
-                </motion.div>
-              )}
+                  {copyright}
+                </motion.p>
+
+                {/* Social Links - Centered on md+ */}
+                {social.length > 0 && (
+                  <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    transition={{ delay: 1.6, staggerChildren: 0.1 }}
+                    className="flex gap-2 md:gap-3 justify-center md:mx-auto"
+                  >
+                    {social.map((socialItem, index) => (
+                      <SocialLink
+                        key={socialItem.label}
+                        href={socialItem.href}
+                        label={socialItem.label}
+                        icon={socialItem.icon}
+                        index={index}
+                      />
+                    ))}
+                  </motion.div>
+                )}
+              </motion.div>
             </div>
     </motion.footer>
   )

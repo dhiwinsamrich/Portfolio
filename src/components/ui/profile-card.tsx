@@ -82,7 +82,7 @@ export function ProfileCard({
                 className="w-full h-full rounded-full border-2 border-[#EBEBEB] overflow-hidden bg-card"
                 style={{ boxShadow: "15px 15px 30px #bebebe, -15px -15px 30px #ffffff", background: "#e0e0e0" }}
               >
-                <img src={avatarUrl || "/placeholder.svg"} alt={name} className="w-full h-full object-cover" />
+              <img src={avatarUrl || "/placeholder.svg"} alt={name} className="w-full h-full object-cover" />
               </div>
             </div>
           </div>
