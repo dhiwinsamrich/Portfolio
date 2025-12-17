@@ -11,7 +11,6 @@ import { projects, getProjectsPreviewData } from '../data/projects';
 import { experiences } from '../data/experience';
 import BadgeButtonCombo from '../components/ui/badge-button-combo';
 import { ProductHighlightCard } from '../components/ui/product-card';
-import { Highlighter } from '../components/ui/highlighter';
 import { LocationTag } from '../components/ui/location-tag';
 import { Trophy, Target, GraduationCap, Award, BookOpen, Users } from 'lucide-react';
 import './Home.css';
@@ -227,8 +226,8 @@ const Home = () => {
                         Achievements:
                       </h5>
                       <ul className="internship-achievements-list">
-                        {currentInternship.descriptions.map((achievement, index) => (
-                          <li key={index} className="internship-achievement-item" style={{ fontFamily: 'var(--font-sans)' }}>
+                        {currentInternship.descriptions.map((achievement) => (
+                          <li key={achievement} className="internship-achievement-item" style={{ fontFamily: 'var(--font-sans)' }}>
                             {achievement}
                           </li>
                         ))}

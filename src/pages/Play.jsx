@@ -24,8 +24,8 @@ const Play = () => {
       <main className="home-main py-12">
         <InteractiveImageBentoGallery
           imageItems={bentoImageItems}
-          title="My Passions & Gallery"
-          description="Drag to rearrange, click to explore. A collection of my photography and videography work."
+          title="My Gallery"
+          description="Drag to explore, click to expand. A collection of my photography moments."
         />
       </main>
       

@@ -1,10 +1,9 @@
 import React from 'react';
 import Footer from '../components/Footer.tsx';
 import { ContributionGraph } from '../components/ui/contribution-graph';
-import { Timeline } from '../components/ui/timeline';
 import { useGitHubContributions } from '../hooks/useGitHubContributions';
-import { getTimelineData } from '../data/experience';
-import { Highlighter } from '../components/ui/highlighter';
+import { experiences } from '../data/experience';
+import { WorkExperience } from '../components/ui/work-experience';
 import './About.css';
 
 const About = () => {
@@ -22,38 +21,35 @@ const About = () => {
 
   const { data: contributionData, loading: contributionsLoading, error: contributionsError } = useGitHubContributions('dhiwinsamrich');
 
-  // Get experience timeline data from centralized data file and format for Timeline component
-  const experienceData = getTimelineData();
-  const experienceTimeline = experienceData.map((exp) => ({
-    title: exp.period,
-    content: (
-      <div className="space-y-3">
-        <div className="space-y-2">
-          <h4 className="text-xl font-semibold text-foreground">
-            {exp.title}
-          </h4>
-          <p className="text-muted-foreground">
-            {exp.company}
-          </p>
-          {exp.type && (
-            <span className="inline-block px-2 py-1 text-xs font-medium bg-muted text-muted-foreground rounded">
-              {exp.type}
-            </span>
-          )}
-        </div>
-        {exp.descriptions && exp.descriptions.length > 0 && (
-          <ul className="space-y-2 mt-4">
-            {exp.descriptions.map((desc, index) => (
-              <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
-                <span className="text-primary mt-1">▹</span>
-                <span>{desc}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    ),
-  }));
+  const workExperienceData = React.useMemo(() => {
+    const logoFallbacks = [
+      "https://images.unsplash.com/photo-1556761175-4b46a572b786?q=80&w=64&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=64&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1523966211575-eb4a01e7dd51?q=80&w=64&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=64&auto=format&fit=crop",
+    ];
+
+    return (Array.isArray(experiences) ? experiences : []).map((exp, idx) => ({
+      id: exp.id,
+      companyName: exp.company,
+      companyLogo: logoFallbacks[idx % logoFallbacks.length],
+      isCurrentEmployer: idx === 0,
+      positions: [
+        {
+          id: `${exp.id}-position`,
+          title: exp.title,
+          employmentPeriod: exp.period,
+          employmentType: exp.type,
+          icon: "code",
+          description: Array.isArray(exp.descriptions)
+            ? exp.descriptions.map((d) => `- ${d}`).join("\n")
+            : undefined,
+          skills: ["AI/ML", "Python", "React", "Data Science"],
+          isExpanded: idx === 0,
+        },
+      ],
+    }));
+  }, []);
 
   return (
     <div className="about-page pt-5">
@@ -72,17 +68,15 @@ const About = () => {
           <h3 className="section-title">Internship Experience</h3>
           <div className="experience-content">
             <p className="experience-description">My journey through various internships and roles in AI/ML and Data Science.</p>
-            <Timeline 
-              data={experienceTimeline}
-            />
+            <WorkExperience className="w-full rounded-lg border" experiences={workExperienceData} />
           </div>
         </section>
 
         <section className="certificates-section">
           <h3 className="section-title">Certificates</h3>
           <div className="certificates-list">
-            {certificates.map((cert, index) => (
-              <div key={index} className="certificate-item">
+            {certificates.map((cert) => (
+              <div key={cert} className="certificate-item">
                 <span className="certificate-name">{cert}</span>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clipPath="url(#clip0)">
@@ -122,9 +116,11 @@ const About = () => {
         <section className="contributions-section">
           <h3 className="section-title">GitHub Contributions</h3>
           <div className="contributions-content">
-            {contributionsLoading ? (
+            {contributionsLoading && (
               <div className="contributions-loading">Loading contributions...</div>
-            ) : contributionsError ? (
+            )}
+
+            {!contributionsLoading && contributionsError && (
               <div className="contributions-error">
                 <p className="text-muted-foreground mb-2">Unable to load GitHub contributions:</p>
                 <p className="text-sm text-muted-foreground">{contributionsError}</p>
@@ -135,7 +131,9 @@ const About = () => {
                   <br />• Check browser console for more details
                 </p>
               </div>
-            ) : (
+            )}
+
+            {!contributionsLoading && !contributionsError && (
               <ContributionGraph
                 data={contributionData}
                 year={new Date().getFullYear()}
