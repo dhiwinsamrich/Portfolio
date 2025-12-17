@@ -114,6 +114,17 @@ export const mediaItems = [
   },
 ];
 
+// Image-only items for the Bento gallery (used in Playground page)
+export const bentoImageItems = mediaItems
+  .filter((item) => item.type === "image")
+  .map((item) => ({
+    id: item.id,
+    title: item.title,
+    desc: item.desc,
+    url: item.url,
+    span: item.span,
+  }));
+
 // Helper function to get media items (useful for filtering, sorting, etc.)
 export const getMediaItems = () => mediaItems;
 

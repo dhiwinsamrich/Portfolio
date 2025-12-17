@@ -20,7 +20,8 @@ const animationStates = [
     noteText: "BAD",
     noteColor: "#e33719",
     noteX: "0%",
-    indicatorLeft: "calc(0% + 12px)",
+    // center of 1st column in a 3-col grid
+    indicatorLeft: "16.6667%",
   },
   {
     bgColor: "#dfa342",
@@ -38,6 +39,7 @@ const animationStates = [
     noteText: "NOT BAD",
     noteColor: "#b37716",
     noteX: "-100%",
+    // center of 2nd column in a 3-col grid
     indicatorLeft: "50%",
   },
   {
@@ -56,7 +58,8 @@ const animationStates = [
     noteText: "GOOD",
     noteColor: "#6e901d",
     noteX: "-200%",
-    indicatorLeft: "calc(100% - 12px)",
+    // center of 3rd column in a 3-col grid
+    indicatorLeft: "83.3333%",
   },
 ];
 
@@ -150,13 +153,15 @@ const FeedbackSlider = React.forwardRef<HTMLDivElement, FeedbackSliderProps>(
             </motion.div>
           </div>
           <div className="w-full">
-            <div className="relative flex w-full items-center justify-between">
+            <div className="relative grid w-full grid-cols-3 items-center">
               {animationStates.map((_, i) => (
                 <button
                   key={i}
-                  className="z-[2] h-6 w-6 rounded-full relative"
+                  type="button"
+                  className="z-[2] mx-auto h-6 w-6 rounded-full relative"
                   onClick={() => setSelectedIndex(i)}
                   style={{ backgroundColor: currentAnim.trackColor }}
+                  aria-label={i === 0 ? "Bad" : i === 1 ? "Not bad" : "Good"}
                 />
               ))}
               <motion.div
@@ -195,11 +200,11 @@ const FeedbackSlider = React.forwardRef<HTMLDivElement, FeedbackSliderProps>(
                 </motion.svg>
               </motion.div>
             </div>
-            <div className="flex w-full items-center justify-between pt-6">
+            <div className="grid w-full grid-cols-3 items-center pt-6">
               {["Bad", "Not Bad", "Good"].map((text, i) => (
                 <motion.span
                   key={text}
-                  className="w-full text-center font-medium"
+                  className="text-center font-medium"
                   animate={{
                     color: currentAnim.titleColor,
                     opacity: selectedIndex === i ? 1 : 0.6,

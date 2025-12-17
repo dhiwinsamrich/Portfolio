@@ -1,8 +1,8 @@
 import React from 'react';
 import FeedbackSlider from '../components/ui/feedback-slider';
-import InteractiveBentoGallery from '../components/ui/interactive-bento-gallery';
+import InteractiveImageBentoGallery from '../components/ui/bento-gallery';
 import Footer from '../components/Footer';
-import { mediaItems } from '../data/play';
+import { bentoImageItems } from '../data/play';
 import './Home.css';
 
 const Play = () => {
@@ -22,8 +22,8 @@ const Play = () => {
       </div>
 
       <main className="home-main py-12">
-        <InteractiveBentoGallery
-          mediaItems={mediaItems}
+        <InteractiveImageBentoGallery
+          imageItems={bentoImageItems}
           title="My Passions & Gallery"
           description="Drag to rearrange, click to explore. A collection of my photography and videography work."
         />

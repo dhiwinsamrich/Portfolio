@@ -253,20 +253,6 @@ export default function StickyFooter({
               {/* Chess Quote */}
               <ChessQuote />
 
-              {/* Title - Dhiwin Samrich */}
-              {/* <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
-                whileHover={{
-                  scale: 1.02,
-                  transition: { type: "spring", stiffness: 300, damping: 20 },
-                }}
-                className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[0.8] font-serif bg-gradient-to-r from-foreground via-muted-foreground to-foreground/60 bg-clip-text text-transparent cursor-default text-center"
-              >
-                {title}
-              </motion.h1> */}
-
               {/* Social Links and Copyright - Same line on md+ */}
               <motion.div
                 initial={{ opacity: 0 }}
