@@ -290,6 +290,25 @@ export default function StickyFooter({
                     ))}
                   </motion.div>
                 )}
+
+                {/* Chess Pieces - Right aligned on md+ */}
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 2, duration: 0.5 }}
+                  className="flex items-center gap-1 md:gap-2 text-lg md:text-xl font-serif md:absolute md:right-0"
+                >
+                  {/* Black pieces: pawn, bishop, rook, queen, king */}
+                  <span className="text-foreground">♟</span>
+                  <span className="text-foreground">♝</span>
+                  <span className="text-foreground">♜</span>
+                  <span className="text-foreground">♛</span>
+                  <span className="text-foreground">♚</span>
+                  {/* Black knight */}
+                  <span className="text-foreground">♞</span>
+                  {/* White knight (facing the black knight) */}
+                  <span className="text-muted-foreground transform scale-x-[-1]">♘</span>
+                </motion.div>
               </motion.div>
             </div>
     </motion.footer>

@@ -135,9 +135,9 @@ const ProjectDetail = () => {
                       {project.details.features.map((feature, index) => (
                         <li
                           key={index}
-                          className="text-muted-foreground flex items-start gap-2"
+                          className="text-muted-foreground flex items-center gap-2"
                         >
-                          <span className="text-primary mt-1">▹</span>
+                          <span className="text-primary flex-shrink-0">♟</span>
                           <span>{feature}</span>
                         </li>
                       ))}
@@ -155,9 +155,9 @@ const ProjectDetail = () => {
                       {project.details.difficulties.map((difficulty, index) => (
                         <li
                           key={index}
-                          className="text-muted-foreground flex items-start gap-2"
+                          className="text-muted-foreground flex items-center gap-2"
                         >
-                          <span className="text-primary mt-1">▹</span>
+                          <span className="text-primary flex-shrink-0">♟</span>
                           <span>{difficulty}</span>
                         </li>
                       ))}

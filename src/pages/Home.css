@@ -292,9 +292,11 @@
 }
 
 .internship-achievement-item::before {
-  content: '▹';
+  content: '♟';
   position: absolute;
   left: 0;
+  top: 0;
+  line-height: 1.6;
   color: hsl(var(--primary));
 }
 

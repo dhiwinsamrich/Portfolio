@@ -499,6 +499,22 @@
   }
 }
 
+.education-content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+  width: 765px;
+}
+
+@media (max-width: 768px) {
+  .education-content {
+    width: 100%;
+  }
+}
+
 .education-list {
   display: flex;
   width: 765px;
@@ -523,8 +539,8 @@
 
 .education-item {
   display: flex;
+  flex-direction: column;
   padding-bottom: 32px;
-  gap: 32px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -532,15 +548,12 @@
 
 @media (max-width: 768px) {
   .education-item {
-    flex-direction: column;
-    gap: 8px;
     padding-bottom: 24px;
   }
 }
 
 @media (max-width: 480px) {
   .education-item {
-    gap: 6px;
     padding-bottom: 20px;
   }
 }
@@ -554,6 +567,7 @@
   flex-direction: column;
   gap: 8px;
   flex: 1;
+  width: 100%;
 }
 
 .degree-title {
@@ -580,6 +594,107 @@
 
 @media (max-width: 768px) {
   .institution-name {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+.education-period {
+  color: hsl(var(--muted-foreground));
+  font-family: var(--font-sans);
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-weight: 400;
+  line-height: 1.6;
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .education-period {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+.education-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid hsl(var(--border, 0 0% 90%));
+}
+
+@media (max-width: 768px) {
+  .education-details {
+    gap: 12px;
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .education-details {
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+}
+
+.education-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+@media (max-width: 768px) {
+  .education-field {
+    gap: 4px;
+  }
+}
+
+.education-label {
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .education-label {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+.education-value {
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .education-value {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+.education-text {
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  font-weight: 400;
+  line-height: 1.6;
+  margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .education-text {
     font-size: 14px;
     line-height: 1.5;
   }
@@ -635,11 +750,19 @@
 
 .contributions-content {
   display: flex;
-  width: 765px;
+  width: 900px;
   max-width: 100%;
   flex-direction: column;
   gap: 32px;
   box-sizing: border-box;
+  overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+  .contributions-content {
+    width: 100%;
+    gap: 28px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -660,6 +783,106 @@
   font-size: 16px;
   text-align: center;
   padding: 40px 0;
+}
+
+.contribution-graph {
+  width: 900px;
+  position: relative;
+  overflow: hidden;
+}
+
+.contribution-graph > div {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden !important;
+}
+
+.contribution-graph table {
+  width: 100%;
+  max-width: 100%;
+  border-spacing: 0.5px;
+}
+
+.contribution-graph tbody td {
+  padding: 0;
+}
+
+.contribution-graph tbody td:first-child {
+  width: 1.75rem;
+  min-width: 1.75rem;
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .contribution-graph {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .contribution-graph > div {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden !important;
+  }
+  
+  .contribution-graph table {
+    width: 100%;
+    max-width: 100%;
+    border-spacing: 0.25px;
+  }
+  
+  .contribution-graph thead td {
+    padding: 0;
+    font-size: 0.6rem;
+  }
+  
+  .contribution-graph tbody td {
+    padding: 0;
+    height: 0.4rem !important;
+    width: 0.4rem !important;
+  }
+  
+  .contribution-graph tbody td div {
+    height: 0.4rem !important;
+    width: 0.4rem !important;
+  }
+  
+  .contribution-graph tbody td:first-child {
+    width: 1.25rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .contribution-graph table {
+    font-size: 10px;
+    border-spacing: 0.5px;
+  }
+  
+  .contribution-graph tbody td {
+    padding: 0;
+    height: 0.45rem !important;
+    width: 0.45rem !important;
+  }
+  
+  .contribution-graph tbody td div {
+    height: 0.45rem !important;
+    width: 0.45rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .contribution-graph table {
+    border-spacing: 0.25px;
+  }
+  
+  .contribution-graph tbody td {
+    height: 0.4rem !important;
+    width: 0.4rem !important;
+  }
+  
+  .contribution-graph tbody td div {
+    height: 0.4rem !important;
+    width: 0.4rem !important;
+  }
 }
 
 .about-main .page-title {

@@ -3,7 +3,9 @@ import Footer from '../components/Footer.tsx';
 import { ContributionGraph } from '../components/ui/contribution-graph';
 import { useGitHubContributions } from '../hooks/useGitHubContributions';
 import { experiences } from '../data/experience';
+import { education } from '../data/education';
 import { WorkExperience } from '../components/ui/work-experience';
+import { Education } from '../components/ui/education';
 import './About.css';
 
 const About = () => {
@@ -51,6 +53,20 @@ const About = () => {
     }));
   }, []);
 
+  const educationData = React.useMemo(() => {
+    return (Array.isArray(education) ? education : []).map((edu, idx) => ({
+      id: edu.id,
+      degree: edu.degree,
+      institution: edu.institution,
+      period: edu.period,
+      cgpa: edu.cgpa,
+      description: edu.description,
+      achievement: edu.achievement,
+      lessonLearnt: edu.lessonLearnt,
+      isExpanded: idx === 0,
+    }));
+  }, []);
+
   return (
     <div className="about-page pt-5">
       <main className="about-main">
@@ -65,9 +81,9 @@ const About = () => {
         </section>
 
         <section className="experience-section">
-          <h3 className="section-title">Internship Experience</h3>
+          <h3 className="section-title">Work Experience</h3>
           <div className="experience-content">
-            <p className="experience-description">My journey through various internships and roles in AI/ML and Data Science.</p>
+            {/* <p className="experience-description">My journey through various internships and roles in AI/ML and Data Science.</p> */}
             <WorkExperience className="w-full rounded-lg border" experiences={workExperienceData} />
           </div>
         </section>
@@ -95,21 +111,8 @@ const About = () => {
         </section>
         <section className="education-section">
           <h3 className="section-title">Education</h3>
-          <div className="education-list">
-            <div className="education-item border-bottom">
-              <div className="degree-info">
-                <h4 className="degree-title">Master of Computer Applications</h4>
-                <p className="institution-name">JAIN University</p>
-              </div>
-              <p className="text-secondary">2023-2025</p>
-            </div>
-            <div className="education-item">
-              <div className="degree-info">
-                <h4 className="degree-title">Bachelor of Computer Applications</h4>
-                <p className="institution-name">NPR College</p>
-              </div>
-              <p className="text-secondary">2020-2023</p>
-            </div>
+          <div className="education-content">
+            <Education className="w-full rounded-lg border" education={educationData} />
           </div>
         </section>
 

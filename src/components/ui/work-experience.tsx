@@ -1,5 +1,4 @@
 import * as React from "react";
-import ReactMarkdown from "react-markdown";
 import {
   BriefcaseBusinessIcon,
   ChevronsDownUpIcon,
@@ -69,60 +68,26 @@ export function WorkExperience({
   className?: string;
   experiences: ExperienceItemType[];
 }>) {
+  // Flatten all positions from all experiences into a single list
+  const allPositions = React.useMemo(() => {
+    const positions: Array<ExperiencePositionItemType & { companyName: string; isCurrentEmployer?: boolean }> = [];
+    experiences.forEach((experience) => {
+      experience.positions.forEach((position) => {
+        positions.push({
+          ...position,
+          companyName: experience.companyName,
+          isCurrentEmployer: experience.isCurrentEmployer,
+        });
+      });
+    });
+    return positions;
+  }, [experiences]);
+
   return (
     <div className={cn("bg-background px-4", className)}>
-      {experiences.map((experience) => (
-        <ExperienceItem key={experience.id} experience={experience} />
+      {allPositions.map((position) => (
+        <ExperiencePositionItem key={position.id} position={position} />
       ))}
-    </div>
-  );
-}
-
-export function ExperienceItem({
-  experience,
-}: Readonly<{
-  experience: ExperienceItemType;
-}>) {
-  return (
-    <div className="space-y-4 py-4">
-      <div className="not-prose flex items-center gap-3">
-        <div
-          className="flex size-6 shrink-0 items-center justify-center"
-          aria-hidden
-        >
-          {experience.companyLogo ? (
-            <img
-              src={experience.companyLogo}
-              alt={experience.companyName}
-              width={24}
-              height={24}
-              className="rounded-full"
-              loading="lazy"
-              referrerPolicy="no-referrer"
-            />
-          ) : (
-            <span className="flex size-2 rounded-full bg-zinc-300 dark:bg-zinc-600" />
-          )}
-        </div>
-
-        <h3 className="text-lg leading-snug font-medium">
-          {experience.companyName}
-        </h3>
-
-        {experience.isCurrentEmployer && (
-          <span className="relative flex items-center justify-center">
-            <span className="absolute inline-flex size-3 animate-ping rounded-full bg-primary opacity-50" />
-            <span className="relative inline-flex size-2 rounded-full bg-primary" />
-            <span className="sr-only">Current Employer</span>
-          </span>
-        )}
-      </div>
-
-      <div className="relative space-y-4 before:absolute before:left-3 before:h-full before:w-px before:bg-border">
-        {experience.positions.map((position) => (
-          <ExperiencePositionItem key={position.id} position={position} />
-        ))}
-      </div>
     </div>
   );
 }
@@ -130,13 +95,13 @@ export function ExperienceItem({
 export function ExperiencePositionItem({
   position,
 }: Readonly<{
-  position: ExperiencePositionItemType;
+  position: ExperiencePositionItemType & { companyName?: string; isCurrentEmployer?: boolean };
 }>) {
   const ExperienceIcon = iconMap[position.icon || "business"];
 
   return (
     <Collapsible defaultOpen={position.isExpanded} asChild>
-      <div className="relative last:before:absolute last:before:h-full last:before:w-4 last:before:bg-background">
+      <div className="relative py-4 last:before:absolute last:before:h-full last:before:w-4 last:before:bg-background">
         <CollapsibleTrigger className="group/experience not-prose block w-full select-none text-left">
           <div className="relative z-10 mb-1 flex items-center gap-3 bg-background">
             <div
@@ -160,6 +125,20 @@ export function ExperiencePositionItem({
           </div>
 
           <div className="flex items-center gap-2 pl-9 text-sm text-muted-foreground">
+            {position.companyName && (
+              <>
+                <dl>
+                  <dt className="sr-only">Company</dt>
+                  <dd>{position.companyName}</dd>
+                </dl>
+
+                <Separator
+                  className="data-[orientation=vertical]:h-4"
+                  orientation="vertical"
+                />
+              </>
+            )}
+
             {position.employmentType && (
               <>
                 <dl>
@@ -182,21 +161,29 @@ export function ExperiencePositionItem({
         </CollapsibleTrigger>
 
         <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-          {position.description && (
-            <Prose className="pt-2 pl-9">
-              <ReactMarkdown>{position.description}</ReactMarkdown>
-            </Prose>
-          )}
+          <div className="pt-4 pl-9 space-y-4">
+            {position.description && (
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-foreground">Description:</p>
+                <div className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+                  {position.description}
+                </div>
+              </div>
+            )}
 
-          {Array.isArray(position.skills) && position.skills.length > 0 && (
-            <ul className="not-prose flex flex-wrap gap-1.5 pt-2 pl-9">
-              {position.skills.map((skill) => (
-                <li key={skill} className="flex">
-                  <Skill>{skill}</Skill>
-                </li>
-              ))}
-            </ul>
-          )}
+            {Array.isArray(position.skills) && position.skills.length > 0 && (
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-foreground">Skills:</p>
+                <ul className="not-prose flex flex-wrap gap-1.5 pt-1">
+                  {position.skills.map((skill) => (
+                    <li key={skill} className="flex">
+                      <Skill>{skill}</Skill>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
         </CollapsibleContent>
       </div>
     </Collapsible>
@@ -228,6 +215,7 @@ function Skill({ className, ...props }: React.ComponentProps<"span">) {
     />
   );
 }
+
 
 
 

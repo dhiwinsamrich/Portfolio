@@ -149,7 +149,7 @@ const bentoGridStyles = `
   }
 
   .bento-item li::before {
-    content: '▹';
+    content: '♟';
     position: absolute;
     left: 0;
     color: hsl(var(--primary));

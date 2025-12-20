@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useRef } from "react";
 import { motion } from "motion/react";
 
 export interface ContributionData {
@@ -52,6 +52,7 @@ export function ContributionGraph({
 }: ContributionGraphProps) {
   const [hoveredDay, setHoveredDay] = useState<ContributionData | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Generate all days for the year
   const yearData = useMemo(() => {
@@ -170,10 +171,27 @@ export function ContributionGraph({
     return headers;
   }, [year]);
 
-  const handleDayHover = (day: ContributionData, event: React.MouseEvent) => {
+  const handleDayHover = (day: ContributionData, event: React.MouseEvent<HTMLTableCellElement>) => {
     if (showTooltips && day.date) {
       setHoveredDay(day);
-      setTooltipPosition({ x: event.clientX, y: event.clientY });
+      const rect = event.currentTarget.getBoundingClientRect();
+      const containerRect = containerRef.current?.getBoundingClientRect();
+      
+      if (containerRect) {
+        // Position relative to the container
+        const relativeX = rect.left - containerRect.left + rect.width / 2;
+        const relativeY = rect.top - containerRect.top;
+        setTooltipPosition({ 
+          x: relativeX, 
+          y: relativeY 
+        });
+      } else {
+        // Fallback to absolute positioning
+        setTooltipPosition({ 
+          x: rect.left + rect.width / 2, 
+          y: rect.top 
+        });
+      }
     }
   };
 
@@ -199,9 +217,9 @@ export function ContributionGraph({
   };
 
   return (
-    <div className={`contribution-graph ${className}`}>
-      <div className="overflow-x-auto">
-        <table className="border-separate border-spacing-1 text-xs">
+    <div ref={containerRef} className={`contribution-graph w-full relative ${className}`}>
+      <div className="w-full overflow-hidden">
+        <table className="border-separate border-spacing-1 text-xs w-full">
           <caption className="sr-only">Contribution Graph for {year}</caption>
 
           {/* Month Headers */}
@@ -276,10 +294,11 @@ export function ContributionGraph({
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
-          className="bg-background border border-foreground/20 text-foreground pointer-events-none fixed z-50 rounded-lg px-3 py-2 text-sm shadow-lg"
+          className="bg-background border border-foreground/20 text-foreground pointer-events-none absolute z-50 rounded-lg px-3 py-2 text-sm shadow-lg whitespace-nowrap"
           style={{
-            left: tooltipPosition.x + 10,
-            top: tooltipPosition.y - 40,
+            left: `${tooltipPosition.x}px`,
+            top: `${tooltipPosition.y - 50}px`,
+            transform: 'translateX(-50%)',
           }}
         >
           <div className="font-semibold">

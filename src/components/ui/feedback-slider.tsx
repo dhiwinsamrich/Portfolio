@@ -69,7 +69,7 @@ export interface FeedbackSliderProps {
 
 const FeedbackSlider = React.forwardRef<HTMLDivElement, FeedbackSliderProps>(
   ({ className }, ref) => {
-    const [selectedIndex, setSelectedIndex] = useState(0);
+    const [selectedIndex, setSelectedIndex] = useState(2);
     const currentAnim = animationStates[selectedIndex];
     const transition: Transition = { type: "spring", stiffness: 300, damping: 30 };
 
