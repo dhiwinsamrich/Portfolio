@@ -138,8 +138,6 @@ const ProjectDetail = () => {
         {/* Case Studies Component */}
         <CaseStudies
           caseStudies={caseStudies}
-          title={project.name}
-          description={project.description}
         />
 
         {/* Project Details Section */}

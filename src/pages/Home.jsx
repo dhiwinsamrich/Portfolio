@@ -301,7 +301,7 @@ const Home = () => {
               categoryIcon={<GraduationCap className="h-5 w-5" />}
               title="Gold Medalist"
               description="University Gold Medalist at Madurai Kamaraj University - 2023. Recognized for outstanding academic performance and excellence."
-              imageSrc={<Award className="h-24 w-24 text-primary" />}
+              imageSrc={<Award className="pt-5 h-24 w-24 text-primary" />}
               imageAlt="Gold Medal Achievement"
             />
             
@@ -310,7 +310,7 @@ const Home = () => {
               categoryIcon={<Trophy className="h-5 w-5" />}
               title="Make-A-Thon"
               description="2nd Position in 24 Hours Make-A-Thon. Showcased innovation and problem-solving skills in a competitive hackathon environment."
-              imageSrc={<Users className="h-24 w-24 text-primary" />}
+              imageSrc={<Users className="pt-5 h-24 w-24 text-primary" />}
               imageAlt="Hackathon Achievement"
             />
             
@@ -319,7 +319,7 @@ const Home = () => {
               categoryIcon={<Target className="h-5 w-5" />}
               title="TANCET 99.4%"
               description="Achieved 99.4 Percentile in TANCET Exam - 2023. Demonstrated exceptional performance in competitive entrance examination."
-              imageSrc={<BookOpen className="h-24 w-24 text-primary" />}
+              imageSrc={<BookOpen className="pt-5 h-24 w-24 text-primary" />}
               imageAlt="TANCET Achievement"
             />
           </div>

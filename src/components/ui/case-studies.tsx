@@ -119,18 +119,22 @@ export default function CaseStudies({
     >
       <div className="container mx-auto px-6">
         {/* Header */}
-        <div className="flex flex-col gap-4 text-center max-w-2xl mx-auto">
-          <h2
-            id="case-studies-heading"
-            className="text-4xl font-semibold md:text-5xl text-foreground"
-          >
-            {title}
-          </h2>
-          <p className="text-muted-foreground">{description}</p>
-        </div>
+        {title && (
+          <div className="flex flex-col gap-4 text-center max-w-2xl mx-auto">
+            <h2
+              id="case-studies-heading"
+              className="text-4xl font-semibold md:text-5xl text-foreground"
+            >
+              {title}
+            </h2>
+            {description && (
+              <p className="text-muted-foreground">{description}</p>
+            )}
+          </div>
+        )}
 
         {/* Cases */}
-        <div className="mt-20 flex flex-col gap-20">
+        <div className={`flex flex-col gap-20 ${title ? 'mt-20' : ''}`}>
           {caseStudies.map((study, idx) => {
             const reversed = idx % 2 === 1;
             return (

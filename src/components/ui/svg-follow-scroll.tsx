@@ -23,7 +23,7 @@ const Skiper19 = () => {
   return (
     <section
       ref={ref}
-      className="mx-auto flex h-[350vh] w-screen flex-col items-center overflow-hidden bg-background px-4 text-foreground"
+      className="flex h-[350vh] w-full flex-col items-center overflow-hidden bg-background text-foreground"
     >
       <div className="relative mt-24 flex w-fit flex-col items-center justify-center gap-5 text-center lg:mt-32">
         <h1 className="font-jakarta-sans relative z-10 text-6xl font-medium tracking-[-0.08em] sm:text-7xl lg:text-9xl">
@@ -47,11 +47,11 @@ const Skiper19 = () => {
       {/* Quick contact details strip (between hero and big title) */}
       <ContactQuickDetails />
 
-      <div className="w-full translate-y-[200vh] rounded-3xl bg-foreground pb-10 text-background">
+      <div className="w-full translate-y-[200vh] rounded-none bg-foreground pb-10 text-background">
         <h1 className="mt-10 text-center text-[15.5vw] font-bold leading-[0.9] tracking-tighter lg:text-[16.6vw]">
           contact
         </h1>
-        <div className="mt-80 flex w-full flex-col items-start gap-5 px-4 font-medium uppercase lg:mt-0 lg:flex-row lg:justify-between">
+        <div className="mt-80 flex w-full flex-col items-start gap-5 px-6 md:px-12 lg:px-16 font-medium uppercase lg:mt-0 lg:flex-row lg:justify-between">
           <div className="flex w-full items-center justify-between gap-12 lg:w-fit lg:justify-center">
             <p className="w-fit text-sm">
               india <br />
@@ -92,7 +92,7 @@ function ContactQuickDetails() {
   ];
 
   return (
-    <div className="mt-8 w-full max-w-2xl pt-5">
+    <div className="mt-8 w-full max-w-2xl mx-auto px-6 md:px-12 lg:px-16 pt-5">
       <div className="rounded-2xl border bg-background/60 px-4 py-4 backdrop-blur md:px-6">
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-left">
           {items.map((item) => (
