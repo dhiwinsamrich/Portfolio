@@ -141,7 +141,7 @@ const About = () => {
                 data={contributionData}
                 year={new Date().getFullYear()}
                 showLegend={true}
-                showTooltips={true}
+                showTooltips={false}
               />
             )}
           </div>
