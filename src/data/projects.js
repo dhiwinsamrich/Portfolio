@@ -18,6 +18,7 @@ export const projects = [
     previewSubtitle: 'AI-powered legal platform for Indian law',
     details: {
       title: 'Justicia - Legal AI',
+      role: 'Full Stack Developer & AI Engineer',
       features: [
         'AI-powered legal document analysis',
         'Real-time case law search and retrieval',
@@ -34,7 +35,11 @@ export const projects = [
         'Vector Databases'
       ],
       inspiration: 'The complexity and opacity of the Indian legal system inspired me to create a platform that makes legal information accessible and understandable for everyone.',
+      vision: 'The complexity and opacity of the Indian legal system inspired me to create a platform that makes legal information accessible and understandable for everyone.',
       timeline: '6 months - Developed from concept to deployment, including research, development, testing, and integration with legal databases.',
+      coreProcess: 'Started with extensive research on Indian legal systems and requirements. Designed the architecture with FastAPI backend and React frontend. Integrated OpenAI GPT-4 for document analysis and vector databases for semantic search. Conducted rigorous testing with legal professionals and iterated based on feedback. Deployed with PostgreSQL for data persistence and optimized for performance.',
+      impact: '5X',
+      featureCoverage: 75,
       difficulties: [
         'Processing complex legal terminology and context',
         'Integrating multiple legal databases',
@@ -60,6 +65,7 @@ export const projects = [
     previewSubtitle: 'Deep-Q Learning chess opponent',
     details: {
       title: 'Chess Game - RL',
+      role: 'AI Engineer & Frontend Developer',
       features: [
         'Deep-Q Learning based AI opponent',
         'Adaptive difficulty levels',
@@ -76,7 +82,11 @@ export const projects = [
         'Chess.js'
       ],
       inspiration: 'The challenge of creating an AI that learns and improves through gameplay, making each match a unique experience.',
+      vision: 'The challenge of creating an AI that learns and improves through gameplay, making each match a unique experience.',
       timeline: '4 months - Focused on RL model training, game integration, and creating an intuitive user interface.',
+      coreProcess: 'Began by implementing the chess game logic using Chess.js. Developed Deep-Q Learning model with TensorFlow and PyTorch for training. Created experience replay mechanism for efficient learning. Integrated WebSocket for real-time gameplay. Built React frontend with adaptive difficulty levels. Continuously trained the model with game data to improve performance.',
+      impact: '5X',
+      featureCoverage: 75,
       difficulties: [
         'Training the RL model to play at competitive levels',
         'Balancing difficulty progression',
@@ -102,6 +112,7 @@ export const projects = [
     previewSubtitle: 'Retrieval-Augmented Generation system',
     details: {
       title: 'RAG System',
+      role: 'Full Stack Developer & AI Engineer',
       features: [
         'Retrieval-Augmented Generation',
         'Semantic search capabilities',
@@ -118,7 +129,11 @@ export const projects = [
         'React'
       ],
       inspiration: 'The need to create intelligent systems that can bring knowledge to life by connecting information retrieval with natural language generation.',
+      vision: 'The need to create intelligent systems that can bring knowledge to life by connecting information retrieval with natural language generation.',
       timeline: '5 months - Built the RAG pipeline, integrated vector databases, and developed the user interface for knowledge interaction.',
+      coreProcess: 'Designed the RAG architecture using LangChain for orchestration. Integrated Pinecone/Weaviate for vector storage and semantic search. Built FastAPI backend to handle retrieval and generation. Connected OpenAI API for natural language generation. Developed React frontend for user interaction. Optimized retrieval accuracy with hybrid search combining dense vectors and keyword matching.',
+      impact: '5X',
+      featureCoverage: 75,
       difficulties: [
         'Optimizing retrieval accuracy',
         'Managing context window limitations',

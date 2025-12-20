@@ -15,7 +15,7 @@ const previewCardStyles = `
   .work-preview-card {
     position: fixed;
     pointer-events: none;
-    z-index: 1000;
+    z-index: 40;
     opacity: 0;
     transform: translateY(10px) scale(0.95);
     transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);

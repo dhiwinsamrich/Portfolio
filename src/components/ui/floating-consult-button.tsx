@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { Button } from "./button";
 
 interface FloatingConsultButtonProps {
@@ -44,6 +45,7 @@ export const FloatingConsultButton = ({
   position = { bottom: "2rem", right: "2rem" },
 }: FloatingConsultButtonProps): React.ReactElement => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
   
   // Responsive sizes with defaults (smaller sizes)
   const lgButtonSize = buttonSize || 100;
@@ -99,9 +101,30 @@ export const FloatingConsultButton = ({
                 <h3 className="text-4xl lg:text-5xl font-bold text-foreground leading-tight">
                   {popupHeading}
                 </h3>
-                <span className="text-foreground px-4 py-2 border-2 border-foreground rounded-full text-sm font-medium">
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    navigate('/contact');
+                  }}
+                  className="flex items-center gap-2 text-foreground px-4 py-2 border-2 border-foreground rounded-full text-sm font-medium hover:bg-foreground/5 transition-colors cursor-pointer"
+                >
+                  {popupBadgeText === "Available" && (
+                    <div className="relative">
+                      <motion.div
+                        className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_12px] shadow-green-500/40"
+                        animate={{
+                          opacity: [1, 0.3, 1],
+                        }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      />
+                    </div>
+                  )}
                   {popupBadgeText}
-                </span>
+                </button>
               </div>
 
               {/* Description */}

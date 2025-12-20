@@ -1,15 +1,36 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Globe, Github } from 'lucide-react';
+import { Globe, Github } from 'lucide-react';
 import Footer from '../components/Footer.tsx';
-import CaseStudies from '../components/ui/case-studies';
-import { getProjectById } from '../data/projects';
+import { BentoGridShowcase } from '../components/ui/bento-product-features';
+import {
+  IntegrationCard,
+  TrackersCard,
+  FocusCard,
+  StatisticCard,
+  ProductivityCard,
+  CoreProcessCard,
+} from '../components/ui/project-bento-cards';
+import WheelPagination from '../components/ui/wheel-pagination';
+import { getProjectById, projects } from '../data/projects';
 import './Home.css';
 
 const ProjectDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const project = getProjectById(id);
+  
+  // Get current project index and total projects count
+  const currentProjectIndex = projects.findIndex(p => p.id === id);
+  const totalProjects = projects.length;
+  
+  // Handle pagination change - use useCallback to prevent infinite loops
+  const handlePageChange = useCallback((page) => {
+    if (page >= 0 && page < totalProjects && page !== currentProjectIndex) {
+      const targetProject = projects[page];
+      navigate(`/project/${targetProject.id}`);
+    }
+  }, [totalProjects, currentProjectIndex, navigate]);
 
   if (!project) {
     return (
@@ -33,118 +54,77 @@ const ProjectDetail = () => {
     );
   }
 
-  // Transform project data into case study format
-  const caseStudy = {
-    id: 1,
-    quote: project.description,
-    name: project.name,
-    role: 'Project',
-    image: project.previewImage,
-    icon: Globe,
-    metrics: project.details
-      ? [
-          {
-            value: `${project.details.features?.length || 0}`,
-            label: 'Features',
-            sub: 'Key features implemented',
-          },
-          {
-            value: `${project.details.techStack?.length || 0}`,
-            label: 'Technologies',
-            sub: 'Tech stack used',
-          },
-        ]
-      : [],
-  };
-
-  // Create additional case studies from project details if available
-  const caseStudies = project.details
-    ? [
-        caseStudy,
-        // Add a second case study with project details
-        {
-          id: 2,
-          quote: project.details.inspiration || project.description,
-          name: project.name,
-          role: 'Development Journey',
-          image: project.previewImage,
-          icon: Github,
-          metrics: [
-            {
-              value: project.details.timeline?.split(' ')[0] || 'N/A',
-              label: 'Timeline',
-              sub: project.details.timeline?.split('-')[1]?.trim() || 'Development period',
-            },
-            {
-              value: `${project.details.difficulties?.length || 0}`,
-              label: 'Challenges',
-              sub: 'Overcome during development',
-            },
-          ],
-        },
-      ]
-    : [caseStudy];
 
   return (
     <div className="home-page">
       <main className="home-main">
-        {/* Back Button */}
-        <div className="container mx-auto px-6 pt-8">
-          <button
-            onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8"
-          >
-            <ArrowLeft size={20} />
-            <span>Back</span>
-          </button>
-        </div>
-
         {/* Project Header */}
-        <div className="container mx-auto px-6 mb-12">
-          <div className="max-w-4xl mx-auto">
+        <div className="container mx-auto px-6 mb-3 pt-20">
+          <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl font-bold mb-4 text-foreground">
               {project.name}
             </h1>
             <p className="text-xl text-muted-foreground mb-6">
               {project.description}
             </p>
-            <div className="flex items-center gap-4">
-              {project.liveSiteUrl && project.liveSiteUrl !== '#' && (
-                <a
-                  href={project.liveSiteUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
-                >
-                  <Globe size={18} />
-                  <span>Live Site</span>
-                </a>
-              )}
-              {project.githubUrl && project.githubUrl !== '#' && (
-                <a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 border border-border rounded-lg hover:bg-accent transition-colors"
-                >
-                  <Github size={18} />
-                  <span>GitHub</span>
-                </a>
-              )}
-            </div>
+            {(project.githubUrl && project.githubUrl !== '#') || (project.liveSiteUrl && project.liveSiteUrl !== '#') ? (
+              <div className="flex items-center justify-center gap-4">
+                {project.githubUrl && project.githubUrl !== '#' && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 border border-border rounded-lg hover:bg-accent transition-colors cursor-pointer"
+                  >
+                    <Github size={18} />
+                    <span>GitHub Repo</span>
+                  </a>
+                )}
+                {project.liveSiteUrl && project.liveSiteUrl !== '#' && (
+                  <a
+                    href={project.liveSiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors cursor-pointer"
+                  >
+                    <Globe size={18} />
+                    <span>Website Link</span>
+                  </a>
+                )}
+              </div>
+            ) : null}
           </div>
         </div>
 
-        {/* Case Studies Component */}
-        <CaseStudies
-          caseStudies={caseStudies}
-        />
+        {/* Bento Grid Showcase */}
+        <div className="container mx-auto px-6 py-16">
+          <BentoGridShowcase
+            integration={<IntegrationCard project={project} />}
+            trackers={<TrackersCard project={project} />}
+            statistic={<StatisticCard project={project} />}
+            focus={<FocusCard project={project} />}
+            productivity={<ProductivityCard project={project} />}
+            shortcuts={<CoreProcessCard project={project} />}
+          />
+        </div>
 
-        {/* Project Details Section */}
+        {/* Project Details Section - Only show Inspiration, Features, Challenges Faced, and Solution */}
         {project.details && (
-          <div className="container mx-auto px-6 py-16">
+          <div className="container mx-auto px-6 pt-4 pb-16">
             <div className="max-w-4xl mx-auto">
               <div className="grid md:grid-cols-2 gap-8">
+                {/* Inspiration */}
+                {project.details.inspiration && (
+                  <div className="space-y-4 md:col-span-2">
+                    <h2 className="text-2xl font-semibold text-foreground">
+                      Inspiration
+                    </h2>
+                    <p className="text-muted-foreground">
+                      {project.details.inspiration}
+                    </p>
+                  </div>
+                )}
+
                 {/* Features */}
                 {project.details.features && (
                   <div className="space-y-4">
@@ -165,50 +145,7 @@ const ProjectDetail = () => {
                   </div>
                 )}
 
-                {/* Tech Stack */}
-                {project.details.techStack && (
-                  <div className="space-y-4">
-                    <h2 className="text-2xl font-semibold text-foreground">
-                      Tech Stack
-                    </h2>
-                    <div className="flex flex-wrap gap-2">
-                      {project.details.techStack.map((tech, index) => (
-                        <span
-                          key={index}
-                          className="px-3 py-1 bg-accent rounded-md text-sm text-foreground"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Inspiration */}
-                {project.details.inspiration && (
-                  <div className="space-y-4 md:col-span-2">
-                    <h2 className="text-2xl font-semibold text-foreground">
-                      Inspiration
-                    </h2>
-                    <p className="text-muted-foreground">
-                      {project.details.inspiration}
-                    </p>
-                  </div>
-                )}
-
-                {/* Timeline */}
-                {project.details.timeline && (
-                  <div className="space-y-4">
-                    <h2 className="text-2xl font-semibold text-foreground">
-                      Timeline
-                    </h2>
-                    <p className="text-muted-foreground">
-                      {project.details.timeline}
-                    </p>
-                  </div>
-                )}
-
-                {/* Difficulties */}
+                {/* Challenges Faced */}
                 {project.details.difficulties && (
                   <div className="space-y-4">
                     <h2 className="text-2xl font-semibold text-foreground">
@@ -241,6 +178,18 @@ const ProjectDetail = () => {
                 )}
               </div>
             </div>
+          </div>
+        )}
+
+        {/* Pagination */}
+        {currentProjectIndex >= 0 && (
+          <div className="container mx-auto px-6 py-8 flex justify-center">
+            <WheelPagination
+              totalPages={totalProjects}
+              visibleCount={5}
+              initialPage={currentProjectIndex}
+              onChange={handlePageChange}
+            />
           </div>
         )}
       </main>

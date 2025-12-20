@@ -267,6 +267,7 @@ export default function TopNav() {
             {/* Logo - Left */}
             <Link 
               to="/" 
+              onClick={handleLinkClick}
               className="flex items-center gap-2 group" 
               aria-label="Homepage"
               data-navbar-logo
