@@ -205,6 +205,8 @@ export function Testimonial() {
                   <motion.div
                     className="absolute inset-0 bg-foreground"
                     initial={{ x: "-100%" }}
+                    animate={{ x: "-100%" }}
+                    whileHover={{ x: 0 }}
                     transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                   />
                   <svg
@@ -232,6 +234,8 @@ export function Testimonial() {
                   <motion.div
                     className="absolute inset-0 bg-foreground"
                     initial={{ x: "100%" }}
+                    animate={{ x: "100%" }}
+                    whileHover={{ x: 0 }}
                     transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                   />
                   <svg
@@ -262,7 +266,7 @@ export function Testimonial() {
             animate={{ x: [0, -1000] }}
             transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
           >
-            {[...Array(10)].map((_, i) => (
+            {Array.from({ length: 10 }, (_, i) => (
               <span key={i} className="mx-8">
                 {testimonials.map((t) => t.company).join(" • ")} •
               </span>
