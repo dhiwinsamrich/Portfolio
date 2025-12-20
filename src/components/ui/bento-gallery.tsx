@@ -115,7 +115,7 @@ const InteractiveImageBentoGallery: React.FC<InteractiveImageBentoGalleryProps> 
   const y = useTransform(scrollYProgress, [0, 0.2], [30, 0])
 
   return (
-    <section ref={targetRef} className="relative w-full overflow-hidden bg-background py-16 sm:py-24">
+    <section ref={targetRef} className="relative w-full overflow-hidden bg-background pt-16 sm:pt-24">
       <motion.div style={{ opacity, y }} className="container mx-auto px-4 text-center">
         <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">{title}</h2>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">{description}</p>

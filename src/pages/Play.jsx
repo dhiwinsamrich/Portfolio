@@ -1,6 +1,7 @@
 import React from 'react';
 import FeedbackSlider from '../components/ui/feedback-slider';
 import InteractiveImageBentoGallery from '../components/ui/bento-gallery';
+import { Testimonial } from '../components/ui/design-testimonial';
 import Footer from '../components/Footer';
 import { bentoImageItems } from '../data/play';
 import './Home.css';
@@ -27,6 +28,11 @@ const Play = () => {
           title="My Gallery"
           description="Drag to explore, click to expand. A collection of my photography moments."
         />
+        
+        {/* Testimonials Section */}
+        <div className="w-full mt-20">
+          <Testimonial />
+        </div>
       </main>
       
       <Footer />
