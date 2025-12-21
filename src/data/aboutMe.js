@@ -22,52 +22,6 @@ export const aboutMeSections = [
   },
 ];
 
-export const favourites = {
-  title: "My Favourites",
-  items: [
-    {
-      category: "Tools",
-      name: "React",
-      description: "Building dynamic user interfaces",
-    },
-    {
-      category: "Tools",
-      name: "Framer Motion",
-      description: "Creating smooth animations",
-    },
-    {
-      category: "Tools",
-      name: "TypeScript",
-      description: "Type-safe development",
-    },
-    {
-      category: "Design",
-      name: "Minimalism",
-      description: "Less is more philosophy",
-    },
-    {
-      category: "Design",
-      name: "Typography",
-      description: "The art of text",
-    },
-    {
-      category: "Interests",
-      name: "Photography",
-      description: "Capturing moments",
-    },
-    {
-      category: "Interests",
-      name: "Videography",
-      description: "Telling visual stories",
-    },
-    {
-      category: "Interests",
-      name: "Creative Design",
-      description: "Artistic expression",
-    },
-  ],
-};
-
 // Helper function to get all about me sections
 export const getAboutMeSections = () => aboutMeSections;
 
@@ -75,7 +29,4 @@ export const getAboutMeSections = () => aboutMeSections;
 export const getAboutMeSectionById = (id) => {
   return aboutMeSections.find(section => section.id === id);
 };
-
-// Helper function to get favourites
-export const getFavourites = () => favourites;
 

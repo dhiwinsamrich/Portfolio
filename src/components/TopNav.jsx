@@ -36,6 +36,7 @@ export default function TopNav() {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
+  const [isLogoHovered, setIsLogoHovered] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -156,19 +157,53 @@ export default function TopNav() {
             : 'bg-transparent'
         }`}
       >
-        <div className="max-w-10xl mx-auto px-4 md:px-6 lg:px-8 py-2 md:py-3">
+        <div className="max-w-10xl mx-auto px-4 md:px-6 lg:px-8 pt-3 pb-0 md:py-1">
           {/* Desktop Navigation - Visible on md screens and above */}
           <div className="hidden md:flex items-center justify-between">
             {/* Logo - Left */}
             <Link 
               to="/" 
-              className="flex items-center gap-2 group" 
+              className="flex items-center gap-2 group relative" 
               aria-label="Homepage"
               data-navbar-logo
+              onMouseEnter={() => setIsLogoHovered(true)}
+              onMouseLeave={() => setIsLogoHovered(false)}
             >
-              <span className="font-black text-foreground text-base md:text-lg lg:text-xl tracking-tight select-none">
-                Knight's Gambit!
-              </span>
+              <motion.div
+                animate={{
+                  opacity: isLogoHovered ? 0.7 : 1,
+                }}
+                transition={{
+                  duration: 0.3,
+                  ease: [0.4, 0, 0.2, 1],
+                }}
+              >
+                <img 
+                  src="/Logo/noun-horse-6673779.svg" 
+                  alt="Knight's Gambit Logo" 
+                  className="h-8 md:h-10 lg:h-12 w-auto"
+                />
+              </motion.div>
+              <motion.span 
+                className="header-item-hover-text inline-flex items-baseline gap-x-0.5 pl-2 pointer-events-none whitespace-nowrap text-sm md:text-base lg:text-lg tracking-widest"
+                initial={{ maxWidth: 0, opacity: 0 }}
+                animate={{ 
+                  maxWidth: isLogoHovered ? 500 : 0,
+                  opacity: isLogoHovered ? 1 : 0,
+                }}
+                transition={{
+                  duration: 0.6,
+                  ease: [0.25, 0.1, 0.25, 1],
+                }}
+                style={{ 
+                  overflow: 'hidden',
+                  minWidth: 0,
+                }}
+              >
+                <AnimatedText text="Knight's" delay={0.2} isHovered={isLogoHovered} className="font-serif italic" />
+                <span className="mx-0"> </span>
+                <AnimatedText text="Gambit" delay={0.2 + 8 * 0.04} isHovered={isLogoHovered} className="font-sans" />
+              </motion.span>
             </Link>
 
             <div className="header-menu flex justify-end">
@@ -268,13 +303,47 @@ export default function TopNav() {
             <Link 
               to="/" 
               onClick={handleLinkClick}
-              className="flex items-center gap-2 group" 
+              className="flex items-center gap-2 group relative" 
               aria-label="Homepage"
               data-navbar-logo
+              onMouseEnter={() => setIsLogoHovered(true)}
+              onMouseLeave={() => setIsLogoHovered(false)}
             >
-              <span className="font-black text-foreground text-base tracking-tight select-none">
-                Knight's Gambit!
-              </span>
+              <motion.div
+                animate={{
+                  opacity: isLogoHovered ? 0.7 : 1,
+                }}
+                transition={{
+                  duration: 0.3,
+                  ease: [0.4, 0, 0.2, 1],
+                }}
+              >
+                <img 
+                  src="/Logo/noun-horse-6673779.svg" 
+                  alt="Knight's Gambit Logo" 
+                  className="h-8 w-auto"
+                />
+              </motion.div>
+              <motion.span 
+                className="header-item-hover-text inline-flex items-baseline gap-x-0.5 pl-2 pointer-events-none whitespace-nowrap text-sm md:text-base lg:text-lg tracking-widest"
+                initial={{ maxWidth: 0, opacity: 0 }}
+                animate={{ 
+                  maxWidth: isLogoHovered ? 500 : 0,
+                  opacity: isLogoHovered ? 1 : 0,
+                }}
+                transition={{
+                  duration: 0.6,
+                  ease: [0.25, 0.1, 0.25, 1],
+                }}
+                style={{ 
+                  overflow: 'hidden',
+                  minWidth: 0,
+                }}
+              >
+                <AnimatedText text="Knight's" delay={0.2} isHovered={isLogoHovered} className="font-serif italic" />
+                <span className="mx-1"> </span>
+                <AnimatedText text="Gambit" delay={0.2 + 8 * 0.04} isHovered={isLogoHovered} className="font-sans" />
+              </motion.span>
             </Link>
 
             {/* Menu Button - Right */}
@@ -286,12 +355,16 @@ export default function TopNav() {
                 isMenuOpen ? 'z-[101]' : ''
               }`}
             >
-              {/* Chess Knight Icon - Hidden when menu is open */}
+              {/* Hamburger Menu Icon - Hidden when menu is open */}
               <motion.svg
-                width="36"
-                height="36"
-                viewBox="0 0 2000 2000"
-                fill="currentColor"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 xmlns="http://www.w3.org/2000/svg"
                 className="absolute inset-0"
                 animate={{ 
@@ -301,15 +374,20 @@ export default function TopNav() {
                 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
               >
-                {/* Chess Knight - Main silhouette path from the SVG */}
-                <path d="M 948.148438 427.078125 C 621.023438 427.078125 355.835938 692.269531 355.835938 1019.390625 C 355.835938 1263.640625 503.679688 1473.351562 714.757812 1563.941406 C 711.832031 1557.660156 711.214844 1550.289062 713.734375 1543.148438 C 713.773438 1543.039062 713.8125 1542.929688 713.851562 1542.820312 L 741.78125 1465.519531 C 745.183594 1456.101562 751.097656 1449.148438 758.0625 1445.890625 L 852.4375 1445.890625 L 761.660156 1429.761719 C 751.917969 1428.03125 744.390625 1419.890625 743.945312 1410.011719 C 743.929688 1409.671875 743.921875 1409.320312 743.921875 1408.96875 C 743.921875 1397.871094 751.863281 1388.621094 762.378906 1386.601562 C 762.363281 1386.460938 762.34375 1386.328125 762.324219 1386.191406 L 933.742188 1386.191406 L 778.765625 1363.050781 C 760.421875 1360.308594 746.207031 1345.558594 744.195312 1327.121094 C 728.050781 1179.21875 926.863281 1063.121094 921.761719 962.570312 C 905.164062 983.601562 878.113281 995.21875 851.328125 994.570312 C 824.550781 993.921875 753.578125 968.898438 741.101562 978.511719 C 728.621094 988.121094 716.371094 998.691406 701.484375 1003.828125 C 686.597656 1008.96875 667.984375 1007.21875 657.996094 995.039062 C 653.511719 989.570312 651.085938 982.46875 645.8125 977.761719 C 640.546875 973.058594 633.472656 970.980469 627.621094 967.03125 C 607.972656 953.761719 641.089844 933.140625 638.589844 906.921875 C 711.601562 892.558594 772.199219 841.761719 817.367188 782.628906 C 847.625 743.011719 863.761719 759.230469 926.453125 735.011719 C 910.683594 717.390625 918.503906 683.03125 926.53125 665.421875 C 943.484375 712.949219 1087.570312 735.609375 1114.871094 841.339844 C 1127.078125 888.628906 1098.808594 975.269531 1043.421875 1020.828125 C 1106.738281 994.140625 1147.988281 939.53125 1154.539062 881.871094 C 1187.769531 970.03125 1147.828125 1089.910156 1062 1132.988281 C 1131.679688 1131.769531 1177.460938 1064.121094 1187.039062 1005.761719 C 1191.660156 1052.738281 1173.96875 1100.820312 1148.101562 1140.300781 C 1122.230469 1179.789062 1082.570312 1210.050781 1037.648438 1224.570312 C 1093.871094 1223.269531 1149.488281 1199.5 1187.039062 1157.621094 C 1172.429688 1289.609375 1078.648438 1296.808594 1109.601562 1386.191406 L 1109.789062 1386.191406 C 1109.789062 1386.359375 1109.769531 1386.519531 1109.769531 1386.699219 C 1120.050781 1388.890625 1127.761719 1398.03125 1127.761719 1408.96875 C 1127.761719 1421.550781 1117.570312 1431.75 1104.988281 1431.75 L 1104.578125 1431.75 C 1103.378906 1431.75 1102.410156 1432.71875 1102.410156 1433.921875 L 1102.410156 1441.648438 C 1102.410156 1442.839844 1103.378906 1443.808594 1104.578125 1443.808594 C 1115.300781 1443.808594 1125.101562 1452.210938 1129.898438 1465.519531 L 1157.828125 1542.820312 C 1161.449219 1552.839844 1161.671875 1563.53125 1159.398438 1572.921875 C 1382.210938 1487.839844 1540.460938 1272.101562 1540.460938 1019.390625 C 1540.460938 692.269531 1275.269531 427.078125 948.148438 427.078125 Z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="18" x2="21" y2="18" />
               </motion.svg>
               {/* Close X icon - Visible when menu is open */}
               <motion.svg
-                width="36"
-                height="36"
+                width="24"
+                height="24"
                 viewBox="0 0 24 24"
                 fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 xmlns="http://www.w3.org/2000/svg"
                 className="absolute inset-0"
                 animate={{ 
@@ -319,13 +397,8 @@ export default function TopNav() {
                 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
               >
-                <path
-                  d="M6 6L18 18M18 6L6 18"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+                <line x1="6" y1="6" x2="18" y2="18" />
+                <line x1="18" y1="6" x2="6" y2="18" />
               </motion.svg>
             </button>
           </div>

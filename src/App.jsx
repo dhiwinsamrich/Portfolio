@@ -7,6 +7,7 @@ import Contact from './pages/Contact';
 import Projects from './pages/Projects';
 import ProjectDetail from './pages/ProjectDetail';
 import Play from './pages/Play';
+import Career from './pages/Career';
 import NotFound from './pages/NotFound';
 import TopNav from './components/TopNav';
 import ProfileLoader from './components/ProfileLoader';
@@ -79,17 +80,18 @@ function AppContent() {
         <Route path="/projects" element={<PageWrapper><Projects /></PageWrapper>} />
         <Route path="/project/:id" element={<PageWrapper><ProjectDetail /></PageWrapper>} />
         <Route path="/play" element={<PageWrapper><Play /></PageWrapper>} />
+        <Route path="/career" element={<PageWrapper><Career /></PageWrapper>} />
         <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
       </Routes>
       
       {/* Floating Consult Button - appears on all pages */}
       {!isLoading && (
         <FloatingConsultButton
-          revolvingText="LET'S TALK - CONSULTATION - "
+          revolvingText="Let's Talk-Knight's Gambit-Game On-"
           popupHeading="Let's Connect"
           popupDescription="I'm available for freelance projects and open to full-time opportunities. Let's discuss how I can help bring your ideas to life."
           popupBadgeText="Available"
-          ctaButtonText="Get in Touch"
+          ctaButtonText="Connect via Mail"
           ctaButtonAction={handleBookCall}
           position={{ bottom: "2rem", right: "2rem" }}
         />

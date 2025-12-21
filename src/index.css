@@ -135,3 +135,125 @@ nav a > span[style*="transform-origin"] {
   transform-origin: left center;
 }
 
+/* Hero Section Animations */
+@keyframes word-appear {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.8);
+    filter: blur(10px);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(10px) scale(0.95);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes grid-draw {
+  0% {
+    stroke-dashoffset: 1000;
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.15;
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes underline-grow {
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.2;
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-5px) translateX(-3px);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translateY(-15px) translateX(7px);
+    opacity: 0.8;
+  }
+}
+
+/* Hero Section Utility Classes */
+.grid-line {
+  stroke: hsl(var(--foreground));
+  stroke-width: 0.5;
+  animation: grid-draw 2s ease-out forwards;
+  opacity: 0;
+}
+
+.detail-dot {
+  fill: hsl(var(--foreground));
+  animation: word-appear 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.corner-element {
+  position: absolute;
+  animation: word-appear 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.floating-element {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: hsl(var(--foreground) / 0.2);
+  border-radius: 50%;
+  animation: float 8s ease-in-out infinite;
+  animation-play-state: paused;
+  opacity: 0;
+}
+
+/* Hero Section Word Spacing */
+.word {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  word-spacing: 0;
+  letter-spacing: inherit;
+}
+
+.word + .word {
+  margin-left: 0;
+}
+
+/* Remove spacing between inline-block elements */
+h1 .word,
+h2 .word {
+  font-size: inherit;
+  line-height: inherit;
+}
+

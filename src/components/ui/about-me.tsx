@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion"
-import { aboutMeSections, favourites } from "../../data/aboutMe"
+import { aboutMeSections } from "../../data/aboutMe"
 
 export function AboutMe() {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -41,15 +41,6 @@ export function AboutMe() {
   }, [])
 
   const current = aboutMeSections[activeIndex]
-
-  // Group favourites by category for display
-  const favouritesByCategory = favourites.items.reduce((acc, item) => {
-    if (!acc[item.category]) {
-      acc[item.category] = []
-    }
-    acc[item.category].push(item)
-    return acc
-  }, {} as Record<string, typeof favourites.items>)
 
   return (
     <div className="flex items-start justify-center bg-background overflow-visible px-4 sm:px-6 md:px-0 py-8 md:py-16">
@@ -273,61 +264,6 @@ export function AboutMe() {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Favourites Section */}
-        <div className="mt-8 md:mt-24 pt-6 md:pt-16 border-t border-border">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="mb-8 md:mb-12"
-          >
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-foreground mb-6 md:mb-8">{favourites.title}</h3>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-              {Object.entries(favouritesByCategory).map(([category, items]) => (
-                <motion.div
-                  key={category}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="space-y-4"
-                >
-                  <h4 className="text-xs sm:text-sm font-mono text-muted-foreground uppercase tracking-wider mb-3 md:mb-4">
-                    {category}
-                  </h4>
-                  {items.map((item, index) => (
-                    <motion.div
-                      key={`${item.name}-${index}`}
-                      className="pb-3 md:pb-4 border-b border-border/50 last:border-0"
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.7 + index * 0.1 }}
-                    >
-                      <p className="text-sm sm:text-base font-medium text-foreground mb-1">{item.name}</p>
-                      <p className="text-xs sm:text-sm text-muted-foreground">{item.description}</p>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Bottom ticker - subtle repeating favourite names */}
-        <div className="hidden md:block absolute -bottom-20 left-0 right-0 overflow-hidden opacity-[0.08] pointer-events-none">
-          <motion.div
-            className="flex whitespace-nowrap text-6xl font-bold tracking-tight"
-            animate={{ x: [0, -1000] }}
-            transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-          >
-            {Array.from({ length: 10 }, (_, i) => (
-              <span key={i} className="mx-8">
-                {favourites.items.map((item) => item.name).join(" • ")} •
-              </span>
-            ))}
-          </motion.div>
         </div>
       </div>
     </div>

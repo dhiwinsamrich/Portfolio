@@ -500,11 +500,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
   margin-top: 48px;
   padding-top: 24px;
 }
 
-.view-more-button {
+.view-more-button,
+.know-more-button {
   display: inline-block;
   padding: 12px 32px;
   color: hsl(var(--foreground));
@@ -523,14 +526,16 @@
   text-transform: uppercase;
 }
 
-.view-more-button:hover {
+.view-more-button:hover,
+.know-more-button:hover {
   background: rgba(255, 255, 255, 0.15);
   border-color: rgba(255, 255, 255, 0.3);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
 }
 
-.view-more-button:active {
+.view-more-button:active,
+.know-more-button:active {
   transform: translateY(0);
 }
 
@@ -540,7 +545,8 @@
     padding-top: 20px;
   }
   
-  .view-more-button {
+  .view-more-button,
+  .know-more-button {
     padding: 10px 24px;
     font-size: 14px;
   }

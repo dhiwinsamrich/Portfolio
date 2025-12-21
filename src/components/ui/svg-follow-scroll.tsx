@@ -13,6 +13,8 @@ const CONTACT_PHONE = "+91 00000 00000";
 const CONTACT_LINKEDIN = "https://linkedin.com/in/dhiwinsamrich";
 const CONTACT_GITHUB = "https://github.com/dhiwinsamrich";
 const CONTACT_LOCATION = "India • Remote";
+const CONTACT_LOCATION_MAP = "https://www.google.com/maps/place/Chennai,+Tamil+Nadu,+India";
+const CONTACT_EMAIL_SUBJECT = "Let's Connect";
 
 const Skiper19 = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -53,21 +55,30 @@ const Skiper19 = () => {
         </h1>
         <div className="mt-80 flex w-full flex-col items-start gap-5 px-6 md:px-12 lg:px-16 font-medium uppercase lg:mt-0 lg:flex-row lg:justify-between">
           <div className="flex w-full items-center justify-between gap-12 lg:w-fit lg:justify-center">
-            <p className="w-fit text-sm">
-              india <br />
-              and online
-            </p>
+            <button
+              onClick={() => window.open(CONTACT_LOCATION_MAP, "_blank", "noopener,noreferrer")}
+              className="w-fit text-sm cursor-pointer hover:opacity-70 transition-opacity text-left"
+            >
+              INDIA <br />
+              AND ONLINE
+            </button>
             <p className="w-fit text-right text-sm lg:text-left">
               dhiwinsamrich <br /> available
             </p>
           </div>
           <div className="flex w-full flex-wrap items-center justify-between gap-12 lg:w-fit lg:justify-center">
-            <p className="w-fit text-sm">
-              email <br /> fast reply
-            </p>
-            <p className="w-fit text-right text-sm lg:text-left">
-              github <br /> projects
-            </p>
+            <button
+              onClick={() => window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(CONTACT_EMAIL_SUBJECT)}`}
+              className="w-fit text-sm cursor-pointer hover:opacity-70 transition-opacity text-left"
+            >
+              EMAIL <br /> FAST REPLY
+            </button>
+            <button
+              onClick={() => window.open(CONTACT_GITHUB, "_blank", "noopener,noreferrer")}
+              className="w-fit text-right text-sm lg:text-left cursor-pointer hover:opacity-70 transition-opacity"
+            >
+              GITHUB <br /> PROJECTS
+            </button>
           </div>
         </div>
       </div>

@@ -33,7 +33,7 @@ interface FloatingConsultButtonProps {
 export const FloatingConsultButton = ({
   buttonSize,
   imageSize,
-  imageSrc = "/consultant-avatar.jpg",
+  imageSrc = "Profile Pictures/Initial Loader.jpg",
   imageAlt = "Consultant",
   revolvingText = "FREE 30 MINUTES - CONSULT - ",
   revolvingSpeed = 10,
@@ -161,7 +161,7 @@ export const FloatingConsultButton = ({
         >
           {/* Rotating Text */}
           <motion.div
-            className="absolute inset-0"
+            className="absolute inset-0 z-0"
             animate={{ rotate: 360 }}
             transition={{
               duration: revolvingSpeed,
@@ -188,9 +188,9 @@ export const FloatingConsultButton = ({
           </motion.div>
 
           {/* Center Image/Circle */}
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center z-10">
             <div 
-              className="rounded-full overflow-hidden bg-foreground shadow-lg group-hover:shadow-xl transition-shadow"
+              className="rounded-full overflow-hidden bg-foreground shadow-lg group-hover:shadow-xl transition-shadow relative"
               style={{
                 width: `${smImageSize}px`,
                 height: `${smImageSize}px`,
@@ -206,14 +206,20 @@ export const FloatingConsultButton = ({
                     e.currentTarget.style.display = 'none';
                     const parent = e.currentTarget.parentElement;
                     if (parent) {
-                      parent.innerHTML = '<div class="w-full h-full bg-gradient-to-br from-foreground/80 to-foreground/60 flex items-center justify-center text-background text-2xl font-bold">DS</div>';
+                      const fallbackImg = document.createElement('img');
+                      fallbackImg.src = imageSrc;
+                      fallbackImg.alt = imageAlt;
+                      fallbackImg.className = 'w-full h-full object-cover';
+                      parent.appendChild(fallbackImg);
                     }
                   }}
                 />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-foreground/80 to-foreground/60 flex items-center justify-center text-background text-2xl font-bold">
-                  DS
-                </div>
+                <img
+                  src={imageSrc}
+                  alt={imageAlt}
+                  className="w-full h-full object-cover"
+                />
               )}
             </div>
           </div>

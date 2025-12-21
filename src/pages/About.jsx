@@ -1,7 +1,5 @@
 import React from 'react';
 import Footer from '../components/Footer.tsx';
-import { ContributionGraph } from '../components/ui/contribution-graph';
-import { useGitHubContributions } from '../hooks/useGitHubContributions';
 import { experiences } from '../data/experience';
 import { education } from '../data/education';
 import { WorkExperience } from '../components/ui/work-experience';
@@ -20,8 +18,6 @@ const About = () => {
     'Machine Learning using Python - Tutorialspoint',
     'Deep Learning - Tutorialspoint'
   ];
-
-  const { data: contributionData, loading: contributionsLoading, error: contributionsError } = useGitHubContributions('dhiwinsamrich');
 
   const workExperienceData = React.useMemo(() => {
     const logoFallbacks = [
@@ -114,37 +110,6 @@ const About = () => {
           <h3 className="section-title">Education</h3>
           <div className="education-content">
             <Education className="w-full rounded-lg border" education={educationData} />
-          </div>
-        </section>
-
-        <section className="contributions-section">
-          <h3 className="section-title">GitHub Contributions</h3>
-          <div className="contributions-content">
-            {contributionsLoading && (
-              <div className="contributions-loading">Loading contributions...</div>
-            )}
-
-            {!contributionsLoading && contributionsError && (
-              <div className="contributions-error">
-                <p className="text-muted-foreground mb-2">Unable to load GitHub contributions:</p>
-                <p className="text-sm text-muted-foreground">{contributionsError}</p>
-                <p className="text-xs text-muted-foreground mt-2">
-                  Please check:
-                  <br />• Your GitHub username is correct: <strong>dhiwinsamrich</strong>
-                  <br />• Your GitHub profile is public
-                  <br />• Check browser console for more details
-                </p>
-              </div>
-            )}
-
-            {!contributionsLoading && !contributionsError && (
-              <ContributionGraph
-                data={contributionData}
-                year={new Date().getFullYear()}
-                showLegend={true}
-                showTooltips={true}
-              />
-            )}
           </div>
         </section>
       </main>

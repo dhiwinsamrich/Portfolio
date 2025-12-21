@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Zap, TrendingUp, Globe } from 'lucide-react';
-import FeedbackSlider from '../components/ui/feedback-slider';
+import { Sparkles, Zap } from 'lucide-react';
+import { HeroSection } from '../components/ui/hero-section';
 import InteractiveImageBentoGallery from '../components/ui/bento-gallery';
 import { AboutMe } from '../components/ui/about-me';
 import { WavePath } from '../components/ui/wave-path';
@@ -12,17 +12,8 @@ import './Home.css';
 const Play = () => {
   return (
     <div className="home-page min-h-screen">
-      {/* Hero Section with Feedback Slider */}
-      <div 
-        className="w-full md:h-[700px] flex items-center justify-center overflow-hidden relative"
-        style={{
-          height: '100dvh',
-          minHeight: '-webkit-fill-available',
-        }}
-      >
-        <FeedbackSlider className="h-full w-full" />
-        
-      </div>
+      {/* Hero Section */}
+      <HeroSection />
 
       <main className="home-main py-0">
         <section className="py-0 md:py-0">
@@ -76,39 +67,6 @@ const Play = () => {
         {/* About Me Section */}
         <section className="w-full overflow-visible">
           <AboutMe />
-        </section>
-
-        {/* Call to Action Section */}
-        <section className="container mx-auto px-4 py-16 md:py-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto p-8 md:p-12 rounded-2xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20"
-          >
-            <Globe className="h-12 w-12 mx-auto mb-6 text-primary" />
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">
-              Let's Create Something Together
-            </h2>
-            <p className="text-muted-foreground mb-6 text-lg">
-              Interested in collaborating on a creative project? Whether it's photography, videography, or design,
-              I'm always open to new opportunities and exciting challenges.
-            </p>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-block"
-            >
-              <a
-                href="/contact"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
-              >
-                <TrendingUp className="h-4 w-4" />
-                Get In Touch
-              </a>
-            </motion.div>
-          </motion.div>
         </section>
       </main>
       

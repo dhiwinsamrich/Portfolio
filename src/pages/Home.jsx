@@ -222,7 +222,7 @@ const Home = () => {
                         Achievements:
                       </h5>
                       <ul className="internship-achievements-list">
-                        {currentInternship.descriptions.map((achievement) => (
+                        {currentInternship.descriptions.slice(0, 3).map((achievement) => (
                           <li key={achievement} className="internship-achievement-item" style={{ fontFamily: 'var(--font-sans)' }}>
                             {achievement}
                           </li>
@@ -237,14 +237,14 @@ const Home = () => {
 
           <div className="view-more-container">
             <BadgeButtonCombo 
-              label="View All" 
+              label="Know More" 
               badge={experiences.length}
               size="md"
               asChild
-              className="view-more-button"
+              className="know-more-button"
             >
-              <Link to="/about" style={{ textDecoration: 'none', color: 'inherit', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-                View All
+              <Link to="/career" style={{ textDecoration: 'none', color: 'inherit', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                Know More
               </Link>
             </BadgeButtonCombo>
           </div>
@@ -292,6 +292,14 @@ const Home = () => {
           <h3 className="section-title">ACHIVEMENTS</h3>
           
           <div className="achievements-grid-new">
+          <ProductHighlightCard
+              category="Academic Excellence"
+              categoryIcon={<GraduationCap className="h-5 w-5" />}
+              title="Gold Medalist"
+              description="Got Gold Medal in PG - Jain University (9.55 CGPA). Recognized for outstanding academic performance and excellence in postgraduate studies."
+              imageSrc={<Award className="pt-5 h-24 w-24 text-primary" />}
+              imageAlt="PG Gold Medal Achievement"
+            />
             <ProductHighlightCard
               category="Academic Excellence"
               categoryIcon={<GraduationCap className="h-5 w-5" />}
@@ -318,6 +326,7 @@ const Home = () => {
               imageSrc={<BookOpen className="pt-5 h-24 w-24 text-primary" />}
               imageAlt="TANCET Achievement"
             />
+          
           </div>
         </section>
 
