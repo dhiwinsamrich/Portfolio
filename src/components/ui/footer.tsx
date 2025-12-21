@@ -62,8 +62,8 @@ const backgroundVariants = {
 }
 
 // Reusable components
-const NavSection = ({ links, index }: { links: { label: string; href: string }[]; index: number }) => (
-  <motion.div variants={itemVariants} custom={index} className="flex flex-row gap-6 md:gap-8 justify-center items-center">
+const NavSection = ({ links, index }: { links: { label: string; href: string; center?: string; right?: string }[]; index: number }) => (
+  <motion.div variants={itemVariants} custom={index} className="flex flex-row flex-wrap gap-3 sm:gap-4 md:gap-6 lg:gap-8 justify-center items-center px-2">
     {links.map((link, linkIndex) => (
       <motion.div
         key={linkIndex}
@@ -73,11 +73,17 @@ const NavSection = ({ links, index }: { links: { label: string; href: string }[]
           y: -2,
           transition: { type: "spring", stiffness: 300, damping: 20 },
         }}
-        className="text-muted-foreground hover:text-foreground transition-colors duration-300 font-sans text-xs md:text-sm group relative"
+        className="text-muted-foreground hover:text-foreground transition-colors duration-300 font-sans text-[10px] sm:text-xs md:text-sm group relative whitespace-nowrap"
       >
         <Link to={link.href} className="relative">
-          <span className="relative">
-            {link.label}
+          <span className="relative flex items-baseline gap-0.5 sm:gap-1">
+            <span className="uppercase tracking-wider">{link.label}</span>
+            {link.center && (
+              <span className="italic normal-case opacity-70 text-[9px] sm:text-[10px] md:text-xs">{link.center}</span>
+            )}
+            {link.right && (
+              <span className="normal-case opacity-70 text-[9px] sm:text-[10px] md:text-xs">{link.right}</span>
+            )}
             <motion.span
               className="absolute bottom-0 left-0 h-0.5 bg-primary"
               initial={{ width: 0 }}
@@ -117,7 +123,7 @@ const SocialLink = ({ href, label, icon, index }: { href: string; label: string;
 )
 
 interface StickyFooterProps {
-  sections?: { title: string; links: { label: string; href: string }[] }[];
+  sections?: { title: string; links: { label: string; href: string; center?: string; right?: string }[] }[];
   social?: { href: string; label: string; icon: React.ReactNode }[];
   title?: string;
   subtitle?: string;
@@ -145,7 +151,7 @@ const ChessNotationDivider = () => (
     initial={{ scaleX: 0 }}
     animate={{ scaleX: 1 }}
     transition={{ duration: 1, delay: 0.5 }}
-    className="relative w-full max-w-2xl h-px bg-gradient-to-r from-transparent via-border to-transparent my-4"
+    className="relative w-full max-w-2xl h-px bg-gradient-to-r from-transparent via-border to-transparent my-3 sm:my-4"
   >
     <div className="absolute left-0 top-1/2 -translate-y-1/2 text-[8px] font-mono text-muted-foreground/40">
       a8
@@ -162,10 +168,10 @@ const ChessQuote = () => (
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay: 1.4, duration: 0.8 }}
-    className="text-center max-w-2xl mx-auto"
+    className="text-center max-w-2xl mx-auto px-4"
   >
     <motion.p
-      className="text-sm md:text-base text-muted-foreground/80 italic font-serif mb-2"
+      className="text-xs sm:text-sm md:text-base text-muted-foreground/80 italic font-serif mb-1 sm:mb-2 px-2"
       whileHover={{ scale: 1.02 }}
     >
       "Every move is a decision, every decision shapes the game"
@@ -179,10 +185,10 @@ const ChessQuote = () => (
 export default function StickyFooter({
   sections = [
     { title: "Navigation", links: [
-      { label: "Home", href: "/" },
-      { label: "Projects", href: "/projects" },
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/contact" },
+      { label: "WORKS", href: "/projects", center: "i've", right: "done" },
+      { label: "MY", href: "/play", center: "play", right: "GROUND" },
+      { label: "ABOUT", href: "/about", center: "me" },
+      { label: "CONTACT", href: "/contact", center: "me" },
     ]},
   ],
   social = [],
@@ -196,7 +202,7 @@ export default function StickyFooter({
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="pt-6 md:pt-12 pb-20 md:pb-32 px-4 md:px-12 w-full flex flex-col justify-center items-center relative overflow-hidden mt-20 min-h-[550px] bg-gradient-to-b from-transparent via-background/50 to-background"
+      className="pt-6 md:pt-12 pb-20 md:pb-32 px-3 sm:px-4 md:px-12 w-full flex flex-col justify-center items-center relative overflow-hidden mt-20 min-h-[500px] sm:min-h-[550px] bg-gradient-to-b from-transparent via-background/50 to-background"
     >
             {/* Chess Board Pattern Background */}
             <ChessBoardPattern />
@@ -239,12 +245,12 @@ export default function StickyFooter({
             />
 
             {/* Footer Content - Vertical Stack Layout */}
-            <div className="relative z-[10] w-full max-w-10xl mx-auto flex flex-col items-center justify-center gap-6 md:gap-8">
+            <div className="relative z-[10] w-full max-w-10xl mx-auto flex flex-col items-center justify-center gap-4 sm:gap-6 md:gap-8 px-2 sm:px-4">
               {/* Chess Notation Divider - Top */}
               <ChessNotationDivider />
 
-              {/* Navigation Section - Horizontal */}
-              <motion.div variants={containerVariants} className="w-auto flex justify-center">
+              {/* Navigation Section - Horizontal with wrapping */}
+              <motion.div variants={containerVariants} className="w-full max-w-full flex justify-center px-2 sm:px-4">
                 {sections.map((section, index) => (
                   <NavSection key={section.title} links={section.links} index={index} />
                 ))}
@@ -258,7 +264,7 @@ export default function StickyFooter({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.6, duration: 0.5 }}
-                className="flex flex-col md:flex-row items-center gap-4 md:gap-0 w-full relative"
+                className="flex flex-col md:flex-row items-center gap-3 sm:gap-4 md:gap-0 w-full relative px-2 sm:px-4"
               >
                 {/* Copyright - Left aligned on md+ */}
                 <motion.p

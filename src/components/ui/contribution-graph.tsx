@@ -224,7 +224,7 @@ export function ContributionGraph({
 
           {/* Month Headers */}
           <thead>
-            <tr className="h-3">
+            <tr className="h-5">
               <td className="w-7 min-w-7"></td>
               {monthHeaders.map((header, index) => (
                 <td
@@ -241,7 +241,7 @@ export function ContributionGraph({
           {/* Day Grid */}
           <tbody>
             {Array.from({ length: 7 }, (_, dayIndex) => (
-              <tr key={dayIndex} className="h-2.5">
+              <tr key={dayIndex} className="h-3">
                 {/* Day Labels */}
                 <td className="text-foreground relative w-7 min-w-7">
                   {dayIndex % 2 === 0 && (

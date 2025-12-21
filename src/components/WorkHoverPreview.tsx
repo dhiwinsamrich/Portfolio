@@ -137,10 +137,10 @@ export function useWorkHoverPreview(previewData: Record<string, PreviewData>) {
     const cardWidth = 300;
     const cardHeight = 250;
     const offsetX = 15;
-    const offsetY = 20;
+    const offsetY = 5; // Reduced to position closer to cursor
 
     let x = e.clientX - cardWidth / 2;
-    let y = e.clientY - cardHeight - offsetY;
+    let y = e.clientY - cardHeight - offsetY; // Position above cursor with minimal gap
 
     if (x + cardWidth > window.innerWidth - 20) {
       x = window.innerWidth - cardWidth - 20;
@@ -149,8 +149,9 @@ export function useWorkHoverPreview(previewData: Record<string, PreviewData>) {
       x = 20;
     }
 
+    // If card would go above viewport, position below cursor instead
     if (y < 20) {
-      y = e.clientY + offsetY;
+      y = e.clientY + offsetY + 10; // Position below cursor with small gap
     }
 
     setPosition({ x, y });

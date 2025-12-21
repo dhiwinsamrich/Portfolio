@@ -21,9 +21,14 @@ const ProjectItem = ({
       const newParts = [];
       parts.forEach((part, partIndex) => {
         if (typeof part === 'string') {
-          const index = part.indexOf(keyword.text);
+          // Case-insensitive search
+          const lowerPart = part.toLowerCase();
+          const lowerKeyword = keyword.text.toLowerCase();
+          const index = lowerPart.indexOf(lowerKeyword);
           if (index !== -1) {
+            // Find the actual text in the original string (preserving case)
             const before = part.substring(0, index);
+            const matchedText = part.substring(index, index + keyword.text.length);
             const after = part.substring(index + keyword.text.length);
             newParts.push(
               before,
@@ -35,7 +40,7 @@ const ProjectItem = ({
                 onHoverEnd={handleHoverEnd}
               >
                 <Highlighter action="underline" color="#FFEB3B">
-                  {keyword.text}
+                  {matchedText}
                 </Highlighter>
               </HoverLink>,
               after

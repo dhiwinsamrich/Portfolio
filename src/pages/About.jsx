@@ -44,9 +44,10 @@ const About = () => {
           employmentType: exp.type,
           icon: "code",
           description: Array.isArray(exp.descriptions)
-            ? exp.descriptions.map((d) => `- ${d}`).join("\n")
+            ? exp.descriptions.map((d) => `♞ ${d}`).join("\n")
             : undefined,
-          skills: ["AI/ML", "Python", "React", "Data Science"],
+          skills: Array.isArray(exp.skills) ? exp.skills : [],
+          projectsInvolved: Array.isArray(exp.projectsInvolved) ? exp.projectsInvolved : [],
           isExpanded: idx === 0,
         },
       ],
@@ -62,7 +63,7 @@ const About = () => {
       cgpa: edu.cgpa,
       description: edu.description,
       achievement: edu.achievement,
-      lessonLearnt: edu.lessonLearnt,
+      specialization: edu.specialization,
       isExpanded: idx === 0,
     }));
   }, []);
@@ -141,7 +142,7 @@ const About = () => {
                 data={contributionData}
                 year={new Date().getFullYear()}
                 showLegend={true}
-                showTooltips={false}
+                showTooltips={true}
               />
             )}
           </div>

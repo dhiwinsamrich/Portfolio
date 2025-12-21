@@ -28,8 +28,8 @@ export type EducationItemType = {
   description?: string;
   /** Achievements during the education */
   achievement?: string;
-  /** Lessons learnt */
-  lessonLearnt?: string;
+  /** Specialization areas */
+  specialization?: string;
   /** Indicates if the education details are expanded in the UI */
   isExpanded?: boolean;
 };
@@ -100,6 +100,16 @@ export function EducationItem({
 
         <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
           <div className="pt-4 pl-9 space-y-4">
+
+          {education.specialization && (
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-foreground">Specialization:</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {education.specialization}
+                </p>
+              </div>
+            )}
+            
             {education.cgpa && (
               <div className="space-y-1">
                 <p className="text-sm font-medium text-foreground">CGPA:</p>
@@ -125,14 +135,6 @@ export function EducationItem({
               </div>
             )}
 
-            {education.lessonLearnt && (
-              <div className="space-y-1">
-                <p className="text-sm font-medium text-foreground">Lesson Learnt:</p>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {education.lessonLearnt}
-                </p>
-              </div>
-            )}
           </div>
         </CollapsibleContent>
       </div>

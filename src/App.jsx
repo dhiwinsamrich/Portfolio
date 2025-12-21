@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -15,10 +15,8 @@ import './App.css';
 
 const PageWrapper = ({ children }) => (
   <motion.div
-    key={children.key}
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
     transition={{ duration: 0.4, ease: "easeOut" }}
   >
     {children}
@@ -74,17 +72,15 @@ function AppContent() {
     <>
       <TopNav />
 
-      <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<PageWrapper key={location.pathname}><Home /></PageWrapper>} />
-          <Route path="/about" element={<PageWrapper key={location.pathname}><About /></PageWrapper>} />
-          <Route path="/contact" element={<PageWrapper key={location.pathname}><Contact /></PageWrapper>} />
-          <Route path="/projects" element={<PageWrapper key={location.pathname}><Projects /></PageWrapper>} />
-          <Route path="/project/:id" element={<PageWrapper key={location.pathname}><ProjectDetail /></PageWrapper>} />
-          <Route path="/play" element={<PageWrapper key={location.pathname}><Play /></PageWrapper>} />
-          <Route path="*" element={<PageWrapper key={location.pathname}><NotFound /></PageWrapper>} />
+      <Routes>
+        <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
+        <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
+        <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
+        <Route path="/projects" element={<PageWrapper><Projects /></PageWrapper>} />
+        <Route path="/project/:id" element={<PageWrapper><ProjectDetail /></PageWrapper>} />
+        <Route path="/play" element={<PageWrapper><Play /></PageWrapper>} />
+        <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
       </Routes>
-      </AnimatePresence>
       
       {/* Floating Consult Button - appears on all pages */}
       {!isLoading && (

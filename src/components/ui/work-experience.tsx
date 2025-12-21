@@ -44,6 +44,8 @@ export type ExperiencePositionItemType = {
   icon?: ExperiencePositionIconType;
   /** A list of skills associated with the position */
   skills?: string[];
+  /** Projects involved in during this position */
+  projectsInvolved?: string[];
   /** Indicates if the position details are expanded in the UI */
   isExpanded?: boolean;
 };
@@ -170,6 +172,20 @@ export function ExperiencePositionItem({
                 </div>
               </div>
             )}
+
+             {Array.isArray(position.projectsInvolved) && position.projectsInvolved.length > 0 && (
+               <div className="space-y-1">
+                 <p className="text-sm font-medium text-foreground">Projects Involved:</p>
+                 <ul className="space-y-2">
+                   {position.projectsInvolved.map((project, idx) => (
+                     <li key={idx} className="text-sm text-muted-foreground leading-relaxed flex items-start gap-2">
+                       <span className="text-foreground mt-0.5">♜</span>
+                       <span>{project}</span>
+                     </li>
+                   ))}
+                 </ul>
+               </div>
+             )}
 
             {Array.isArray(position.skills) && position.skills.length > 0 && (
               <div className="space-y-1">

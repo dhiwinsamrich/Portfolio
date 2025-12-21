@@ -34,10 +34,10 @@ const Footer = ({ currentTime = "", scrollToTop }: FooterProps) => {
     {
       title: "Navigation",
       links: [
-        { label: "Home", href: "/" },
-        { label: "Projects", href: "/projects" },
-        { label: "About", href: "/about" },
-        { label: "Contact", href: "/contact" },
+        { label: "WORKS", href: "/projects", center: "i've", right: "done" },
+        { label: "MY", href: "/play", center: "play", right: "GROUND" },
+        { label: "ABOUT", href: "/about", center: "me" },
+        { label: "CONTACT", href: "/contact", center: "me" },
       ],
     },
   ];

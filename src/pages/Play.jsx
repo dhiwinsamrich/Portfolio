@@ -1,59 +1,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Camera, Video, Palette, Sparkles, Heart, Zap, TrendingUp, Globe } from 'lucide-react';
+import { Sparkles, Zap, TrendingUp, Globe } from 'lucide-react';
 import FeedbackSlider from '../components/ui/feedback-slider';
 import InteractiveImageBentoGallery from '../components/ui/bento-gallery';
 import { AboutMe } from '../components/ui/about-me';
-import { ProductHighlightCard } from '../components/ui/product-card';
 import { WavePath } from '../components/ui/wave-path';
 import Footer from '../components/Footer';
 import { bentoImageItems } from '../data/play';
 import './Home.css';
 
 const Play = () => {
-  const stats = [
-    { label: 'Photos Captured', value: '500+', icon: Camera },
-    { label: 'Videos Created', value: '50+', icon: Video },
-    { label: 'Creative Projects', value: '100+', icon: Palette },
-    { label: 'Happy Moments', value: '∞', icon: Heart },
-  ];
-
-  const passions = [
-    {
-      categoryIcon: <Camera className="h-5 w-5" />,
-      category: 'Photography',
-      title: 'Visual Storytelling',
-      description: 'Capturing moments that tell stories, from golden hour landscapes to candid portraits that reveal human emotion.',
-      imageSrc: <Camera className="pt-5 h-24 w-24 text-primary" />,
-      imageAlt: 'Photography Passion',
-    },
-    {
-      categoryIcon: <Video className="h-5 w-5" />,
-      category: 'Videography',
-      title: 'Motion & Emotion',
-      description: 'Creating cinematic experiences through video, bringing static moments to life with movement and narrative.',
-      imageSrc: <Video className="pt-5 h-24 w-24 text-primary" />,
-      imageAlt: 'Videography Passion',
-    },
-    {
-      categoryIcon: <Palette className="h-5 w-5" />,
-      category: 'Creative Design',
-      title: 'Artistic Expression',
-      description: 'Exploring the intersection of technology and art, where code meets creativity and pixels become poetry.',
-      imageSrc: <Palette className="pt-5 h-24 w-24 text-primary" />,
-      imageAlt: 'Creative Design Passion',
-    },
-  ];
-
   return (
     <div className="home-page min-h-screen">
       {/* Hero Section with Feedback Slider */}
       <div 
         className="w-full md:h-[700px] flex items-center justify-center overflow-hidden relative"
         style={{
-          height: '100vh',
           height: '100dvh',
-          minHeight: '100vh',
           minHeight: '-webkit-fill-available',
         }}
       >

@@ -113,6 +113,26 @@ const ProjectDetail = () => {
           <div className="container mx-auto px-6 pt-4 pb-16">
             <div className="max-w-4xl mx-auto">
               <div className="grid md:grid-cols-2 gap-8">
+                {/* What I Built */}
+                {project.details.whatIBuilt && project.details.whatIBuilt.length > 0 && (
+                  <div className="space-y-4 md:col-span-2">
+                    <h2 className="text-2xl font-semibold text-foreground">
+                      What I Built
+                    </h2>
+                    <ul className="space-y-3">
+                      {project.details.whatIBuilt.map((item, index) => (
+                        <li
+                          key={index}
+                          className="text-muted-foreground flex items-start gap-2"
+                        >
+                          <span className="text-primary flex-shrink-0 mt-1">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
                 {/* Inspiration */}
                 {project.details.inspiration && (
                   <div className="space-y-4 md:col-span-2">

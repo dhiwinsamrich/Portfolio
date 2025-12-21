@@ -95,7 +95,7 @@ const products = [
 
 const toolsLogos = [
   {
-    src: "https://svgl.app/library/github_wordmark_light.svg",
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original-wordmark.svg",
     alt: "GitHub",
   },
   {
@@ -105,52 +105,48 @@ const toolsLogos = [
     width: 80,
   },
   {
-    src: "https://svgl.app/library/supabase_wordmark_light.svg",
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original-wordmark.svg",
     alt: "Supabase",
   },
   {
-    src: "https://svgl.app/library/figma-wordmark-light.svg",
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
     alt: "Figma",
   },
   {
-    src: "https://svgl.app/library/azure-wordmark-light.svg",
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original-wordmark.svg",
     alt: "Azure",
   },
   {
-    src: "https://svgl.app/library/aws-wordmark-light.svg",
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg",
     alt: "AWS",
   },
   {
-    src: "https://svgl.app/library/hugging-face-wordmark-light.svg",
-    alt: "Hugging Face",
-  },
-  {
-    src: "https://svgl.app/library/kaggle-wordmark-light.svg",
-    alt: "Kaggle",
-  },
-  {
-    src: "https://svgl.app/library/git-wordmark-light.svg",
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original-wordmark.svg",
     alt: "Git",
   },
   {
-    src: "https://svgl.app/library/microsoft-wordmark-light.svg",
+    src: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@v9/icons/powerbi.svg",
     alt: "Power BI",
   },
   {
-    src: "https://svgl.app/library/microsoft-wordmark-light.svg",
-    alt: "Microsoft Workbench",
+    src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain-wordmark.svg",
+    alt: "Microsoft SQL Server",
   },
   {
-    src: "https://svgl.app/library/microsoft-wordmark-light.svg",
+    src: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@v9/icons/microsoftpowerautomate.svg",
     alt: "Power Automate",
   },
   {
-    src: "https://svgl.app/library/n8n-wordmark-light.svg",
+    src: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@v9/icons/n8n.svg",
     alt: "n8n",
   },
   {
-    src: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=400&auto=format&fit=crop",
-    alt: "LM Studio",
+    src: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@v9/icons/kaggle.svg",
+    alt: "Kaggle",
+  },
+  {
+    src: "https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@v9/icons/huggingface.svg",
+    alt: "Hugging Face",
   },
 ];
 
