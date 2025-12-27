@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Footer from '../components/Footer.tsx';
 import { experiences } from '../data/experience';
 import { education } from '../data/education';
 import { WorkExperience } from '../components/ui/work-experience';
 import { Education } from '../components/ui/education';
+import { Button } from '../components/ui/button';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import './About.css';
 
 const About = () => {
+  const [showAllExperiences, setShowAllExperiences] = useState(false);
   const certificates = [
     'GenAI Powered Data Analytics - Tata',
     'Probability & Statistics for ML & DS - DeepLearning.AI',
@@ -81,7 +84,35 @@ const About = () => {
           <h3 className="section-title">Work Experience</h3>
           <div className="experience-content">
             {/* <p className="experience-description">My journey through various internships and roles in AI/ML and Data Science.</p> */}
-            <WorkExperience className="w-full rounded-lg border" experiences={workExperienceData} />
+            <WorkExperience 
+              className="w-full rounded-lg border" 
+              experiences={showAllExperiences ? workExperienceData : workExperienceData.slice(0, 4)} 
+            />
+            {workExperienceData.length > 4 && (
+              <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'center' }}>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowAllExperiences(!showAllExperiences)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}
+                >
+                  {showAllExperiences ? (
+                    <>
+                      Show Less
+                      <ChevronUp size={18} />
+                    </>
+                  ) : (
+                    <>
+                      Show All ({workExperienceData.length} experiences)
+                      <ChevronDown size={18} />
+                    </>
+                  )}
+                </Button>
+              </div>
+            )}
           </div>
         </section>
 

@@ -194,7 +194,7 @@
 
 .internship-item {
   display: flex;
-  padding: 24px 0;
+  padding: 0px 0;
   gap: 36px;
   width: 100%;
   max-width: 100%;
@@ -205,14 +205,14 @@
   .internship-item {
     flex-direction: column;
     gap: 16px;
-    padding: 20px 0;
+    padding: 0px 0;
   }
 }
 
 @media (max-width: 480px) {
   .internship-item {
     gap: 12px;
-    padding: 16px 0;
+    padding: 0px 0;
   }
 }
 

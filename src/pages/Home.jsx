@@ -9,10 +9,12 @@ import { useWorkHoverPreview, WorkHoverPreviewStyles } from '../components/WorkH
 import ProjectItem from '../components/ProjectItem';
 import { projects, getProjectsPreviewData } from '../data/projects';
 import { experiences } from '../data/experience';
+import { homepageCurrentWork } from '../data/homepage-current-work';
 import BadgeButtonCombo from '../components/ui/badge-button-combo';
 import { ProductHighlightCard } from '../components/ui/product-card';
 import { LocationTag } from '../components/ui/location-tag';
-import { Trophy, Target, GraduationCap, Award, BookOpen, Users } from 'lucide-react';
+import { LiquidButton } from '../components/ui/liquid-glass-button';
+import { Trophy, Target, GraduationCap, Award, BookOpen, Users, ArrowUp, ArrowDown } from 'lucide-react';
 import './Home.css';
 
 const products = [
@@ -156,6 +158,60 @@ const workPreviewData = getProjectsPreviewData();
 // Show only top 5 projects on home page
 const displayedProjects = projects.slice(0, 5);
 
+// Parse date string (e.g., "Aug 2025")
+const parseDate = (dateStr) => {
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const parts = dateStr.split(' ');
+  const month = monthNames.indexOf(parts[0]);
+  const year = Number.parseInt(parts[1], 10);
+  
+  if (Number.isNaN(year) || month === -1) return null;
+  return new Date(year, month, 1);
+};
+
+// Format duration string
+const formatDuration = (years, months) => {
+  const yearText = years === 1 ? 'year' : 'years';
+  const monthText = months === 1 ? 'month' : 'months';
+  
+  if (years > 0 && months > 0) {
+    return `${years} ${yearText} ${months} ${monthText}`;
+  }
+  if (years > 0) {
+    return `${years} ${yearText}`;
+  }
+  if (months > 0) {
+    return `${months} ${monthText}`;
+  }
+  return 'Less than a month';
+};
+
+// Calculate duration from period string (e.g., "Aug 2025 - Present")
+const calculateDuration = (period) => {
+  if (!period) return '';
+  
+  const parts = period.split(' - ');
+  if (parts.length < 1) return '';
+  
+  const startDate = parseDate(parts[0].trim());
+  if (!startDate) return '';
+  
+  const endDateStr = parts[1]?.trim() || 'Present';
+  const endDate = endDateStr === 'Present' ? new Date() : parseDate(endDateStr);
+  if (!endDate) return '';
+  
+  // Calculate difference
+  let years = endDate.getFullYear() - startDate.getFullYear();
+  let months = endDate.getMonth() - startDate.getMonth();
+  
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+  
+  return formatDuration(years, months);
+};
+
 const Home = () => {
   const { handleHoverStart, handleHoverMove, handleHoverEnd, PreviewCardComponent } = useWorkHoverPreview(workPreviewData);
   const [currentTime, setCurrentTime] = useState('');
@@ -190,7 +246,19 @@ const Home = () => {
       <main className="home-main">
 
         <section className="current-internship-section">
-          <h3 className="section-title">CURRENT INTERNSHIP</h3>
+          <h3 className="section-title">CURRENT WORK</h3>
+          
+          {experiences.length > 0 && (() => {
+            const currentWork = experiences[0];
+            const workType = currentWork.type === 'Internship' ? 'Internship' : 'Full time';
+            return (
+              <div style={{ marginBottom: '24px', display: 'inline-block' }}>
+                <LiquidButton size="default" variant="default">
+                  {workType}
+                </LiquidButton>
+              </div>
+            );
+          })()}
           
           <div className="internship-container">
             {experiences.length > 0 && (() => {
@@ -205,6 +273,16 @@ const Home = () => {
                       <p className="internship-role" style={{ fontFamily: 'var(--font-sans)' }}>
                         {currentInternship.title}
                       </p>
+                      {currentInternship.period && (
+                        <p className="internship-duration" style={{ 
+                          fontFamily: 'var(--font-sans)', 
+                          fontSize: '0.875rem',
+                          opacity: 0.7,
+                          marginTop: '4px'
+                        }}>
+                          {calculateDuration(currentInternship.period)}
+                        </p>
+                      )}
                       {currentInternship.location && (
                         <div className="internship-location" style={{ marginTop: '12px' }}>
                           <LocationTag 
@@ -219,14 +297,35 @@ const Home = () => {
                   <div className="internship-content">
                     <div className="internship-achievements">
                       <h5 className="internship-achievements-title" style={{ fontFamily: 'var(--font-sans)' }}>
-                        Achievements:
+                        Key Metrics:
                       </h5>
                       <ul className="internship-achievements-list">
-                        {currentInternship.descriptions.slice(0, 3).map((achievement) => (
-                          <li key={achievement} className="internship-achievement-item" style={{ fontFamily: 'var(--font-sans)' }}>
-                            {achievement}
-                          </li>
-                        ))}
+                        {homepageCurrentWork.metrics.slice(0, 6).map((item) => {
+                          const isIncrease = item.type === 'increase';
+                          const ArrowIcon = isIncrease ? ArrowUp : ArrowDown;
+                          const arrowColor = isIncrease ? '#22c55e' : '#ef4444'; // green-500 and red-500
+                          const rotation = isIncrease ? '30deg' : '-30deg'; // slight slant
+                          
+                          return (
+                            <li key={`${item.metric}-${item.description}`} className="internship-achievement-item" style={{ fontFamily: 'var(--font-sans)', display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                              <ArrowIcon 
+                                size={18} 
+                                style={{ 
+                                  color: arrowColor, 
+                                  marginTop: '2px',
+                                  flexShrink: 0,
+                                  transform: `rotate(${rotation})`,
+                                  transition: 'transform 0.2s ease'
+                                }} 
+                              />
+                              <div>
+                                <strong style={{ color: 'hsl(var(--primary))', fontWeight: 600 }}>{item.metric}</strong>
+                                {' — '}
+                                <span style={{ opacity: 0.8, fontSize: '0.95em' }}>{item.description}</span>
+                              </div>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
                   </div>
