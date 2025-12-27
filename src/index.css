@@ -130,6 +130,20 @@
   transform: translateY(0);
 }
 
+/* Ensure content is visible on mobile even if IntersectionObserver doesn't trigger */
+@media (max-width: 768px) {
+  .reveal-init {
+    opacity: 1;
+    transform: translateY(0);
+    transition: none;
+  }
+  
+  /* Still allow animation if it triggers */
+  .reveal-init.reveal-visible {
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+}
+
 /* Ensure the underline scales from left */
 nav a > span[style*="transform-origin"] {
   transform-origin: left center;

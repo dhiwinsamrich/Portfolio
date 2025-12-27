@@ -1,0 +1,29 @@
+.page-heading {
+  font-size: clamp(3rem, 8vw, 8rem);
+  letter-spacing: -0.02em;
+  color: hsl(var(--foreground));
+  line-height: 0.9;
+  display: flex;
+  align-items: baseline;
+  gap: 0.1em;
+  margin: 0;
+}
+
+.page-heading-first {
+  font-family: var(--font-sans);
+  font-weight: 400;
+}
+
+.page-heading-second {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .page-heading {
+    font-size: clamp(2rem, 10vw, 4rem);
+    line-height: 1;
+  }
+}
+

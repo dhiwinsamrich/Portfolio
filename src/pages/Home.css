@@ -1174,3 +1174,19 @@
 .animate-wiggle {
   animation: wiggle 0.3s ease-in-out infinite;
 }
+
+.play-heading-container {
+  padding: 0 56px;
+}
+
+@media (max-width: 768px) {
+  .play-heading-container {
+    padding: 0 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .play-heading-container {
+    padding: 0 16px;
+  }
+}

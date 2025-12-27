@@ -6,6 +6,7 @@ import { WorkExperience } from '../components/ui/work-experience';
 import { Education } from '../components/ui/education';
 import { Button } from '../components/ui/button';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { PageHeading } from '../components/ui/page-heading';
 import './About.css';
 
 const About = () => {
@@ -71,7 +72,9 @@ const About = () => {
     <div className="about-page pt-5">
       <main className="about-main">
         <section className="about-section">
-          <h3 className="section-title">About me</h3>
+          <div style={{ marginBottom: '48px' }}>
+            <PageHeading firstWord="About" secondWord="Me" />
+          </div>
           <div className="about-content">
             <p className="about-text">
               I'm Dhiwin Samrich, an AI/ML Engineer who's  inspired by the Chess Knight - bold, creative, and unafraid to take the unconventional path. Guided by the motto, "I Aspire to Inspire before I Expire," I approach every project and connection with passion and purpose. When I'm not building intelligent systems, you'll find me exploring new worlds through gaming or discovering fresh perspectives while traveling. For me, life and innovation are both about curiosity, courage, and making the next move count.

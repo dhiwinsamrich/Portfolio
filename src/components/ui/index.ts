@@ -1,4 +1,2 @@
-export { LogoCloud } from "./logo-cloud-2";
-export { LogoCloud as LogoCloud4 } from "./logo-cloud-4";
-export { InfiniteSlider } from "./infinite-slider";
-export { ProgressiveBlur } from "./progressive-blur";
+// This file can be used for exporting UI components if needed in the future
+// Currently, components are imported directly from their files

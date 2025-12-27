@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer.tsx';
 import { HeroSection03 } from '../components/ui/hero-03';
-import { LogoCloud, LogoCloud4 } from '../components/ui';
 import { WavePath } from '../components/ui/wave-path';
 import { CleanTestimonial } from '../components/ui/clean-testimonial';
 import { useWorkHoverPreview, WorkHoverPreviewStyles } from '../components/WorkHoverPreview';
@@ -15,6 +14,10 @@ import { ProductHighlightCard } from '../components/ui/product-card';
 import { LocationTag } from '../components/ui/location-tag';
 import { LiquidButton } from '../components/ui/liquid-glass-button';
 import { Trophy, Target, GraduationCap, Award, BookOpen, Users, ArrowUp, ArrowDown } from 'lucide-react';
+import { ExpandableSkillTags } from '../components/ui/expandable-skill-tags';
+import { technologies, tools } from '../data/skills';
+import { AwakeKnightButton } from '../components/ui/awake-knight-button';
+import { KnightFuryChat } from '../components/ui/knight-fury-chat';
 import './Home.css';
 
 const products = [
@@ -237,6 +240,8 @@ const Home = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
   return (
     <div className="home-page">
       <WorkHoverPreviewStyles />
@@ -244,6 +249,10 @@ const Home = () => {
       <HeroSection03 />
       
       <main className="home-main">
+        {/* Awake Knight Fury Button */}
+        <section className="awake-knight-section" style={{ marginTop: '10px', marginBottom: '1 0px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <AwakeKnightButton onClick={() => setIsChatOpen(true)} />
+        </section>
 
         <section className="current-internship-section">
           <h3 className="section-title">CURRENT WORK</h3>
@@ -435,7 +444,12 @@ const Home = () => {
             <span className="typography-statement-serif text-primary">work</span> with.
           </h3>
           <div className="w-full">
-            <LogoCloud />
+            <ExpandableSkillTags
+              title=""
+              skills={technologies}
+              initialCount={12}
+              className="max-w-4xl mx-auto"
+            />
           </div>
         </section>
 
@@ -446,7 +460,13 @@ const Home = () => {
                 Tools I <span className="typography-statement-serif text-primary">Use</span>
               </span>
             </h2>
-            <LogoCloud4 logos={toolsLogos} />
+            <div className="max-w-4xl mx-auto">
+              <ExpandableSkillTags
+                title=""
+                skills={tools}
+                initialCount={12}
+              />
+            </div>
           </div>
         </section>
 
@@ -514,6 +534,9 @@ const Home = () => {
         </section>
 
       </main>
+      
+      {/* Knight Fury Chat Dialog */}
+      <KnightFuryChat open={isChatOpen} onOpenChange={setIsChatOpen} />
       
       <Footer currentTime={currentTime} scrollToTop={scrollToTop} />
     </div>

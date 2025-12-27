@@ -1,13 +1,21 @@
 import React from "react";
 import Footer from "../components/Footer.tsx";
-import { Skiper19 } from "../components/ui/svg-follow-scroll";
-import './Home.css';
+import { ContactModern } from "../components/ui/contact-modern";
+import './Contact.css';
 
 const Contact = () => {
   return (
-    <div className="home-page">
-      <main className="home-main !p-0">
-        <Skiper19 />
+    <div className="contact-page">
+      <main className="contact-main">
+        <ContactModern 
+          generalEmail="dhiwinsamrichj@gmail.com"
+          generalPhone="+91 8678949676"
+          address="Chennai, Tamil Nadu, India"
+          githubUrl="https://github.com"
+          instagramUrl="https://instagram.com"
+          facebookUrl="https://facebook.com"
+          xUrl="https://x.com"
+        />
       </main>
       <Footer />
     </div>

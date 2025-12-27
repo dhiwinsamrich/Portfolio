@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, Zap } from 'lucide-react';
-import { HeroSection } from '../components/ui/hero-section';
+import { PlaygroundHero } from '../components/ui/playground-hero';
 import InteractiveImageBentoGallery from '../components/ui/bento-gallery';
 import { AboutMe } from '../components/ui/about-me';
 import { WavePath } from '../components/ui/wave-path';
@@ -13,10 +13,10 @@ const Play = () => {
   return (
     <div className="home-page min-h-screen">
       {/* Hero Section */}
-      <HeroSection />
+      <PlaygroundHero />
 
       <main className="home-main py-0">
-        <section className="py-0 md:py-0">
+        <section className="py-0 md:py-0" style={{ paddingTop: '20px', paddingBottom: '28px' }}>
           <InteractiveImageBentoGallery
             imageItems={bentoImageItems}
             title="Visual Gallery"

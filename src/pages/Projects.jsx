@@ -4,6 +4,7 @@ import { useWorkHoverPreview, WorkHoverPreviewStyles } from '../components/WorkH
 import ProjectItem from '../components/ProjectItem';
 import { projects, getProjectsPreviewData } from '../data/projects';
 import { Highlighter } from '../components/ui/highlighter';
+import { PageHeading } from '../components/ui/page-heading';
 import './Home.css';
 
 const workPreviewData = getProjectsPreviewData();
@@ -17,7 +18,9 @@ const Projects = () => {
       
       <main className="home-main pt-10">
         <section className="selected-works-section">
-          <h3 className="section-title">ALL PROJECTS</h3>
+          <div style={{ marginBottom: '48px' }}>
+            <PageHeading firstWord="My" secondWord="Works" />
+          </div>
           
           <div className="works-container">
             {projects.map((project, index) => (

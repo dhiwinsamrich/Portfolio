@@ -3,13 +3,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "./dialog";
 import { Button } from "./button";
-import { Send, Loader2 } from "lucide-react";
+import { Send, Loader2, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShiningText } from "./shining-text";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
+  smartTriggers?: string[];
 }
 
 interface KnightFuryChatProps {
@@ -34,8 +35,57 @@ const stripMarkdown = (text: string): string => {
     .trim();
 };
 
+// Function to detect if query is out-of-scope
+const isOutOfScope = (query: string): boolean => {
+  const outOfScopeKeywords = [
+    'current events', 'news', 'weather', 'stock', 'crypto', 'bitcoin',
+    'politics', 'election', 'war', 'conflict', 'medical advice', 'legal advice',
+    'financial advice', 'investment', 'trading', 'gambling', 'betting'
+  ];
+  const lowerQuery = query.toLowerCase();
+  return outOfScopeKeywords.some(keyword => lowerQuery.includes(keyword));
+};
+
+// Function to generate smart trigger questions
+const generateSmartTriggers = (lastMessage: string, conversationContext: Message[]): string[] => {
+  const triggers: string[] = [];
+  const lowerMessage = lastMessage.toLowerCase();
+  
+  // Context-based triggers
+  if (lowerMessage.includes('project') || lowerMessage.includes('work')) {
+    triggers.push("What technologies did you use?");
+    triggers.push("Tell me about your other projects");
+    triggers.push("What challenges did you face?");
+  } else if (lowerMessage.includes('education') || lowerMessage.includes('degree') || lowerMessage.includes('university')) {
+    triggers.push("What did you study?");
+    triggers.push("Tell me about your achievements");
+    triggers.push("What's your CGPA?");
+  } else if (lowerMessage.includes('experience') || lowerMessage.includes('internship') || lowerMessage.includes('job')) {
+    triggers.push("What did you work on?");
+    triggers.push("Tell me about your current role");
+    triggers.push("What skills did you gain?");
+  } else if (lowerMessage.includes('skill') || lowerMessage.includes('technology') || lowerMessage.includes('framework')) {
+    triggers.push("What projects use this?");
+    triggers.push("How did you learn this?");
+    triggers.push("What else can you do?");
+  } else {
+    // Default contextual triggers
+    triggers.push("Tell me about your projects");
+    triggers.push("What's your work experience?");
+    triggers.push("What are your achievements?");
+  }
+  
+  return triggers.slice(0, 3);
+};
+
 // Knowledge base about Dhiwin Samrich
 const KNOWLEDGE_BASE = `You are Knight Fury, the AI companion of Dhiwin Samrich. You have comprehensive knowledge about Dhiwin and should answer questions about him, his work, projects, and achievements.
+
+IMPORTANT: Keep responses CRISP and CLEAR:
+- Use 2-3 concise sentences or a structured list
+- Avoid redundancy and fluff
+- Ensure perfect spelling and grammar
+- Be direct and helpful
 
 ABOUT DHIWIN SAMRICH:
 - Full Name: Dhiwin Samrich
@@ -178,10 +228,14 @@ export function KnightFuryChat({ open, onOpenChange }: KnightFuryChatProps) {
     {
       role: "assistant",
       content: "Greetings! I am Knight Fury, Dhiwin's AI companion. I can help you learn about Dhiwin Samrich, his projects, work experience, education, and achievements. How may I assist you today?",
+      smartTriggers: ["Tell me about your projects", "What's your work experience?", "What are your achievements?"]
     },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showOutOfBoxDialog, setShowOutOfBoxDialog] = useState(false);
+  const [pendingQuery, setPendingQuery] = useState<string>("");
+  const [outOfBoxMode, setOutOfBoxMode] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -199,21 +253,21 @@ export function KnightFuryChat({ open, onOpenChange }: KnightFuryChatProps) {
     }
   }, [open]);
 
-  const sendMessage = async () => {
-    if (!input.trim() || isLoading) return;
-
-    const userMessage: Message = { role: "user", content: input.trim() };
+  const processMessage = async (query: string, useOutOfBox: boolean = false) => {
+    const userMessage: Message = { role: "user", content: query };
     setMessages((prev) => [...prev, userMessage]);
-    setInput("");
     setIsLoading(true);
 
     try {
-      // Get API key from environment variable or prompt user
       const apiKey = process.env.REACT_APP_OPENROUTER_API_KEY;
       
       if (!apiKey) {
         throw new Error("OpenRouter API key not found. Please set REACT_APP_OPENROUTER_API_KEY in your .env file");
       }
+
+      const systemPrompt = useOutOfBox 
+        ? `${KNOWLEDGE_BASE}\n\nYou may now provide expanded information beyond the standard knowledge base, but remain helpful and accurate.`
+        : `${KNOWLEDGE_BASE}\n\nIf asked about something outside your knowledge base, politely redirect to what you know about Dhiwin.`;
 
       const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
@@ -228,7 +282,7 @@ export function KnightFuryChat({ open, onOpenChange }: KnightFuryChatProps) {
           messages: [
             {
               role: "system",
-              content: KNOWLEDGE_BASE,
+              content: systemPrompt,
             },
             ...messages,
             userMessage,
@@ -245,9 +299,13 @@ export function KnightFuryChat({ open, onOpenChange }: KnightFuryChatProps) {
       const rawContent = data.choices[0]?.message?.content || "I apologize, but I couldn't generate a response.";
       const cleanedContent = stripMarkdown(rawContent);
       
+      // Generate smart triggers based on the response
+      const smartTriggers = generateSmartTriggers(cleanedContent, [...messages, userMessage]);
+      
       const assistantMessage: Message = {
         role: "assistant",
         content: cleanedContent,
+        smartTriggers,
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
@@ -265,6 +323,47 @@ export function KnightFuryChat({ open, onOpenChange }: KnightFuryChatProps) {
     }
   };
 
+  const sendMessage = async () => {
+    if (!input.trim() || isLoading) return;
+
+    const query = input.trim();
+    setInput("");
+
+    // Check if query is out-of-scope
+    if (isOutOfScope(query) && !outOfBoxMode) {
+      setPendingQuery(query);
+      setShowOutOfBoxDialog(true);
+      return;
+    }
+
+    await processMessage(query, outOfBoxMode);
+  };
+
+  const handleOutOfBoxConfirm = async () => {
+    setShowOutOfBoxDialog(false);
+    setOutOfBoxMode(true);
+    if (pendingQuery) {
+      await processMessage(pendingQuery, true);
+      setPendingQuery("");
+    }
+  };
+
+  const handleOutOfBoxCancel = () => {
+    setShowOutOfBoxDialog(false);
+    setPendingQuery("");
+    const cancelMessage: Message = {
+      role: "assistant",
+      content: "Understood. I'll focus on what I know about Dhiwin Samrich. How can I help you learn about his work, projects, or achievements?",
+      smartTriggers: ["Tell me about your projects", "What's your work experience?", "What are your achievements?"]
+    };
+    setMessages((prev) => [...prev, cancelMessage]);
+  };
+
+  const handleSmartTrigger = async (trigger: string) => {
+    if (isLoading) return;
+    await processMessage(trigger, outOfBoxMode);
+  };
+
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -273,89 +372,137 @@ export function KnightFuryChat({ open, onOpenChange }: KnightFuryChatProps) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl h-[80vh] flex flex-col p-0">
-        <DialogHeader className="px-6 pt-6 pb-4 border-b">
-          <DialogTitle className="text-xl font-semibold">Meet The Knight Fury</DialogTitle>
-          <DialogDescription>
-            Chat with your AI companion. Ask me anything about AI/ML, creative projects, or just have a conversation.
-          </DialogDescription>
-        </DialogHeader>
+    <>
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="max-w-2xl h-[80vh] flex flex-col p-0 overflow-hidden backdrop-blur-xl bg-background/80 border border-border/50 shadow-2xl rounded-2xl">
+          <DialogHeader className="px-6 pt-6 pb-4 border-b border-border/50 bg-background/40 backdrop-blur-sm">
+            <DialogTitle className="text-xl font-semibold flex items-center gap-2">
+              <Sparkles className="h-5 w-5 text-primary" />
+              Meet The Knight Fury
+            </DialogTitle>
+            <DialogDescription className="text-sm text-muted-foreground">
+              Chat with your AI companion. Ask me anything about AI/ML, creative projects, or just have a conversation.
+            </DialogDescription>
+          </DialogHeader>
 
-        <div className="flex-1 overflow-y-auto px-6 py-0 space-y-4 relative">
-          {/* Knight Fury Background Logo */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 pt-20">
-            <img 
-              src="/Logo/7476e9fd4777681c22652e0e7364fb0b.svg" 
-              alt="Knight Fury Background" 
-              className="h-64 w-auto opacity-10"
-            />
-          </div>
-          <div className="relative z-10">
-          <AnimatePresence>
-            {messages.map((message, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
-              >
-                <div
-                  className={`max-w-[80%] rounded-lg px-4 py-2 ${
-                    message.role === "user"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted text-muted-foreground"
-                  }`}
-                >
-                  <p className="text-sm whitespace-pre-wrap">{message.content}</p>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-          {isLoading && (
-            <div className="flex justify-start">
-              <div className="bg-muted text-muted-foreground rounded-lg px-4 py-3 flex items-center gap-2">
-                <ShiningText text="Knight Fury is thinking..." className="text-sm" />
-              </div>
+          <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4 relative">
+            {/* Knight Fury Background Logo */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 pt-20">
+              <img 
+                src="/Logo/7476e9fd4777681c22652e0e7364fb0b.svg" 
+                alt="Knight Fury Background" 
+                className="h-64 w-auto opacity-5"
+              />
             </div>
-          )}
-          <div ref={messagesEndRef} />
+            <div className="relative z-10">
+            <AnimatePresence>
+              {messages.map((message, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className={`flex flex-col gap-2 ${message.role === "user" ? "items-end" : "items-start"}`}
+                >
+                  <div
+                    className={`max-w-[80%] rounded-2xl px-4 py-3 shadow-lg backdrop-blur-sm ${
+                      message.role === "user"
+                        ? "bg-primary/90 text-primary-foreground border border-primary/20"
+                        : "bg-muted/60 text-foreground border border-border/30 backdrop-blur-md"
+                    }`}
+                  >
+                    <p className="text-sm whitespace-pre-wrap leading-relaxed">{message.content}</p>
+                  </div>
+                  
+                  {/* Smart Triggers */}
+                  {message.role === "assistant" && message.smartTriggers && message.smartTriggers.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-2 max-w-[80%]">
+                      {message.smartTriggers.map((trigger, triggerIndex) => (
+                        <button
+                          key={triggerIndex}
+                          onClick={() => handleSmartTrigger(trigger)}
+                          className="text-xs px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 transition-all duration-200 hover:scale-105"
+                        >
+                          {trigger}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </motion.div>
+              ))}
+            </AnimatePresence>
+            {isLoading && (
+              <div className="flex justify-start">
+                <div className="bg-muted/60 text-muted-foreground rounded-2xl px-4 py-3 flex items-center gap-2 backdrop-blur-md border border-border/30 shadow-lg">
+                  <ShiningText text="Knight Fury is thinking..." className="text-sm" />
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+            </div>
           </div>
-        </div>
 
-        <div className="border-t px-6 py-4">
-          <div className="flex gap-2">
-            <input
-              ref={inputRef}
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Type your message..."
-              className="flex-1 px-4 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-              disabled={isLoading}
-            />
+          <div className="border-t border-border/50 px-6 py-4 bg-background/40 backdrop-blur-sm">
+            <div className="flex gap-2">
+              <input
+                ref={inputRef}
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Type your message..."
+                className="flex-1 px-4 py-2.5 border border-input/50 rounded-xl bg-background/60 backdrop-blur-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all"
+                disabled={isLoading}
+              />
+              <Button
+                onClick={sendMessage}
+                disabled={!input.trim() || isLoading}
+                size="icon"
+                className="rounded-xl shadow-lg"
+              >
+                {isLoading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Send className="h-4 w-4" />
+                )}
+              </Button>
+            </div>
+            {!process.env.REACT_APP_OPENROUTER_API_KEY && (
+              <p className="text-xs text-muted-foreground mt-2">
+                Note: Please set REACT_APP_OPENROUTER_API_KEY in your .env file
+              </p>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Out-of-Box Confirmation Dialog */}
+      <Dialog open={showOutOfBoxDialog} onOpenChange={setShowOutOfBoxDialog}>
+        <DialogContent className="max-w-md rounded-2xl backdrop-blur-xl bg-background/90 border border-border/50 shadow-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-lg font-semibold">Out-of-the-Box Exploration</DialogTitle>
+            <DialogDescription className="text-sm text-muted-foreground pt-2">
+              This request requires me to search outside my immediate knowledge base about Dhiwin Samrich. Would you like to proceed with an expanded exploration?
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex gap-3 mt-4">
             <Button
-              onClick={sendMessage}
-              disabled={!input.trim() || isLoading}
-              size="icon"
+              onClick={handleOutOfBoxCancel}
+              variant="outline"
+              className="flex-1 rounded-xl"
             >
-              {isLoading ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <Send className="h-4 w-4" />
-              )}
+              Cancel
+            </Button>
+            <Button
+              onClick={handleOutOfBoxConfirm}
+              className="flex-1 rounded-xl"
+            >
+              Proceed
             </Button>
           </div>
-          {!process.env.REACT_APP_OPENROUTER_API_KEY && (
-            <p className="text-xs text-muted-foreground mt-2">
-              Note: Please set REACT_APP_OPENROUTER_API_KEY in your .env file
-            </p>
-          )}
-        </div>
-      </DialogContent>
-    </Dialog>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 

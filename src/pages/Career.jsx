@@ -2,6 +2,7 @@ import React from 'react';
 import Footer from '../components/Footer.tsx';
 import { experiences } from '../data/experience';
 import { WorkExperience } from '../components/ui/work-experience';
+import { PageHeading } from '../components/ui/page-heading';
 import './Career.css';
 
 const Career = () => {
@@ -40,7 +41,9 @@ const Career = () => {
     <div className="career-page pt-5">
       <main className="career-main">
         <section className="career-header-section">
-          <h1 className="career-title">Career Journey</h1>
+          <div style={{ marginBottom: '48px' }}>
+            <PageHeading firstWord="My" secondWord="Experience" />
+          </div>
           <p className="career-subtitle">
             A detailed look at my professional experiences, achievements, and growth in AI/ML engineering.
           </p>
